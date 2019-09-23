@@ -51,7 +51,8 @@ export default {
     { src: "~plugins/vimeo-player", ssr: false },
     "~/plugins/axios",
     { src: "~plugins/vue-konva", ssr: false },
-    "@/plugins/google-maps"
+    "@/plugins/google-maps",
+    "@/plugins/vee-validate"
   ],
   /*
    ** Nuxt.js dev-modules

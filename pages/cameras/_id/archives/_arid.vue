@@ -334,6 +334,7 @@ import "video.js/dist/video-js.css"
 import { videoPlayer } from "vue-video-player"
 import moment from "moment"
 import VueCompareImage from "vue-compare-image"
+import { mapGetters } from "vuex"
 
 export default {
   name: "Gallery",
@@ -365,31 +366,30 @@ export default {
       is_mp4: null,
       image_url: "",
       camera_id: this.$route.params.id,
-      api_id: "",
-      api_key: ""
     }
   },
   computed: {
+    ...mapGetters(["token"]),
     playerOptions() {
       let url = ""
       switch (this.archive.type) {
         case "clip":
-          url = `${process.env.API_URL}cameras/${this.$route.params.id}/archives/${this.$route.params.arid}.mp4?api_id=${this.keys.api_id}&api_key=${this.keys.api_key}`
+          url = `${process.env.API_URL}cameras/${this.$route.params.id}/archives/${this.$route.params.arid}.mp4?authorization=${this.token}`
           break
         case "compare":
-          url = `${process.env.API_URL}cameras/${this.$route.params.id}/compares/${this.$route.params.arid}.mp4?api_id=${this.keys.api_id}&api_key=${this.keys.api_key}`
+          url = `${process.env.API_URL}cameras/${this.$route.params.id}/compares/${this.$route.params.arid}.mp4?authorization=${this.token}`
           break
         case "url":
           url = this.archive.media_url
           break
         case "edit":
-          url = `${process.env.API_URL}cameras/${this.$route.params.id}/archives/${this.archive.file_name}?api_id=${this.keys.api_id}&api_key=${this.keys.api_key}`
+          url = `${process.env.API_URL}cameras/${this.$route.params.id}/archives/${this.archive.file_name}?authorization=${this.token}`
           break
         case "file":
-          url = `${process.env.API_URL}cameras/${this.$route.params.id}/archives/${this.archive.file_name}?api_id=${this.keys.api_id}&api_key=${this.keys.api_key}`
+          url = `${process.env.API_URL}cameras/${this.$route.params.id}/archives/${this.archive.file_name}?authorization=${this.token}`
           break
         case "timelapse":
-          url = `${process.env.API_URL}cameras/${this.$route.params.id}/timelapse/${this.$route.params.arid}/play?api_id=${this.keys.api_id}&api_key=${this.keys.api_key}`
+          url = `${process.env.API_URL}cameras/${this.$route.params.id}/timelapse/${this.$route.params.arid}/play?authorization=${this.token}`
           break
       }
       return {
@@ -409,11 +409,10 @@ export default {
     }
   },
   async asyncData({ params, $axios }) {
-    const keys = await $axios.get(process.env.API_URL + "auth/credentials")
     const archive = await $axios.get(
       process.env.API_URL + "cameras/" + params.id + "/archives/" + params.arid
     )
-    return { archive: archive.data.archives[0], keys: keys.data }
+    return { archive: archive.data.archives[0] }
   },
   mounted() {
     if (this.archive.type == "file") {

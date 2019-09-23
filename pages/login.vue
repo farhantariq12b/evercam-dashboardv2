@@ -19,12 +19,21 @@
                   />
                 </div>
                 <v-form ref="model">
-                  <v-text-field
-                    v-model="model.username"
-                    name="login"
-                    label="Login"
-                    type="text"
-                  />
+                  <ValidationProvider name="login" rules="required|email">
+                    <v-text-field
+                      slot-scope="{
+                        errors,
+                        valid
+                      }"
+                      :error-messages="errors"
+                      :success="valid"
+                      v-model="model.username"
+                      name="login"
+                      label="Login"
+                      type="text"
+                      required
+                    />
+                  </ValidationProvider>
                   <v-text-field
                     id="password"
                     v-model="model.password"
@@ -81,12 +90,15 @@
 import { mapActions } from "vuex"
 import "video.js/dist/video-js.css"
 import { videoPlayer } from "vue-video-player"
+import { ValidationObserver, ValidationProvider, withValidation } from "vee-validate";
 
 export default {
   layout: "clean",
   middleware: "unauth",
   components: {
-    videoPlayer
+    videoPlayer,
+    ValidationProvider,
+    ValidationObserver
   },
   data: () => ({
     playerOptions: {

@@ -1,70 +1,69 @@
 <template>
-  <v-container class="pa-2" fluid>
-    <v-row>
-      <v-col v-for="archive in to_show" :key="archive.id" cols="3">
-        <v-card
-          outlined
-          nuxt
-          elevation="10"
-          :to="'/cameras/' + archive.camera_id + '/archives/' + archive.id"
+  <v-layout wrap>
+    <v-flex v-for="archive in to_show" :key="archive.id" xs12 md3>
+      <v-card
+        outlined
+        nuxt
+        elevation="10"
+        class="ma-2"
+        :to="'/cameras/' + archive.camera_id + '/archives/' + archive.id"
+      >
+        <v-icon
+          v-if="archive.type == 'compare'"
+          dark
+          dense
+          class="pa-2 archive-icon"
         >
-          <v-icon
-            v-if="archive.type == 'compare'"
-            dark
-            dense
-            class="pa-2 archive-icon"
-          >
-            fas fa-compress-arrows-alt
-          </v-icon>
-          <v-icon
-            v-else-if="archive.type == 'clip'"
-            dark
-            dense
-            class="pa-2 archive-icon"
-          >
-            fas fa-video
-          </v-icon>
-          <v-icon
-            v-else-if="archive.type == 'url'"
-            dark
-            dense
-            class="pa-2 archive-icon"
-          >
-            fas fa-copy
-          </v-icon>
-          <v-icon
-            v-else-if="archive.type == 'edit'"
-            dark
-            dense
-            class="pa-2 archive-icon"
-          >
-            fas fa-images
-          </v-icon>
-          <v-icon v-else dark dense class="pa-2 archive-icon">
-            fas fa-history
-          </v-icon>
-          <v-img
-            :src="archive.thumbnail_url"
-            class="white--text"
-            height="200px"
-            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-          >
-            <v-card-title
-              class="fill-height align-end"
-              v-text="archive.title"
-            />
-          </v-img>
+          fas fa-compress-arrows-alt
+        </v-icon>
+        <v-icon
+          v-else-if="archive.type == 'clip'"
+          dark
+          dense
+          class="pa-2 archive-icon"
+        >
+          fas fa-video
+        </v-icon>
+        <v-icon
+          v-else-if="archive.type == 'url'"
+          dark
+          dense
+          class="pa-2 archive-icon"
+        >
+          fas fa-copy
+        </v-icon>
+        <v-icon
+          v-else-if="archive.type == 'edit'"
+          dark
+          dense
+          class="pa-2 archive-icon"
+        >
+          fas fa-images
+        </v-icon>
+        <v-icon v-else dark dense class="pa-2 archive-icon">
+          fas fa-history
+        </v-icon>
+        <v-img
+          :src="archive.thumbnail_url"
+          class="white--text"
+          height="200px"
+          gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+        >
+          <v-card-title
+            class="fill-height align-end"
+            v-text="archive.title"
+          />
+        </v-img>
 
-          <v-card-text>
-            <v-icon small>
-              fas fa-calendar-alt
-            </v-icon>
-            {{ getDate(archive.from_date) }} - {{ getDate(archive.to_date) }}
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-    <div v-show="pagination" class="text-xs-center pt-2 pb-12">
+        <v-card-text>
+          <v-icon small>
+            fas fa-calendar-alt
+          </v-icon>
+          {{ getDate(archive.from_date) }} - {{ getDate(archive.to_date) }}
+        </v-card-text>
+      </v-card>
+    </v-flex>
+    <div v-show="pagination" class="text-xs-center pl-2 pr-2 pt-2 pb-12" style="width: 100%">
       <v-btn dark width="100%" @click="loadMore">
         Load more...
       </v-btn>
@@ -91,10 +90,10 @@
             "
           >
             <v-list-item-title>
-              <v-icon small>
+              <v-icon small class="pl-2">
                 {{ item.icon }}
               </v-icon>
-              &nbsp;{{ item.title }}
+              {{ item.title }}
             </v-list-item-title>
           </v-list-item>
         </v-list>
@@ -237,7 +236,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </v-container>
+  </v-layout>
 </template>
 
 <style scoped>
@@ -332,7 +331,10 @@ export default {
     return $axios
       .$get(`${process.env.API_URL}cameras/${params.id}/archives`)
       .then(res => {
-        return { archives: res.archives }
+        let completed_archives = res.archives.filter(function(archive) {
+          return archive.status == "Completed" || archive.status == 5
+        })
+        return { archives: completed_archives }
       })
       .catch(() => {
         error({ statusCode: 404, message: "Post not found" })
