@@ -535,8 +535,8 @@
 </style>
 
 <script>
-import moment from "moment-timezone"
-import { mapActions } from "vuex"
+import moment from "moment-timezone";
+import { mapActions } from "vuex";
 
 export default {
   name: "Details",
@@ -548,13 +548,13 @@ export default {
       timezones: [],
       testSnapshot: "",
       mapTypeId: "terrain"
-    }
+    };
   },
   async asyncData({ params, store, $axios }) {
     const { data } = await $axios.get(
       `${process.env.API_URL}cameras/${params.id}`
-    )
-    let c = data.cameras[0]
+    );
+    let c = data.cameras[0];
     return {
       camera: c,
       thumbnail_url: `${c.thumbnail_url}?authorization=${store.getters.token}`,
@@ -571,24 +571,48 @@ export default {
       selectedVendor: { name: c.vendor_name, id: c.vendor_id },
       selectedModel: { name: c.model_name, id: c.model_id },
       selectedTimezone: { value: c.timezone, text: c.timezone }
-    }
+    };
   },
   mounted() {
-    this.loadVendors()
-    this.loadModels("hikvision")
-    this.bindTimezones()
+    this.loadVendors();
+    this.loadModels("hikvision");
+    this.bindTimezones();
   },
   methods: {
     ...mapActions({ cameras: "CAMERAS" }),
     async loadVendors() {
-      const { data } = await this.$axios.get(`${process.env.API_URL}vendors`)
-      this.vendors = this.sortByKey(data.vendors, "name")
+      const { data } = await this.$axios.get(`${process.env.API_URL}vendors`);
+      this.vendors = this.sortByKey(data.vendors, "name");
     },
     async loadModels(vendor_id) {
       const { data } = await this.$axios.get(
         `${process.env.API_URL}models?vendor_id=${vendor_id}&limit=300`
-      )
-      this.models = this.sortByKey(data.models, "name")
+      );
+      this.models = this.sortByKey(data.models, "name");
+    },
+    async checkPortStatus(external_port, type) {
+      let data = {
+        ex_ip: this.camera.external.http.port,
+        // url: "cameras/port-check",
+        ex_port: external_port
+      };
+      this.$axios
+        .$get(
+          `${process.env.API_URL}cameras/port-check?address=${ex_ip}&port=${ex_port}`,
+          {
+            data: {
+              email: control.attr("share-request-email"),
+              key: share_request_id
+            }
+          }
+        )
+        .then(function(data) {})
+        .catch(jqXHR => {
+          console.log(jqXHR);
+          console.log(
+            "Delete of share request failed. Please contact support."
+          );
+        });
     },
     async doTestSnapshot() {
       let data = {
@@ -598,15 +622,15 @@ export default {
         cam_password: this.camera.cam_password,
         vendor_id: "hikvision",
         camera_exid: this.camera.id
-      }
+      };
       try {
         let response = await this.$axios.post(
           `${process.env.API_URL}cameras/test`,
           data
-        )
-        this.testSnapshot = response.data.data
+        );
+        this.testSnapshot = response.data.data;
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
     },
     bindTimezones() {
@@ -620,7 +644,7 @@ export default {
       //       name: tz,
       //       offset: moment.tz(tz).utcOffset()
       //     })
-          
+
       //     return memo
       //   }, [])
       //   .sort((a, b) => {
@@ -634,36 +658,60 @@ export default {
       //     })
       //   }, "")
       this.timezones = [
-        { value: "Etc/GMT+12", text: "(GMT-12:00) International Date Line West" },
+        {
+          value: "Etc/GMT+12",
+          text: "(GMT-12:00) International Date Line West"
+        },
         { value: "Pacific/Pago_Pago", text: "(GMT-11:00) American Samoa" },
         { value: "Pacific/Midway", text: "(GMT-11:00) Midway Island" },
         { value: "Pacific/Honolulu", text: "(GMT-10:00) Hawaii" },
         { value: "America/Juneau", text: "(GMT-09:00) Alaska" },
-        { value: "America/Los_Angeles", text: "(GMT-08:00) Pacific Time (US &amp; Canada)" },
+        {
+          value: "America/Los_Angeles",
+          text: "(GMT-08:00) Pacific Time (US &amp; Canada)"
+        },
         { value: "America/Tijuana", text: "(GMT-08:00) Tijuana" },
         { value: "America/Phoenix", text: "(GMT-07:00) Arizona" },
         { value: "America/Chihuahua", text: "(GMT-07:00) Chihuahua" },
         { value: "America/Mazatlan", text: "(GMT-07:00) Mazatlan" },
-        { value: "America/Denver", text: "(GMT-07:00) Mountain Time (US &amp; Canada)" },
+        {
+          value: "America/Denver",
+          text: "(GMT-07:00) Mountain Time (US &amp; Canada)"
+        },
         { value: "America/Guatemala", text: "(GMT-06:00) Central America" },
-        { value: "America/Chicago", text: "(GMT-06:00) Central Time (US &amp; Canada)" },
+        {
+          value: "America/Chicago",
+          text: "(GMT-06:00) Central Time (US &amp; Canada)"
+        },
         { value: "America/Mexico_City", text: "(GMT-06:00) Guadalajara" },
         { value: "America/Mexico_City", text: "(GMT-06:00) Mexico City" },
         { value: "America/Monterrey", text: "(GMT-06:00) Monterrey" },
         { value: "America/Regina", text: "(GMT-06:00) Saskatchewan" },
         { value: "America/Bogota", text: "(GMT-05:00) Bogota" },
-        { value: "America/New_York", text: "(GMT-05:00) Eastern Time (US &amp; Canada)" },
-        { value: "America/Indiana/Indianapolis", text: "(GMT-05:00) Indiana (East)" },
+        {
+          value: "America/New_York",
+          text: "(GMT-05:00) Eastern Time (US &amp; Canada)"
+        },
+        {
+          value: "America/Indiana/Indianapolis",
+          text: "(GMT-05:00) Indiana (East)"
+        },
         { value: "America/Lima", text: "(GMT-05:00) Lima" },
         { value: "America/Lima", text: "(GMT-05:00) Quito" },
-        { value: "America/Halifax", text: "(GMT-04:00) Atlantic Time (Canada)" },
+        {
+          value: "America/Halifax",
+          text: "(GMT-04:00) Atlantic Time (Canada)"
+        },
         { value: "America/Caracas", text: "(GMT-04:00) Caracas" },
         { value: "America/Guyana", text: "(GMT-04:00) Georgetown" },
         { value: "America/La_Paz", text: "(GMT-04:00) La Paz" },
         { value: "America/Puerto_Rico", text: "(GMT-04:00) Puerto Rico" },
         { value: "America/Santiago", text: "(GMT-04:00) Santiago" },
         { value: "America/Sao_Paulo", text: "(GMT-03:00) Brasilia" },
-        { value: "America/Argentina/Buenos_Aires", text: "(GMT-03:00) Buenos Aires" },
+        {
+          value: "America/Argentina/Buenos_Aires",
+          text: "(GMT-03:00) Buenos Aires"
+        },
         { value: "America/Godthab", text: "(GMT-03:00) Greenland" },
         { value: "America/Montevideo", text: "(GMT-03:00) Montevideo" },
         { value: "Atlantic/South_Georgia", text: "(GMT-02:00) Mid-Atlantic" },
@@ -771,19 +819,19 @@ export default {
         { value: "Pacific/Auckland", text: "(GMT+12:00) Wellington" },
         { value: "Pacific/Tongatapu", text: "(GMT+13:00) Nuku'alofa" },
         { value: "Pacific/Apia", text: "(GMT+13:00) Samoa" },
-        { value: "Pacific/Fakaofo", text: "(GMT+13:00) Tokelau Is." },
-      ]
+        { value: "Pacific/Fakaofo", text: "(GMT+13:00) Tokelau Is." }
+      ];
     },
     openCameraUpdate() {
-      this.dialog = !this.dialog
+      this.dialog = !this.dialog;
     },
     onSelectVendor(data) {
-      console.log(data)
-      this.loadModels(data)
+      console.log(data);
+      this.loadModels(data);
     },
     onSelectModel(data) {
-      this.snapshot_url = data.jpg_url
-      this.rtsp_url = data.h264_url
+      this.snapshot_url = data.jpg_url;
+      this.rtsp_url = data.h264_url;
     },
     async updateCamera() {
       let data = {
@@ -798,35 +846,35 @@ export default {
         external_http_port: this.camera.external.http.port,
         nvr_http_port: this.camera.external.http.nvr_port,
         external_rtsp_port: this.camera.external.rtsp.port,
-        camera_timezone: this.selectedTimezone.value,
-      }
+        camera_timezone: this.selectedTimezone.value
+      };
       await this.$axios
         .$patch(`${process.env.API_URL}cameras/${this.camera.id}`, data)
         .then(function(response) {
-          console.log("Settings updated successfully.")
+          console.log("Settings updated successfully.");
         })
-        .catch((jqXHR) => {
-          console.log(jqXHR)
-        })
-      this.dialog = false
-      this.cameras()
+        .catch(jqXHR => {
+          console.log(jqXHR);
+        });
+      this.dialog = false;
+      this.cameras();
     },
     sortByKey(list, key) {
       return list.sort(function(a, b) {
-        var x, y
-        x = a[key]
-        y = b[key]
+        var x, y;
+        x = a[key];
+        y = b[key];
         if (x < y) {
-          return -1
+          return -1;
         } else {
           if (x > y) {
-            return 1
+            return 1;
           } else {
-            return 0
+            return 0;
           }
         }
-      })
+      });
     }
   }
-}
+};
 </script>
