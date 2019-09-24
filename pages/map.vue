@@ -12,8 +12,8 @@
     >
       <gmap-marker
         :key="index"
-        v-for="(m, index) in markers"
-        :position="m.position"
+        v-for="(m, index) in cameras"
+        :position="m.location"
         @click="toggleInfoWindow(m,index)">
       </gmap-marker>
 
@@ -30,6 +30,8 @@
 </template>
 <script>
   import InfoWindow from '@/components/InfoWindow';
+  import { mapGetters } from "vuex";
+
   export default {
     name: "GoogleMap",
     components: {
@@ -55,35 +57,24 @@
             height: -35
           }
         },
-        markers: [
-          {
-            name: "House of Aleida Greve",
-            position: {lat: 52.512942, lng: 6.089625}
-          },
-          {
-            name: "House of Potgieter",
-            position: {lat: 52.511950, lng: 6.091056}
-          },
-          {
-            name: "House of Johannes Cele",
-            position: {lat: 52.511047, lng: 6.091728}
-          },
-        ],
       };
     },
     mounted() {
       //set bounds of the map
       this.$refs.gmap.$mapPromise.then((map) => {
         const bounds = new google.maps.LatLngBounds()
-        for (let m of this.markers) {
-          bounds.extend(m.position)
+        for (let m of this.cameras) {
+          bounds.extend(m.location)
         }
         map.fitBounds(bounds);
       });
     },
+    computed: {
+      ...mapGetters(["cameras"])
+    },
     methods: {
       toggleInfoWindow: function (marker, idx) {
-        this.infoWindowPos = marker.position;
+        this.infoWindowPos = marker.location;
         this.infoContent = marker;
         
         //check if its the same marker that was selected if yes toggle
