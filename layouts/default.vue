@@ -17,12 +17,15 @@
   max-width: 9999px;
   height: 100%;
 }
+main {
+  background: #fff;
+}
 </style>
 
 <script>
-import Left from "~/components/left.vue"
-import CameraTabs from "~/components/camera_tabs.vue"
-import UsersTabs from "~/components/users_tabs.vue"
+import Left from "~/components/left.vue";
+import CameraTabs from "~/components/camera_tabs.vue";
+import UsersTabs from "~/components/users_tabs.vue";
 
 export default {
   middleware: "auth",
@@ -33,11 +36,11 @@ export default {
   },
   computed: {
     camera() {
-      return this.$route.params.id
+      return this.$route.params.id;
     },
     users() {
-      return this.$route.fullPath.split("/")[1]
+      return this.$route.fullPath.split("/")[1];
     }
   }
-}
+};
 </script>
