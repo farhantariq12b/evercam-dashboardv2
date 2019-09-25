@@ -370,18 +370,21 @@
                   v-model="camera.external.http.port"
                   label="VH HTTP Port"
                   class="caption col-4 text-field-left width-quarter"
+                  @keyup="checkPortStatus(camera.external.http.port)"
                   required
                 />
                 <v-text-field
                   v-model="camera.external.http.nvr_port"
                   label="NVR HTTP Port"
                   class="caption col-4 text-field-left width-quarter"
+                  @keyup="checkPortStatus(camera.external.http.nvr_port)"
                   required
                 />
                 <v-text-field
                   v-model="camera.external.rtsp.port"
                   label="RTSP Port"
                   class="caption col-4 text-field-right width-quarter"
+                  @keyup="checkPortStatus(camera.external.rtsp.port)"
                   required
                 />
 
@@ -590,29 +593,17 @@ export default {
       );
       this.models = this.sortByKey(data.models, "name");
     },
-    async checkPortStatus(external_port, type) {
-      let data = {
-        ex_ip: this.camera.external.http.port,
-        // url: "cameras/port-check",
-        ex_port: external_port
-      };
-      this.$axios
-        .$get(
-          `${process.env.API_URL}cameras/port-check?address=${ex_ip}&port=${ex_port}`,
-          {
-            data: {
-              email: control.attr("share-request-email"),
-              key: share_request_id
-            }
-          }
-        )
-        .then(function(data) {})
-        .catch(jqXHR => {
-          console.log(jqXHR);
-          console.log(
-            "Delete of share request failed. Please contact support."
-          );
-        });
+    async checkPortStatus(port_value) {
+      this.$axios.get(
+        `${process.env.API_URL}cameras/port-check?address=${this.camera.external.host}&port=${port_value}`
+      )
+      .then(function(data) {
+        console.log(data);
+      })
+      .catch((jqXHR) => {
+        console.log(jqXHR)
+        console.log("Error port check status")
+      })
     },
     async doTestSnapshot() {
       let data = {
