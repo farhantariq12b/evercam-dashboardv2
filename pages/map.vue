@@ -8,7 +8,6 @@
       ref="gmap"
       :center="center"
       :zoom="12"
-      class="map-box"
     >
       <gmap-marker
         :key="index"
@@ -90,8 +89,8 @@
     }
   };
 </script>
-<style>
-  .map-box {
+<style scoped>
+  .vue-map-container {
     width:100%;
     height: 100vh;
   }
