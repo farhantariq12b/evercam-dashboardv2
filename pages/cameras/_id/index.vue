@@ -81,7 +81,7 @@ export default {
     publicPath: process.env.BASE_URL,
     isPlaying: true,
     url: "",
-    isLoading: true,
+    isLoading: true
   }),
   computed: {
     ...mapGetters(["token"])

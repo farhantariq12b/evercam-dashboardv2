@@ -14,9 +14,9 @@
         <v-icon>fas fa-times</v-icon>
       </v-btn>
     </v-snackbar>
-    <v-row no-gutters style="height: 100%;width: 100%">
+    <v-row no-gutters class="full-size">
       <v-col cols="9">
-        <v-layout align-center justify-center style="min-height: 500px">
+        <v-layout align-center justify-center class="player-size">
           <v-progress-circular
             v-if="isLoading"
             :size="80"
@@ -39,21 +39,48 @@
           <v-img
             :src="currentSnapshot.data"
             :lazy-src="currentSnapshot.data"
-            :class="{imageLoading: isLoading}"
+            :class="{ imageLoading: isLoading }"
             class="grey lighten-2"
             width="100%"
           />
         </v-layout>
         <v-layout class="grey darken-2" align-center justify-center>
-          <v-row no-gutters style="height: 100%;width: 100%">
+          <v-row no-gutters class="full-size">
             <v-col cols="12">
-              <v-card class="d-flex justify-space-between" color="grey darken-2" flat tile>
-                <v-card class="pa-2" color="grey darken-2" outlined tile width="150"></v-card>
-                <v-card class="pa-2" color="grey darken-2" outlined tile width="150">
-                  <p class="text-center white--text">{{ value + 1 }} of {{ count + 1 }}</p>
+              <v-card
+                class="d-flex justify-space-between"
+                color="grey darken-2"
+                flat
+                tile
+              >
+                <v-card
+                  class="pa-2"
+                  color="grey darken-2"
+                  outlined
+                  tile
+                  width="150"
+                />
+                <v-card
+                  class="pa-2"
+                  color="grey darken-2"
+                  outlined
+                  tile
+                  width="150"
+                >
+                  <p class="text-center white--text">
+                    {{ value + 1 }} of {{ count + 1 }}
+                  </p>
                 </v-card>
-                <v-card class="pa-2" color="grey darken-2" outlined tile width="150">
-                  <p class="text-center white--text">{{ datePicker }} {{timePicker}}</p>
+                <v-card
+                  class="pa-2"
+                  color="grey darken-2"
+                  outlined
+                  tile
+                  width="150"
+                >
+                  <p class="text-center white--text">
+                    {{ datePicker }} {{ timePicker }}
+                  </p>
                 </v-card>
               </v-card>
 
@@ -66,44 +93,67 @@
                 :clickable="true"
                 :disabled="isDisabled"
                 :adsorb="true"
-                style="with: 100%"
-                @change="go_to_get_snapshot"
                 :interval="1"
                 height="20px"
                 :duration="0"
-                :dotStyle="{ display: 'none' }"
-                :processStyle="{ backgroundColor: 'rgb(25, 118, 210)' }"
-                :railStyle="{ backgroundColor: 'rgb(130, 177, 255)' }"
+                :dot-style="{ display: 'none' }"
+                :process-style="{ backgroundColor: 'rgb(25, 118, 210)' }"
+                :rail-style="{ backgroundColor: 'rgb(130, 177, 255)' }"
+                @change="go_to_get_snapshot"
               />
 
-              <v-card class="d-flex justify-center mb-6" color="grey darken-2" flat tile>
+              <v-card
+                class="d-flex justify-center mb-6"
+                color="grey darken-2"
+                flat
+                tile
+              >
                 <div v-if="isPlaying">
-                  <v-btn color="white" @click="interval = -10" text>
+                  <v-btn color="white" text @click="interval = -10">
                     <v-icon>fas fa-fast-backward</v-icon>
                   </v-btn>
-                  <v-btn color="white" @click="interval = -5" text>
+                  <v-btn color="white" text @click="interval = -5">
                     <v-icon>fas fa-step-backward</v-icon>
                   </v-btn>
-                  <v-btn color="white" @click="isPlaying = !isPlaying" text>
+                  <v-btn color="white" text @click="isPlaying = !isPlaying">
                     <v-icon>fas fa-pause</v-icon>
                   </v-btn>
-                  <v-btn color="white" @click="interval = 5" text>
+                  <v-btn color="white" text @click="interval = 5">
                     <v-icon>fas fa-step-forward</v-icon>
                   </v-btn>
-                  <v-btn color="white" @click="interval = 10" text>
+                  <v-btn color="white" text @click="interval = 10">
                     <v-icon>fas fa-fast-forward</v-icon>
                   </v-btn>
                 </div>
                 <div v-else>
-                  <v-btn color="white" @click="decrease(100)" text>-100</v-btn>
-                  <v-btn color="white" @click="decrease(10)" text>-10</v-btn>
-                  <v-btn color="white" @click="decrease(1)" text>-1</v-btn>
-                  <v-btn color="white" @click="isPlaying = !isPlaying; play()" text>
+                  <v-btn color="white" text @click="decrease(100)">
+                    -100
+                  </v-btn>
+                  <v-btn color="white" text @click="decrease(10)">
+                    -10
+                  </v-btn>
+                  <v-btn color="white" text @click="decrease(1)">
+                    -1
+                  </v-btn>
+                  <v-btn
+                    color="white"
+                    text
+                    @click="
+                      isPlaying = !isPlaying
+                      play()
+                    "
+                  >
                     <v-icon>fas fa-play</v-icon>
                   </v-btn>
-                  <v-btn color="white" @click="increase(1)" text>+1</v-btn>
-                  <v-btn color="white" @click="increase(10)" text>+10</v-btn>
-                  <v-btn color="white" @click="increase(100)" text>+100</v-btn>
+                  <v-btn color="white" text @click="increase(1)">
+                    +1
+                  </v-btn>
+                  <v-btn color="white" text @click="increase(10)">
+                    +10
+                  </v-btn>
+                  <v-btn color="white" text @click="increase(100)">
+                    +100
+                  </v-btn>
                 </div>
               </v-card>
             </v-col>
@@ -113,67 +163,128 @@
       <v-col cols="3" class="pr-2 pl-2">
         <v-date-picker
           ref="datepickerref"
+          v-model="datePicker"
           :allowed-dates="allowedDates"
           no-title
-          v-model="datePicker"
           :value="datePicker"
           :picker-date.sync="pickerDate"
-          @change="isLoading = true; get_disable_hours()"
           full-width
-        ></v-date-picker>
+          @change="
+            isLoading = true
+            get_disable_hours()
+          "
+        />
         <v-card elevation="3" class="mt-2 mb-2">
           <v-card-title class="justify-center font-weight-bold subtitle-1">
-            <p class="text-center">Hours</p>
+            <p class="text-center">
+              Hours
+            </p>
           </v-card-title>
           <v-card-text>
-            <table style="width: 100%; background-color: white">
+            <table class="custom-table">
               <tbody>
                 <tr>
-                  <td v-for="item in [0,1,2,3,4,5,6]" :key="item">
+                  <td v-for="item in [0, 1, 2, 3, 4, 5, 6]" :key="item">
                     <v-btn
                       x-small
                       fab
                       elevation="0"
-                      :class="{active2: buttonActive==item, inactive: buttonActive != item, disabled: allowedHours.find(v => v == item) == item ? false : true}"
+                      :class="{
+                        active2: buttonActive == item,
+                        inactive: buttonActive != item,
+                        disabled:
+                          allowedHours.find(v => v == item) == item
+                            ? false
+                            : true
+                      }"
                       class="caption font-weight-medium"
-                      @click="buttonActive = item; isLoading = true; timePicker = item + ':00'; get_all_snapshots()"
-                    >{{ item }}</v-btn>
+                      @click="
+                        buttonActive = item
+                        isLoading = true
+                        timePicker = item + ':00'
+                        get_all_snapshots()
+                      "
+                    >
+                      {{ item }}
+                    </v-btn>
                   </td>
                 </tr>
                 <tr>
-                  <td v-for="item in [7,8,9,10,11,12,13]" :key="item">
+                  <td v-for="item in [7, 8, 9, 10, 11, 12, 13]" :key="item">
                     <v-btn
                       x-small
                       fab
                       elevation="0"
-                      :class="{active2: buttonActive==item, inactive: buttonActive!= item, disabled: allowedHours.find(v => v == item) == item ? false : true}"
+                      :class="{
+                        active2: buttonActive == item,
+                        inactive: buttonActive != item,
+                        disabled:
+                          allowedHours.find(v => v == item) == item
+                            ? false
+                            : true
+                      }"
                       class="caption font-weight-medium"
-                      @click="buttonActive = item; isLoading = true; timePicker = item + ':00'; get_all_snapshots()"
-                    >{{ item }}</v-btn>
+                      @click="
+                        buttonActive = item
+                        isLoading = true
+                        timePicker = item + ':00'
+                        get_all_snapshots()
+                      "
+                    >
+                      {{ item }}
+                    </v-btn>
                   </td>
                 </tr>
                 <tr>
-                  <td v-for="item in [14,15,16,17,18,19,20]" :key="item">
+                  <td v-for="item in [14, 15, 16, 17, 18, 19, 20]" :key="item">
                     <v-btn
                       x-small
                       fab
                       elevation="0"
-                      :class="{active2: buttonActive==item, inactive: buttonActive!= item, disabled: allowedHours.find(v => v == item) == item ? false : true}"
+                      :class="{
+                        active2: buttonActive == item,
+                        inactive: buttonActive != item,
+                        disabled:
+                          allowedHours.find(v => v == item) == item
+                            ? false
+                            : true
+                      }"
                       class="caption font-weight-medium"
-                      @click="buttonActive = item; isLoading = true; timePicker = item + ':00'; get_all_snapshots()"
-                    >{{ item }}</v-btn>
+                      @click="
+                        buttonActive = item
+                        isLoading = true
+                        timePicker = item + ':00'
+                        get_all_snapshots()
+                      "
+                    >
+                      {{ item }}
+                    </v-btn>
                   </td>
                 </tr>
                 <tr>
-                  <td v-for="item in [21,22,23]" :key="item">
+                  <td v-for="item in [21, 22, 23]" :key="item">
                     <v-btn
                       x-small
                       fab
                       elevation="0"
-                      :class="{active2: buttonActive==item, inactive: buttonActive!= item, disabled: allowedHours.find(v => v == item) == item ? false : true}"
+                      :class="{
+                        active2: buttonActive == item,
+                        inactive: buttonActive != item,
+                        disabled:
+                          allowedHours.find(v => v == item) == item
+                            ? false
+                            : true
+                      }"
                       class="caption font-weight-medium"
-                      @click="buttonActive = item; isLoading = true; timePicker = item + ':00'; get_all_snapshots()"
-                    >{{ item }}</v-btn>
+                      @click="
+                        buttonActive = item
+                        isLoading = true
+                        timePicker = item + ':00'
+                        get_all_snapshots()
+                      "
+                    >
+                      {{ item }}
+                    </v-btn>
                   </td>
                 </tr>
               </tbody>
@@ -184,10 +295,22 @@
           <v-card-text class="pa-0">
             <v-row>
               <v-col cols="6">
-                <v-btn text color="primary" width="100%" @click="firstFrame"><v-icon size="15">fas fa-chevron-left</v-icon><v-icon size="15" class="pr-2">fas fa-chevron-left</v-icon>First</v-btn>
+                <v-btn text color="primary" width="100%" @click="firstFrame">
+                  <v-icon size="15">
+fas fa-chevron-left </v-icon
+                  ><v-icon size="15" class="pr-2"> fas fa-chevron-left
+</v-icon>First
+                </v-btn>
               </v-col>
               <v-col cols="6">
-                <v-btn text color="primary" width="100%" @click="lastFrame">Last <v-icon size="15" class="pl-2">fas fa-chevron-right</v-icon><v-icon size="15">fas fa-chevron-right</v-icon></v-btn>
+                <v-btn text color="primary" width="100%" @click="lastFrame">
+                  Last
+                  <v-icon size="15" class="pl-2">
+fas fa-chevron-right </v-icon
+                  ><v-icon size="15">
+                    fas fa-chevron-right
+                  </v-icon>
+                </v-btn>
               </v-col>
             </v-row>
           </v-card-text>
@@ -195,7 +318,9 @@
         <v-card v-show="hasRight" elevation="3" class="mt-2 mb-2">
           <v-card-title>
             <v-row>
-              <v-col cols="10">Recording Settings</v-col>
+              <v-col cols="10">
+                Recording Settings
+              </v-col>
               <v-col cols="2">
                 <v-tooltip left color="rgba(0, 0, 0)">
                   <template v-slot:activator="{ on }">
@@ -203,11 +328,17 @@
                       <v-icon>fas fa-info</v-icon>
                     </v-btn>
                   </template>
-                  <p class="headline">Image Size Estimates</p>
+                  <p class="headline">
+                    Image Size Estimates
+                  </p>
                   <p class="subtitle">Image Size: {{ imageSize }} KB</p>
                   <p class="subtitle">Image Dimension: {{ imageDimensions }}</p>
-                  <p class="subtitle">Monthly GB (est): {{ monthlyImageFileSize }} GB</p>
-                  <p class="subtitle">Total GB (est): {{ totalImageFileSize }} GB</p>
+                  <p class="subtitle">
+                    Monthly GB (est): {{ monthlyImageFileSize }} GB
+                  </p>
+                  <p class="subtitle">
+                    Total GB (est): {{ totalImageFileSize }} GB
+                  </p>
                 </v-tooltip>
               </v-col>
             </v-row>
@@ -215,17 +346,25 @@
           <v-card-text>
             <v-row>
               <v-col cols="3" class="pt-0 pb-0">
-                <p class="font-weight-bold">Recording status:</p>
+                <p class="font-weight-bold">
+                  Recording status:
+                </p>
               </v-col>
               <v-col cols="7" class="pt-0 pb-0">
                 <v-select
-                  v-model="selected_status"
                   v-if="edit_status"
+                  v-model="selected_status"
                   :items="op_status"
                   label="Status"
-                  @change="selected_status == 'on-scheduled'? dialogSchedule = true : dialogSchedule = false"
-                ></v-select>
-                <p v-else>{{ status }}</p>
+                  @change="
+                    selected_status == 'on-scheduled'
+                      ? (dialogSchedule = true)
+                      : (dialogSchedule = false)
+                  "
+                />
+                <p v-else>
+                  {{ status }}
+                </p>
                 <v-dialog v-model="dialogSchedule" persistent max-width="600px">
                   <v-card>
                     <v-card-title>
@@ -239,20 +378,20 @@
                           <FullCalendar
                             ref="fullCalendar"
                             :plugins="plugins"
-                            :axisFormat="axisFormat"
-                            :defaultView="defaultView"
-                            :allDaySlot="allDaySlot"
-                            :slotDuration="slotDuration"
-                            :columnFormat="columnFormat"
-                            :columnHeaderFormat="columnHeaderFormat"
-                            :defaultDate="defaultDate"
-                            :dayNamesShort="dayNamesShort"
-                            :eventLimit="eventLimit"
-                            :eventOverlap="eventOverlap"
-                            :eventColor="eventColor"
-                            :firstDay="firstDay"
+                            :axis-format="axisFormat"
+                            :default-view="defaultView"
+                            :all-day-slot="allDaySlot"
+                            :slot-duration="slotDuration"
+                            :column-format="columnFormat"
+                            :column-header-format="columnHeaderFormat"
+                            :default-date="defaultDate"
+                            :day-names-short="dayNamesShort"
+                            :event-limit="eventLimit"
+                            :event-overlap="eventOverlap"
+                            :event-color="eventColor"
+                            :first-day="firstDay"
                             :height="height"
-                            :selectHelper="selectHelper"
+                            :select-helper="selectHelper"
                             :selectable="selectable"
                             :timezone="timezone"
                             :header="header"
@@ -266,10 +405,10 @@
                         </v-col>
                       </v-row>
                     </v-card-text>
-                    <v-divider></v-divider>
+                    <v-divider />
 
                     <v-card-actions>
-                      <div class="flex-grow-1"></div>
+                      <div class="flex-grow-1" />
                       <v-btn
                         color="primary"
                         text
@@ -280,7 +419,10 @@
                       <v-btn
                         color="primary"
                         text
-                        @click="dialogSchedule = false; selected_schedule = parseCalendar()"
+                        @click="
+                          dialogSchedule = false
+                          selected_schedule = parseCalendar()
+                        "
                       >
                         Save
                       </v-btn>
@@ -290,81 +432,112 @@
               </v-col>
               <v-col cols="2" class="pt-0 pb-0">
                 <v-icon
-                  color="primary"
                   v-if="edit_status"
-                  @click="edit_status = !edit_status; updateRecordings()"
-                  size="20"
-                >fas fa-save</v-icon>
-                <v-icon
                   color="primary"
-                  v-else
-                  @click="edit_status = !edit_status"
                   size="20"
-                >fas fa-pencil-alt</v-icon>
+                  @click="
+                    edit_status = !edit_status
+                    updateRecordings()
+                  "
+                >
+                  fas fa-save
+                </v-icon>
+                <v-icon
+                  v-else
+                  color="primary"
+                  size="20"
+                  @click="edit_status = !edit_status"
+                >
+                  fas fa-pencil-alt
+                </v-icon>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="3" class="pt-0 pb-0">
-                <p class="font-weight-bold">Storage Duration:</p>
+                <p class="font-weight-bold">
+                  Storage Duration:
+                </p>
               </v-col>
               <v-col cols="7" class="pt-0 pb-0">
                 <v-select
-                  v-model="selected_duration"
                   v-if="edit_duration"
+                  v-model="selected_duration"
                   :items="op_duration"
                   label="Duration"
-                ></v-select>
-                <p v-else>{{ storage_duration }}</p>
+                />
+                <p v-else>
+                  {{ storage_duration }}
+                </p>
               </v-col>
               <v-col cols="2" class="pt-0 pb-0">
                 <v-icon
-                  color="primary"
                   v-if="edit_duration"
-                  @click="edit_duration = !edit_duration; updateRecordings()"
-                  size="20"
-                >fas fa-save</v-icon>
-                <v-icon
                   color="primary"
-                  v-else
-                  text
-                  @click="edit_duration = !edit_duration"
                   size="20"
-                >fas fa-pencil-alt</v-icon>
+                  @click="
+                    edit_duration = !edit_duration
+                    updateRecordings()
+                  "
+                >
+                  fas fa-save
+                </v-icon>
+                <v-icon
+                  v-else
+                  color="primary"
+                  text
+                  size="20"
+                  @click="edit_duration = !edit_duration"
+                >
+                  fas fa-pencil-alt
+                </v-icon>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="3" class="pt-0 pb-0">
-                <p class="font-weight-bold">Snapshot per min:</p>
+                <p class="font-weight-bold">
+                  Snapshot per min:
+                </p>
               </v-col>
               <v-col cols="7" class="pt-0 pb-0">
                 <v-select
-                  v-model="selected_frequency"
                   v-if="edit_frequency"
+                  v-model="selected_frequency"
                   :items="op_frequency"
                   label="Frequency"
-                ></v-select>
-                <p v-else>{{ frequency }}</p>
+                />
+                <p v-else>
+                  {{ frequency }}
+                </p>
               </v-col>
               <v-col cols="2" class="pt-0 pb-0">
                 <v-icon
-                  color="primary"
                   v-if="edit_frequency"
-                  @click="edit_frequency = !edit_frequency; updateRecordings()"
-                  size="20"
-                >fas fa-save</v-icon>
-                <v-icon
                   color="primary"
-                  v-else
-                  @click="edit_frequency = !edit_frequency"
                   size="20"
-                >fas fa-pencil-alt</v-icon>
+                  @click="
+                    edit_frequency = !edit_frequency
+                    updateRecordings()
+                  "
+                >
+                  fas fa-save
+                </v-icon>
+                <v-icon
+                  v-else
+                  color="primary"
+                  size="20"
+                  @click="edit_frequency = !edit_frequency"
+                >
+                  fas fa-pencil-alt
+                </v-icon>
               </v-col>
             </v-row>
           </v-card-text>
         </v-card>
         <v-dialog v-model="dialog" persistent max-width="600px">
           <template v-slot:activator="{ on }">
-            <v-btn color="primary" v-on="on" width="100%">Create a new Clip</v-btn>
+            <v-btn color="primary" width="100%" v-on="on">
+              Create a new Clip
+            </v-btn>
           </template>
           <v-card>
             <v-card-title>
@@ -387,7 +560,12 @@
                       min-width="290px"
                     >
                       <template v-slot:activator="{ on }">
-                        <v-text-field v-model="date" label="Start Date*" readonly v-on="on" />
+                        <v-text-field
+                          v-model="date"
+                          label="Start Date*"
+                          readonly
+                          v-on="on"
+                        />
                       </template>
                       <v-date-picker v-model="date" @input="menu2 = false" />
                     </v-menu>
@@ -406,7 +584,12 @@
                       min-width="290px"
                     >
                       <template v-slot:activator="{ on }">
-                        <v-text-field v-model="time" label="Start Time*" readonly v-on="on" />
+                        <v-text-field
+                          v-model="time"
+                          label="Start Time*"
+                          readonly
+                          v-on="on"
+                        />
                       </template>
                       <v-time-picker
                         v-if="menu3"
@@ -417,10 +600,16 @@
                     </v-menu>
                   </v-col>
                   <v-col cols="12" sm="3">
-                    <v-text-field v-model="duration" type="number" label="Duration*" />
+                    <v-text-field
+                      v-model="duration"
+                      type="number"
+                      label="Duration*"
+                    />
                   </v-col>
                   <v-col cols="12" sm="9">
-                    <p class="mb-0 mt-7">Minutes (Max 1hr per clip)</p>
+                    <p class="mb-0 mt-7">
+                      Minutes (Max 1hr per clip)
+                    </p>
                   </v-col>
                 </v-row>
               </v-container>
@@ -428,8 +617,12 @@
             </v-card-text>
             <v-card-actions>
               <div class="flex-grow-1" />
-              <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-              <v-btn color="blue darken-1" text @click="createArchive">Create Clip</v-btn>
+              <v-btn color="blue darken-1" text @click="dialog = false">
+                Close
+              </v-btn>
+              <v-btn color="blue darken-1" text @click="createArchive">
+                Create Clip
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -439,6 +632,17 @@
 </template>
 
 <style scope>
+.custom-table {
+  width: 100%;
+  background-color: white;
+}
+.player-size {
+  min-height: 100px;
+}
+.full-size {
+  height: 100%;
+  width: 100%;
+}
 .edit-link {
   color: #428bca;
   -webkit-transition: all 0.2s linear;
@@ -486,20 +690,20 @@
 </style>
 
 <script>
-import { mapGetters } from "vuex";
-import moment from "moment";
-import VueSlider from "vue-slider-component";
-import "vue-slider-component/theme/default.css";
-import "fullcalendar/dist/fullcalendar.css";
-import FullCalendar from '@fullcalendar/vue'
-import { Calendar } from '@fullcalendar/core';
-import interactionPlugin from '@fullcalendar/interaction';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import listPlugin from '@fullcalendar/list';
-import momentPlugin from '@fullcalendar/moment';
-import '@fullcalendar/core/main.css';
-import '@fullcalendar/daygrid/main.css';
+import { mapGetters } from "vuex"
+import moment from "moment"
+import VueSlider from "vue-slider-component"
+import "vue-slider-component/theme/default.css"
+import "fullcalendar/dist/fullcalendar.css"
+import FullCalendar from "@fullcalendar/vue"
+import { Calendar } from "@fullcalendar/core"
+import interactionPlugin from "@fullcalendar/interaction"
+import dayGridPlugin from "@fullcalendar/daygrid"
+import timeGridPlugin from "@fullcalendar/timegrid"
+import listPlugin from "@fullcalendar/list"
+import momentPlugin from "@fullcalendar/moment"
+import "@fullcalendar/core/main.css"
+import "@fullcalendar/daygrid/main.css"
 
 export default {
   name: "Live",
@@ -523,27 +727,33 @@ export default {
     dialogSchedule: false,
     selected_status: "",
     selected_schedule: [],
-    plugins: [ interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin, momentPlugin],
-    axisFormat: 'HH',
-    defaultView: 'timeGridWeek',
+    plugins: [
+      interactionPlugin,
+      dayGridPlugin,
+      timeGridPlugin,
+      listPlugin,
+      momentPlugin
+    ],
+    axisFormat: "HH",
+    defaultView: "timeGridWeek",
     allDaySlot: false,
-    slotDuration: '00:60:00',
-    columnFormat: 'dddd',
-    columnHeaderFormat: { weekday: 'short' },
-    defaultDate: '1970-01-01',
+    slotDuration: "00:60:00",
+    columnFormat: "dddd",
+    columnHeaderFormat: { weekday: "short" },
+    defaultDate: "1970-01-01",
     dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     eventLimit: true,
     eventOverlap: false,
-    eventColor: '#458CC7',
+    eventColor: "#458CC7",
     firstDay: 1,
-    height: 'auto',
+    height: "auto",
     selectHelper: true,
     selectable: true,
-    timezone: 'UTC',
+    timezone: "UTC",
     header: {
-      left: '',
-      center: '',
-      right: '',
+      left: "",
+      center: "",
+      right: ""
     },
     editable: true,
     events: null,
@@ -600,83 +810,81 @@ export default {
   computed: {
     ...mapGetters(["token"]),
     selected_camera: function() {
-      return this.$store.state.cameras.find(
-        o => o.id === this.$route.params.id
-      );
+      return this.$store.state.cameras.find(o => o.id === this.$route.params.id)
     },
     isDisabled: function() {
       return this.count == 0 ? true : false
     },
     status: function() {
-      let status = "";
+      let status = ""
       switch (this.recordings.status) {
         case "on":
-          status = this.op_status[0].text;
-          break;
+          status = this.op_status[0].text
+          break
         case "off":
-          status = this.op_status[1].text;
-          break;
+          status = this.op_status[1].text
+          break
         case "paused":
-          status = this.op_status[2].text;
-          break;
+          status = this.op_status[2].text
+          break
         case "on-scheduled":
-          status = this.op_status[3].text;
-          break;
+          status = this.op_status[3].text
+          break
       }
-      return status;
+      return status
     },
     storage_duration: function() {
-      let storage_duration = "";
+      let storage_duration = ""
       switch (this.recordings.storage_duration) {
         case -1:
-          storage_duration = this.op_duration[0].text;
-          break;
+          storage_duration = this.op_duration[0].text
+          break
         case 1:
-          storage_duration = this.op_duration[1].text;
-          break;
+          storage_duration = this.op_duration[1].text
+          break
         case 7:
-          storage_duration = this.op_duration[2].text;
-          break;
+          storage_duration = this.op_duration[2].text
+          break
         case 30:
-          storage_duration = this.op_duration[3].text;
-          break;
+          storage_duration = this.op_duration[3].text
+          break
         case 90:
-          storage_duration = this.op_duration[4].text;
-          break;
+          storage_duration = this.op_duration[4].text
+          break
       }
-      return storage_duration;
+      return storage_duration
     },
     frequency: function() {
-      let frequency = "";
+      let frequency = ""
       switch (this.recordings.frequency) {
         case 60:
-          frequency = this.op_frequency[0].text;
-          break;
+          frequency = this.op_frequency[0].text
+          break
         case 30:
-          frequency = this.op_frequency[1].text;
-          break;
+          frequency = this.op_frequency[1].text
+          break
         case 12:
-          frequency = this.op_frequency[2].text;
-          break;
+          frequency = this.op_frequency[2].text
+          break
         case 6:
-          frequency = this.op_frequency[3].text;
-          break;
+          frequency = this.op_frequency[3].text
+          break
         case 1:
-          frequency = this.op_frequency[4].text;
-          break;
+          frequency = this.op_frequency[4].text
+          break
         case 5:
-          frequency = this.op_frequency[5].text;
-          break;
+          frequency = this.op_frequency[5].text
+          break
         case 10:
-          frequency = this.op_frequency[6].text;
-          break;
+          frequency = this.op_frequency[6].text
+          break
       }
-      return frequency;
+      return frequency
     }
   },
   watch: {
     pickerDate(val) {
-      this.get_disable_dates(val);
+      this.get_disable_dates(val)
     }
   },
   created() {
@@ -686,7 +894,7 @@ export default {
   beforeDestroy() {},
   methods: {
     go_to_get_snapshot() {
-      this.isLoading = true;
+      this.isLoading = true
       if (this.selected_hour.length > 0) {
         this.get_snapshot(this.selected_hour[this.value].created_at)
       } else {
@@ -695,23 +903,23 @@ export default {
     },
     getRecordings() {
       this.$axios
-      .$get(
-        process.env.API_URL +
-          "cameras/" +
-          this.selected_camera.id +
-          "/apps/cloud-recording"
-      )
-      .then(response => {
-        this.hasRight = true;
-        this.recordings = response.cloud_recordings[0];
-        this.selected_status = this.recordings.status;
-        this.selected_duration = this.recordings.storage_duration;
-        this.selected_frequency = this.recordings.frequency;
-        this.selected_schedule = this.recordings.schedule;
-      })
-      .catch(error => {
-        this.hasRight = false;
-      });
+        .$get(
+          process.env.API_URL +
+            "cameras/" +
+            this.selected_camera.id +
+            "/apps/cloud-recording"
+        )
+        .then(response => {
+          this.hasRight = true
+          this.recordings = response.cloud_recordings[0]
+          this.selected_status = this.recordings.status
+          this.selected_duration = this.recordings.storage_duration
+          this.selected_frequency = this.recordings.frequency
+          this.selected_schedule = this.recordings.schedule
+        })
+        .catch(error => {
+          this.hasRight = false
+        })
     },
     updateRecordings() {
       if (
@@ -720,11 +928,11 @@ export default {
         this.selected_status != this.recordings.status ||
         this.selected_schedule != this.recordings.schedule
       ) {
-        let formData = new FormData();
-        formData.append("frequency", this.selected_frequency);
-        formData.append("storage_duration", this.selected_duration);
-        formData.append("status", this.selected_status);
-        formData.append("schedule", JSON.stringify(this.selected_schedule));
+        let formData = new FormData()
+        formData.append("frequency", this.selected_frequency)
+        formData.append("storage_duration", this.selected_duration)
+        formData.append("status", this.selected_status)
+        formData.append("schedule", JSON.stringify(this.selected_schedule))
         this.$axios
           .$post(
             process.env.API_URL +
@@ -735,11 +943,11 @@ export default {
           )
           .then(response => {
             this.getRecordings()
-          });
+          })
       }
     },
     firstFrame() {
-      this.isLoading = true;
+      this.isLoading = true
       this.$axios
         .$get(
           process.env.API_URL +
@@ -748,17 +956,17 @@ export default {
             "/recordings/snapshots/oldest"
         )
         .then(response => {
-          let date = moment(response.created_at).format("YYYY-MM-DD");
-          let hour = moment(response.created_at).format("HH");
+          let date = moment(response.created_at).format("YYYY-MM-DD")
+          let hour = moment(response.created_at).format("HH")
           this.setSnapshot = response
-          this.timePicker = hour + ':00'
-          this.disabledDays.push(date);
-          this.datePicker = date;
-          this.pickerDate = date;
-        });
+          this.timePicker = hour + ":00"
+          this.disabledDays.push(date)
+          this.datePicker = date
+          this.pickerDate = date
+        })
     },
     lastFrame() {
-      this.isLoading = true;
+      this.isLoading = true
       this.$axios
         .$get(
           process.env.API_URL +
@@ -767,22 +975,22 @@ export default {
             "/recordings/snapshots/latest"
         )
         .then(response => {
-          let date = moment(response.created_at).format("YYYY-MM-DD");
-          let hour = moment(response.created_at).format("HH");
+          let date = moment(response.created_at).format("YYYY-MM-DD")
+          let hour = moment(response.created_at).format("HH")
           this.setSnapshot = response
           this.timePicker = hour
-          this.disabledDays.push(date);
-          this.datePicker = date;
-          this.pickerDate = date;
-        });
+          this.disabledDays.push(date)
+          this.datePicker = date
+          this.pickerDate = date
+        })
     },
     async play() {
-      let future_value = this.value + this.interval;
+      let future_value = this.value + this.interval
       if (future_value < 0) {
-        future_value = 0;
+        future_value = 0
       }
       if (future_value >= this.count) {
-        future_value = this.count - 1;
+        future_value = this.count - 1
       }
       if (this.isPlaying) {
         this.$axios
@@ -796,44 +1004,44 @@ export default {
           )
           .then(response => {
             if (response.snapshots.length != 0) {
-              this.currentSnapshot = response.snapshots[0];
+              this.currentSnapshot = response.snapshots[0]
             }
-          });
-        this.value = future_value;
+          })
+        this.value = future_value
         if (future_value == this.count - 1 || !future_value) {
-          this.isPlaying = false;
+          this.isPlaying = false
         }
-        await this.timeoutPlayer(1000);
-        this.play();
+        await this.timeoutPlayer(1000)
+        this.play()
       }
     },
     timeoutPlayer(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
+      return new Promise(resolve => setTimeout(resolve, ms))
     },
     increase(v) {
       if (this.value < this.count) {
-        this.isLoading = true;
+        this.isLoading = true
         if (this.value + v > this.selected_hour.length) {
-          this.value = this.count;
+          this.value = this.count
         } else {
-          this.value = this.value + v;
+          this.value = this.value + v
         }
-        this.get_snapshot(this.selected_hour[this.value - 1].created_at);
+        this.get_snapshot(this.selected_hour[this.value - 1].created_at)
       }
     },
     decrease(v) {
       if (this.value > 0) {
-        this.isLoading = true;
+        this.isLoading = true
         if (this.value - v < 0) {
-          this.value = 0;
+          this.value = 0
         } else {
-          this.value = this.value - v;
+          this.value = this.value - v
         }
-        this.get_snapshot(this.selected_hour[this.value].created_at);
+        this.get_snapshot(this.selected_hour[this.value].created_at)
       }
     },
     get_all_snapshots() {
-      let date = moment(this.datePicker + " " + this.timePicker);
+      let date = moment(this.datePicker + " " + this.timePicker)
       this.$axios
         .$get(
           process.env.API_URL +
@@ -849,30 +1057,30 @@ export default {
             date.hour()
         )
         .then(response => {
-          this.selected_hour = response.snapshots;
-          this.count = this.selected_hour.length;
-          this.value = 0;
+          this.selected_hour = response.snapshots
+          this.count = this.selected_hour.length
+          this.value = 0
           if (this.setSnapshot) {
             this.currentSnapshot = this.setSnapshot
             this.setSnapshot = null
             this.isLoading = false
           } else {
-            this.get_snapshot(this.selected_hour[0].created_at);
+            this.get_snapshot(this.selected_hour[0].created_at)
           }
-        });
+        })
     },
     getString(val) {
-      var date = new Date(val * 1000);
+      var date = new Date(val * 1000)
       var str =
-        date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
-      return str;
+        date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate()
+      return str
     },
     getSeconds(date) {
-      var mydate = date.split(" ");
-      var mydate2 = mydate[0].split("-");
-      var date = new Date(mydate2[0], mydate2[1], mydate2[2]);
-      var seconds = date.getTime() / 1000;
-      return seconds;
+      var mydate = date.split(" ")
+      var mydate2 = mydate[0].split("-")
+      var date = new Date(mydate2[0], mydate2[1], mydate2[2])
+      var seconds = date.getTime() / 1000
+      return seconds
     },
     get_snapshot(timestamp) {
       this.$axios
@@ -886,18 +1094,18 @@ export default {
         )
         .then(response => {
           if (response.snapshots.length != 0) {
-            this.currentSnapshot = response.snapshots[0];
+            this.currentSnapshot = response.snapshots[0]
             if (!this.imageDimensions) {
               this.getDimensions()
             }
-            this.isLoading = false;
+            this.isLoading = false
           }
-        });
+        })
     },
     getDimensions() {
       var img = new Image()
       img.onload = () => {
-        this.imageDimensions = img.width + 'x' + img.height
+        this.imageDimensions = img.width + "x" + img.height
       }
       this.imageSize = this.calculateImageSize(this.currentSnapshot.data)
       let image_store_duration
@@ -906,50 +1114,65 @@ export default {
       } else {
         image_store_duration = this.recordings.storage_duration
       }
-      this.totalImageFileSize = this.convertFromBytes(this.imageSize * image_store_duration * this.recordings.frequency * 24 * 60)
-      if (this.recordings.storage_duration == -1 || this.recordings.storage_duration > 30) {
+      this.totalImageFileSize = this.convertFromBytes(
+        this.imageSize *
+          image_store_duration *
+          this.recordings.frequency *
+          24 *
+          60
+      )
+      if (
+        this.recordings.storage_duration == -1 ||
+        this.recordings.storage_duration > 30
+      ) {
         image_store_duration = 30
       } else {
         image_store_duration = this.recordings.storage_duration
       }
-      this.monthlyImageFileSize = this.convertFromBytes(this.imageSize * image_store_duration * this.recordings.frequency * 24 * 60)
+      this.monthlyImageFileSize = this.convertFromBytes(
+        this.imageSize *
+          image_store_duration *
+          this.recordings.frequency *
+          24 *
+          60
+      )
       img.src = this.currentSnapshot.data
     },
-    calculateImageSize(base64String){
-      let padding, inBytes, base64StringLength;
-      if(base64String.endsWith("==")) padding = 2;
-      else if (base64String.endsWith("=")) padding = 1;
-      else padding = 0;
-      base64StringLength = base64String.length;
-      inBytes =(base64StringLength / 4 ) * 3 - padding;
-      this.kbytes = inBytes / 1000;
-      return this.kbytes.toFixed(2);
+    calculateImageSize(base64String) {
+      let padding, inBytes, base64StringLength
+      if (base64String.endsWith("==")) padding = 2
+      else if (base64String.endsWith("=")) padding = 1
+      else padding = 0
+      base64StringLength = base64String.length
+      inBytes = (base64StringLength / 4) * 3 - padding
+      this.kbytes = inBytes / 1000
+      return this.kbytes.toFixed(2)
     },
-    convertFromBytes (bytes) {
-      if (bytes == 0){
-        return '0 Bytes'
+    convertFromBytes(bytes) {
+      if (bytes == 0) {
+        return "0 Bytes"
       }
       let k = 1024
       let i = Math.floor(Math.log(bytes) / Math.log(k))
       return parseFloat((bytes / k ** i).toFixed(2))
     },
     allowedDates(val) {
-      return this.disabledDays.find(v => v === val);
+      return this.disabledDays.find(v => v === val)
     },
     get_disable_dates(date) {
       let last_day = moment(date)
         .endOf("month")
-        .format("DD");
-      let year = moment(date).format("YYYY");
-      let month = moment(date).format("MM");
+        .format("DD")
+      let year = moment(date).format("YYYY")
+      let month = moment(date).format("MM")
 
-      let month_all_days = [];
+      let month_all_days = []
       for (let i = 1; i <= last_day; i++) {
-        month_all_days.push(i);
+        month_all_days.push(i)
       }
 
-      let availible_days;
-      let disabled_days_value = [];
+      let availible_days
+      let disabled_days_value = []
       this.$axios
         .$get(
           process.env.API_URL +
@@ -962,35 +1185,35 @@ export default {
             "/days"
         )
         .then(response => {
-          availible_days = response.days;
+          availible_days = response.days
           availible_days.forEach(function(day) {
-            let month_val = ("0" + month).slice(-2);
-            let day_val = ("0" + day).slice(-2);
-            let complete_date = year + "-" + month_val + "-" + day_val;
-            disabled_days_value.push(complete_date);
-          });
-        });
-      this.disabledDays = disabled_days_value;
-      this.get_disable_hours(this.datePicker);
+            let month_val = ("0" + month).slice(-2)
+            let day_val = ("0" + day).slice(-2)
+            let complete_date = year + "-" + month_val + "-" + day_val
+            disabled_days_value.push(complete_date)
+          })
+        })
+      this.disabledDays = disabled_days_value
+      this.get_disable_hours(this.datePicker)
     },
 
     get_disable_hours(date) {
       if (!date) {
-        date = this.datePicker;
+        date = this.datePicker
       }
       date = date + " " + this.timePicker
-      
-      let first_day = moment(date).format("DD");
-      let year = moment(date).format("YYYY");
-      let month = moment(date).format("MM");
-      let hour = parseInt(moment(date).format("HH"));
-      
-      let availible_hours;
-      let disabled_hours_value = [];
+
+      let first_day = moment(date).format("DD")
+      let year = moment(date).format("YYYY")
+      let month = moment(date).format("MM")
+      let hour = parseInt(moment(date).format("HH"))
+
+      let availible_hours
+      let disabled_hours_value = []
 
       let timestamp = moment(this.datePicker + " " + this.timePicker)
         .subtract(1, "hours")
-        .format("YYYY-MM-DDTHH:mm:ss.000+00:00");
+        .format("YYYY-MM-DDTHH:mm:ss.000+00:00")
 
       this.$axios
         .$get(
@@ -1006,28 +1229,28 @@ export default {
             "/hours"
         )
         .then(response => {
-          this.allowedHours = response.hours;
+          this.allowedHours = response.hours
           if (this.allowedHours.find(v => v == hour) == hour) {
-            this.buttonActive = hour;
+            this.buttonActive = hour
           } else {
-            this.buttonActive = this.allowedHours[this.allowedHours - 1];
+            this.buttonActive = this.allowedHours[this.allowedHours - 1]
           }
-          this.get_all_snapshots();
-        });
+          this.get_all_snapshots()
+        })
     },
     createArchive() {
-      let formData = new FormData();
-      let d = new Date();
-      formData.append("title", this.title);
-      var from = new Date(this.date + " " + this.time);
-      var to = new Date(this.date + " " + this.time);
-      let dur = this.duration * 60;
-      to.setSeconds(to.getSeconds() + dur);
-      this.file_type = "clip";
-      formData.append("from_date", from.toISOString());
-      formData.append("to_date", to.toISOString());
-      formData.append("is_nvr_archive", false);
-      formData.append("type", this.file_type);
+      let formData = new FormData()
+      let d = new Date()
+      formData.append("title", this.title)
+      var from = new Date(this.date + " " + this.time)
+      var to = new Date(this.date + " " + this.time)
+      let dur = this.duration * 60
+      to.setSeconds(to.getSeconds() + dur)
+      this.file_type = "clip"
+      formData.append("from_date", from.toISOString())
+      formData.append("to_date", to.toISOString())
+      formData.append("is_nvr_archive", false)
+      formData.append("type", this.file_type)
       this.$axios
         .$post(
           `${process.env.API_URL}cameras/${this.$route.params.id}/archives`,
@@ -1053,7 +1276,7 @@ export default {
     selectCalendar(event) {
       let api = this.$refs.fullCalendar.getApi()
       api.addEvent(event)
-      this.schedule = JSON.stringify(this.parseCalendar());
+      this.schedule = JSON.stringify(this.parseCalendar())
     },
     clickCalendar(event) {
       if (window.confirm("Are you sure you want to delete this event?")) {
@@ -1064,7 +1287,7 @@ export default {
         } else {
           findingID = event.event.id
         }
-        let removeEvent = api.getEventById( findingID )
+        let removeEvent = api.getEventById(findingID)
         removeEvent.remove()
       }
       this.schedule = JSON.stringify(this.parseCalendar())
@@ -1085,7 +1308,7 @@ export default {
         Friday: [],
         Saturday: [],
         Sunday: []
-      };
+      }
       events.map(function(event) {
         var days = [
           "Sunday",
@@ -1095,16 +1318,16 @@ export default {
           "Thursday",
           "Friday",
           "Saturday"
-        ];
-        var startTime = moment(event.start).get("hours");
-        var endTime = moment(event.end).get("hours");
-        var day = moment(event.start).get("day");
+        ]
+        var startTime = moment(event.start).get("hours")
+        var endTime = moment(event.end).get("hours")
+        var day = moment(event.start).get("day")
         schedule[days[day]] = schedule[days[day]].concat(
           startTime + "-" + endTime
-        );
-      });
-      return schedule;
-    },
+        )
+      })
+      return schedule
+    }
   }
-};
+}
 </script>

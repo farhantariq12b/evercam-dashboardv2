@@ -51,7 +51,7 @@ export default {
     { src: "~plugins/vimeo-player", ssr: false },
     "~/plugins/axios",
     { src: "~plugins/vue-konva", ssr: false },
-    { src: '~/plugins/google-maps' },
+    { src: "~/plugins/google-maps" },
     "@/plugins/vee-validate"
   ],
   /*
