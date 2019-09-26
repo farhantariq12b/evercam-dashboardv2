@@ -12,7 +12,7 @@
 
     <v-card-text class="pa-0 text-center black--text overline">
       {{marker.name}}
-      <nuxt-link to="cameras/https-bhgfx">
+      <nuxt-link :to="`cameras/${marker.id}`">
         <v-icon color="#2a6496" size="12">fas fa-external-link-alt</v-icon>
       </nuxt-link>
     </v-card-text>
