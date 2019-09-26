@@ -93,6 +93,6 @@
 <style>
   .map-box {
     width:100%;
-    height: 100rem;
+    height: 100vh;
   }
 </style>
