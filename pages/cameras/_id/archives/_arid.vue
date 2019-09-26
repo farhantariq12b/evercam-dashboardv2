@@ -365,7 +365,7 @@ export default {
       edit_title: false,
       is_mp4: null,
       image_url: "",
-      camera_id: this.$route.params.id,
+      camera_id: this.$route.params.id
     }
   },
   computed: {

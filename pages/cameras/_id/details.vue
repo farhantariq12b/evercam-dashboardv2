@@ -159,7 +159,10 @@
                   <td class="caption">
                     H264 URL:
                   </td>
-                  <td v-if="camera.external.rtsp.h264" class="caption break-word">
+                  <td
+                    v-if="camera.external.rtsp.h264"
+                    class="caption break-word"
+                  >
                     {{
                       camera.external.rtsp.h264.replace(
                         `rtsp://${camera.external.host}:${camera.external.rtsp.port}/`,
@@ -289,7 +292,7 @@
             Cameras Details
           </span>
         </v-card-title>
-        <v-divider></v-divider>
+        <v-divider />
         <v-card-text>
           <v-container class="model-container">
             <v-row>
@@ -312,7 +315,10 @@
                 >
                   <template slot="item" slot-scope="data">
                     <v-list-item-content>
-                      <v-list-item-title class="caption" v-text="data.item.name" />
+                      <v-list-item-title
+                        class="caption"
+                        v-text="data.item.name"
+                      />
                     </v-list-item-content>
                   </template>
                 </v-select>
@@ -328,7 +334,10 @@
                 >
                   <template slot="item" slot-scope="data">
                     <v-list-item-content>
-                      <v-list-item-title class="caption" v-text="data.item.name" />
+                      <v-list-item-title
+                        class="caption"
+                        v-text="data.item.name"
+                      />
                     </v-list-item-content>
                   </template>
                 </v-select>
@@ -360,8 +369,8 @@
                   v-model="camera.external.host"
                   label="IP (or URL)"
                   class="caption"
-                  @keyup="checkPortStatus(camera.external.http.port, 'http-')"
                   required
+                  @keyup="checkPortStatus(camera.external.http.port, 'http-')"
                 >
                   <template slot="prepend">
                     <span class="input-group-addon">http://</span>
@@ -371,60 +380,66 @@
                   v-model="camera.external.http.port"
                   label="VH HTTP Port"
                   class="caption col-12 text-field-left"
-                  :maxlength=5
+                  :maxlength="5"
                   hint="Port should be in number with 2-5 characters"
+                  required
                   @keyup="checkPortStatus(camera.external.http.port, 'http-')"
                   @keypress="isNumber($event)"
-                  required
                 >
                   <template slot="append">
-                    <span class="http-status-port mt-1 min-width80 text-right"></span>
+                    <span
+                      class="http-status-port mt-1 min-width80 text-right"
+                    />
                     <v-img
                       src="/loading.gif"
                       width="16"
                       height="16"
                       class="mt-1 http-refresh-gif is-active"
-                    ></v-img>
+                    />
                   </template>
                 </v-text-field>
                 <v-text-field
                   v-model="camera.external.http.nvr_port"
                   label="NVR HTTP Port"
                   class="caption col-12 text-field-left"
-                  :maxlength=5
+                  :maxlength="5"
                   hint="Port should be in number with 2-5 characters"
-                  @keyup="checkPortStatus(camera.external.http.nvr_port, 'nvr-')"
-                  @keypress="isNumber($event)"
                   required
+                  @keyup="
+                    checkPortStatus(camera.external.http.nvr_port, 'nvr-')
+                  "
+                  @keypress="isNumber($event)"
                 >
                   <template slot="append">
-                    <span class="nvr-status-port mt-1 min-width80 text-right"></span>
+                    <span class="nvr-status-port mt-1 min-width80 text-right" />
                     <v-img
                       src="/loading.gif"
                       width="16"
                       height="16"
                       class="mt-1 nvr-refresh-gif is-active"
-                    ></v-img>
+                    />
                   </template>
                 </v-text-field>
                 <v-text-field
                   v-model="camera.external.rtsp.port"
                   label="RTSP Port"
                   class="caption col-12 text-field-left"
-                  :maxlength=5
+                  :maxlength="5"
                   hint="Port should be in number with 2-5 characters"
+                  required
                   @keyup="checkPortStatus(camera.external.rtsp.port, 'rtsp-')"
                   @keypress="isNumber($event)"
-                  required
                 >
                   <template slot="append">
-                    <span class="rtsp-status-port mt-1 min-width80 text-right"></span>
+                    <span
+                      class="rtsp-status-port mt-1 min-width80 text-right"
+                    />
                     <v-img
                       src="/loading.gif"
                       width="16"
                       height="16"
                       class="mt-1 rtsp-refresh-gif is-active"
-                    ></v-img>
+                    />
                   </template>
                 </v-text-field>
                 <v-select
@@ -437,12 +452,22 @@
                 >
                   <template v-slot:item="data">
                     <v-list-item-content>
-                      <v-list-item-title class="caption" v-text="data.item.text" />
+                      <v-list-item-title
+                        class="caption"
+                        v-text="data.item.text"
+                      />
                     </v-list-item-content>
                   </template>
                 </v-select>
               </v-col>
-              <v-col col="auto" lg="5" md="5" sm="12" xs="12" class="col-paddings">
+              <v-col
+                col="auto"
+                lg="5"
+                md="5"
+                sm="12"
+                xs="12"
+                class="col-paddings"
+              >
                 <v-img :src="testSnapshot" aspect-ratio="2" class="test-img" />
                 <v-btn color="blue darken-1" text @click="doTestSnapshot">
                   Test Snapshot
@@ -451,7 +476,7 @@
             </v-row>
           </v-container>
         </v-card-text>
-        <v-divider></v-divider>
+        <v-divider />
         <v-card-actions>
           <v-btn color="blue darken-1" text @click="dialog = false">
             Close
@@ -585,8 +610,8 @@
 </style>
 
 <script>
-import moment from "moment-timezone";
-import { mapActions } from "vuex";
+import moment from "moment-timezone"
+import { mapActions } from "vuex"
 
 export default {
   name: "Details",
@@ -598,13 +623,13 @@ export default {
       timezones: [],
       testSnapshot: "",
       mapTypeId: "terrain"
-    };
+    }
   },
   async asyncData({ params, store, $axios }) {
     const { data } = await $axios.get(
       `${process.env.API_URL}cameras/${params.id}`
-    );
-    let c = data.cameras[0];
+    )
+    let c = data.cameras[0]
     return {
       camera: c,
       thumbnail_url: `${c.thumbnail_url}?authorization=${store.getters.token}`,
@@ -621,56 +646,60 @@ export default {
       selectedVendor: { name: c.vendor_name, id: c.vendor_id },
       selectedModel: { name: c.model_name, id: c.model_id },
       selectedTimezone: { value: c.timezone, text: c.timezone }
-    };
+    }
   },
   mounted() {
-    this.loadVendors();
-    this.loadModels("hikvision");
-    this.bindTimezones();
+    this.loadVendors()
+    this.loadModels("hikvision")
+    this.bindTimezones()
   },
   methods: {
     ...mapActions({ cameras: "CAMERAS" }),
     async loadVendors() {
-      const { data } = await this.$axios.get(`${process.env.API_URL}vendors`);
-      this.vendors = this.sortByKey(data.vendors, "name");
+      const { data } = await this.$axios.get(`${process.env.API_URL}vendors`)
+      this.vendors = this.sortByKey(data.vendors, "name")
     },
     async loadModels(vendor_id) {
       const { data } = await this.$axios.get(
         `${process.env.API_URL}models?vendor_id=${vendor_id}&limit=300`
-      );
-      this.models = this.sortByKey(data.models, "name");
+      )
+      this.models = this.sortByKey(data.models, "name")
     },
     isNumber(evt) {
-      evt = (evt) ? evt : window.event;
-      var charCode = (evt.which) ? evt.which : evt.keyCode;
-      if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
-        evt.preventDefault();;
+      evt = evt ? evt : window.event
+      var charCode = evt.which ? evt.which : evt.keyCode
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
+        evt.preventDefault()
       } else {
-        return true;
+        return true
       }
     },
     checkPortStatus(port_value, port_type) {
       let control = this
       let $text = $(`.${port_type}status-port`)
-      $text.text('')
+      $text.text("")
       let $icon = $(`.${port_type}refresh-gif.is-active`)
       $icon.show()
-      this.$axios.get(
-        `${process.env.API_URL}cameras/port-check?address=${this.camera.external.host}&port=${port_value}`
-      )
-      .then(function(data) {
-        if (data.data.open == true) {
-          $text.text('port is open')
-          $icon.hide()
-        }
-        else {
-          $text.text('port is closed')
-          $icon.hide()
-        }
-      })
-      .catch((jqXHR) => {
-        console.log(jqXHR)
-      })
+      this.$axios
+        .get(
+          `${process.env.API_URL}cameras/port-check?address=${this.camera.external.host}&port=${port_value}`
+        )
+        .then(function(data) {
+          if (data.data.open == true) {
+            $text.text("port is open")
+            $icon.hide()
+          } else {
+            $text.text("port is closed")
+            $icon.hide()
+          }
+        })
+        .catch(jqXHR => {
+          console.log(jqXHR)
+        })
     },
     async doTestSnapshot() {
       let data = {
@@ -680,15 +709,15 @@ export default {
         cam_password: this.camera.cam_password,
         vendor_id: "hikvision",
         camera_exid: this.camera.id
-      };
+      }
       try {
         let response = await this.$axios.post(
           `${process.env.API_URL}cameras/test`,
           data
-        );
-        this.testSnapshot = response.data.data;
+        )
+        this.testSnapshot = response.data.data
       } catch (e) {
-        console.log(e);
+        console.log(e)
       }
     },
     bindTimezones() {
@@ -878,18 +907,18 @@ export default {
         { value: "Pacific/Tongatapu", text: "(GMT+13:00) Nuku'alofa" },
         { value: "Pacific/Apia", text: "(GMT+13:00) Samoa" },
         { value: "Pacific/Fakaofo", text: "(GMT+13:00) Tokelau Is." }
-      ];
+      ]
     },
     openCameraUpdate() {
-      this.dialog = !this.dialog;
+      this.dialog = !this.dialog
     },
     onSelectVendor(data) {
-      console.log(data);
-      this.loadModels(data);
+      console.log(data)
+      this.loadModels(data)
     },
     onSelectModel(data) {
-      this.snapshot_url = data.jpg_url;
-      this.rtsp_url = data.h264_url;
+      this.snapshot_url = data.jpg_url
+      this.rtsp_url = data.h264_url
     },
     async updateCamera() {
       let data = {
@@ -905,34 +934,34 @@ export default {
         nvr_http_port: this.camera.external.http.nvr_port,
         external_rtsp_port: this.camera.external.rtsp.port,
         camera_timezone: this.selectedTimezone.value
-      };
+      }
       await this.$axios
         .$patch(`${process.env.API_URL}cameras/${this.camera.id}`, data)
         .then(function(response) {
-          console.log("Settings updated successfully.");
+          console.log("Settings updated successfully.")
         })
         .catch(jqXHR => {
-          console.log(jqXHR);
-        });
-      this.dialog = false;
-      this.cameras();
+          console.log(jqXHR)
+        })
+      this.dialog = false
+      this.cameras()
     },
     sortByKey(list, key) {
       return list.sort(function(a, b) {
-        var x, y;
-        x = a[key];
-        y = b[key];
+        var x, y
+        x = a[key]
+        y = b[key]
         if (x < y) {
-          return -1;
+          return -1
         } else {
           if (x > y) {
-            return 1;
+            return 1
           } else {
-            return 0;
+            return 0
           }
         }
-      });
+      })
     }
   }
-};
+}
 </script>

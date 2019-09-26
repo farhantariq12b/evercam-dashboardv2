@@ -21,13 +21,10 @@
                 <v-form ref="model">
                   <ValidationProvider name="login" rules="required|email">
                     <v-text-field
-                      slot-scope="{
-                        errors,
-                        valid
-                      }"
+                      v-model="model.username"
+                      slot-scope="{ errors, valid }"
                       :error-messages="errors"
                       :success="valid"
-                      v-model="model.username"
                       name="login"
                       label="Login"
                       type="text"
@@ -82,7 +79,6 @@
   position: absolute;
   z-index: 0;
   width: 100%;
-
 }
 </style>
 
@@ -90,7 +86,11 @@
 import { mapActions } from "vuex"
 import "video.js/dist/video-js.css"
 import { videoPlayer } from "vue-video-player"
-import { ValidationObserver, ValidationProvider, withValidation } from "vee-validate";
+import {
+  ValidationObserver,
+  ValidationProvider,
+  withValidation
+} from "vee-validate"
 
 export default {
   layout: "clean",
@@ -112,7 +112,7 @@ export default {
       sources: [
         {
           type: "video/mp4",
-          src: require('~/static/gpoview-a756f65192d97eb7c27d054296cd84fa4d2c41707d8c8ad1a579690cfb66e093.mp4')
+          src: require("~/static/gpoview-a756f65192d97eb7c27d054296cd84fa4d2c41707d8c8ad1a579690cfb66e093.mp4")
         }
       ]
     },
