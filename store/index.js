@@ -7,16 +7,28 @@ Vue.use(Vuex)
 
 export const state = () => ({
   token: null,
+  firstname: null,
+  lastname: null,
+  username: null,
+  email: null,
   cameras: null
 })
 
 export const mutations = {
-  SET_USER(state, { token }) {
+  SET_USER(state, { token, firstname, lastname, username, email }) {
     state.token = token
+    state.firstname = firstname
+    state.lastname = lastname
+    state.username = username
+    state.email = email
   },
 
   UNSET_USER(state) {
     state.token = null
+    state.firstname = null
+    state.lastname = null
+    state.username = null
+    state.email = null
   },
 
   SET_CAMERAS(state, { cameras }) {
@@ -72,6 +84,10 @@ export const actions = {
 
 export const getters = {
   token: state => state.token,
+  firstname: state => state.firstname,
+  lastname: state => state.lastname,
+  username: state => state.username,
+  email: state => state.email,
   cameras: state => state.cameras,
   isAuthenticated: state => state.token !== null
 }
