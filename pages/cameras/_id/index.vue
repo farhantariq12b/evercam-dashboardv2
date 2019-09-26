@@ -1,5 +1,5 @@
 <template>
-  <v-layout align-center justify-center style="">
+  <v-layout align-center justify-center>
     <v-progress-circular
       v-if="isLoading"
       :size="80"
@@ -81,7 +81,7 @@ export default {
     publicPath: process.env.BASE_URL,
     isPlaying: true,
     url: "",
-    isLoading: true
+    isLoading: true,
   }),
   computed: {
     ...mapGetters(["token"])
