@@ -15,13 +15,15 @@
                   <v-text-field
                     label="API ID"
                     class="col-4 height-50 float-left"
+                    :value="userApiId"
                     solo
-                  ></v-text-field>
+                  />
                   <v-text-field
                     label="API KEY"
                     class="col-8 height-50 float-left"
+                    :value="userApiKey"
                     solo
-                  ></v-text-field>
+                  />
                 </td>
               </tr>
             </tbody>
@@ -163,3 +165,24 @@
   padding: 5px;
 }
 </style>
+
+<script>
+export default {
+  data () {
+    return {
+      userApiId: '',
+      userApiKey: ''
+    }
+  },
+  mounted() {
+    this.$axios
+      .$get(process.env.API_URL + "auth/credentials")
+      .then(response => {
+        this.userApiId = response.api_id
+        this.userApiKey = response.api_key
+        console.log(this.userApiId )
+        console.log(this.userApiKey )
+      })
+  }
+}
+</script>
