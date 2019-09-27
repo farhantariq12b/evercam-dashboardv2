@@ -687,18 +687,17 @@ export default {
       }
     },
     checkPortStatus(port_value, port_type) {
-      let control = this
       let variable = `${port_type}Status`
-      control[variable] = ""
+      this[variable] = ""
       this.$axios
         .get(
           `${process.env.API_URL}cameras/port-check?address=${this.camera.external.host}&port=${port_value}`
         )
-        .then(function(data) {
+        .then(data => {
           if (data.data.open == true) {
-            control[variable] = "Port is Open"
+            this[variable] = "Port is Open"
           } else {
-            control[variable] = "Port is Closed"
+            this[variable] = "Port is Closed"
           }
         })
         .catch(jqXHR => {
