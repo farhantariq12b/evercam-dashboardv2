@@ -44,9 +44,8 @@
               @validate="changeDate"
             >
               <v-btn color="primary">
-                <v-icon class="pr-2">
-                  fas fa-calendar-alt
-                </v-icon>First frame
+                <v-icon class="pr-2">fas fa-calendar-alt</v-icon>
+                First frame
               </v-btn>
             </vue-ctk-date-time-picker>
             <vue-ctk-date-time-picker
@@ -66,9 +65,8 @@
               @validate="changeDate"
             >
               <v-btn color="primary" class="float-right">
-                <v-icon class="pr-2">
-                  fas fa-calendar-alt
-                </v-icon>Last frame
+                <v-icon class="pr-2">fas fa-calendar-alt</v-icon>
+                Last frame
               </v-btn>
             </vue-ctk-date-time-picker>
             <v-stage ref="stage" :config="configKonva">

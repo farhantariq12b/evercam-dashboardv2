@@ -351,7 +351,7 @@ export default {
     }
   },
   methods: {
-    async filesChange(fileList) {
+    filesChange(fileList) {
       this.currentStatus = STATUS_SUCCESS
       this.file = fileList[0]
       var vuethis = this
