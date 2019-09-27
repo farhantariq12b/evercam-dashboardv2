@@ -17,6 +17,10 @@
   max-width: 9999px;
   height: 100%;
 }
+
+main {
+  background: #fff;
+}
 </style>
 
 <script>
