@@ -370,6 +370,7 @@
                   label="IP (or URL)"
                   class="caption"
                   required
+                  @keyup="checkPortStatus(camera.external.http.port, 'http')"
                 >
                   <template slot="prepend">
                     <span class="input-group-addon">http://</span>
@@ -378,28 +379,84 @@
                 <v-text-field
                   v-model="camera.external.http.port"
                   label="VH HTTP Port"
-                  class="caption col-4 text-field-left width-quarter"
+                  class="caption col-12 text-field-left"
+                  :maxlength="5"
+                  hint="Port should be in number with 2-5 characters"
                   required
-                />
+                  @keyup="checkPortStatus(camera.external.http.port, 'http')"
+                  @keypress="isNumber($event)"
+                >
+                  <template slot="append">
+                    <span class="mt-1 min-width80 text-right">
+                      {{ httpStatus }}
+                    </span>
+                    <v-img
+                      v-show="httpStatus == ''"
+                      src="/loading.gif"
+                      width="16"
+                      height="16"
+                      max-height="16"
+                      max-width="16"
+                      class="mt-1 http-refresh-gif"
+                    />
+                  </template>
+                </v-text-field>
                 <v-text-field
                   v-model="camera.external.http.nvr_port"
                   label="NVR HTTP Port"
-                  class="caption col-4 text-field-left width-quarter"
+                  class="caption col-12 text-field-left"
+                  :maxlength="5"
+                  hint="Port should be in number with 2-5 characters"
                   required
-                />
+                  @keyup="checkPortStatus(camera.external.http.nvr_port, 'nvr')"
+                  @keypress="isNumber($event)"
+                >
+                  <template slot="append">
+                    <span class="mt-1 min-width80 text-right">
+                      {{ nvrStatus }}
+                    </span>
+                    <v-img
+                      v-show="nvrStatus == ''"
+                      src="/loading.gif"
+                      width="16"
+                      height="16"
+                      max-width="16"
+                      max-height="16"
+                      class="mt-1 nvr-refresh-gif"
+                    />
+                  </template>
+                </v-text-field>
                 <v-text-field
                   v-model="camera.external.rtsp.port"
                   label="RTSP Port"
-                  class="caption col-4 text-field-right width-quarter"
+                  class="caption col-12 text-field-left"
+                  :maxlength="5"
+                  hint="Port should be in number with 2-5 characters"
                   required
-                />
-
+                  @keyup="checkPortStatus(camera.external.rtsp.port, 'rtsp')"
+                  @keypress="isNumber($event)"
+                >
+                  <template slot="append">
+                    <span class="rtsp-status-port mt-1 min-width80 text-right">
+                      {{ rtspStatus }}
+                    </span>
+                    <v-img 
+                      v-show="rtspStatus == ''"
+                      src="/loading.gif"
+                      width="16"
+                      height="16"
+                      max-height="16"
+                      max-width="16"
+                      class="mt-1 rtsp-refresh-gif"
+                    />
+                  </template>
+                </v-text-field>
                 <v-select
                   v-model="selectedTimezone"
                   :items="timezones"
                   :item-value="timezones.value"
                   label="Timezone"
-                  class="caption"
+                  class="caption col-12 text-field-left"
                   return-object
                 >
                   <template v-slot:item="data">
@@ -504,6 +561,10 @@
   padding-top: 56.2%;
 }
 
+.min-width80 {
+  min-width: 80px;
+}
+
 .edit-link {
   color: #428bca;
   -webkit-transition: all 0.2s linear;
@@ -566,7 +627,10 @@ export default {
       models: [],
       timezones: [],
       testSnapshot: "",
-      mapTypeId: "terrain"
+      mapTypeId: "terrain",
+      httpStatus: " ",
+      nvrStatus: " ",
+      rtspStatus: " "
     }
   },
   async asyncData({ params, store, $axios }) {
@@ -608,6 +672,37 @@ export default {
         `${process.env.API_URL}models?vendor_id=${vendor_id}&limit=300`
       )
       this.models = this.sortByKey(data.models, "name")
+    },
+    isNumber(evt) {
+      evt = evt ? evt : window.event
+      var charCode = evt.which ? evt.which : evt.keyCode
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
+        evt.preventDefault()
+      } else {
+        return true
+      }
+    },
+    checkPortStatus(port_value, port_type) {
+      let variable = `${port_type}Status`
+      this[variable] = ""
+      this.$axios
+        .get(
+          `${process.env.API_URL}cameras/port-check?address=${this.camera.external.host}&port=${port_value}`
+        )
+        .then(data => {
+          if (data.data.open == true) {
+            this[variable] = "Port is Open"
+          } else {
+            this[variable] = "Port is Closed"
+          }
+        })
+        .catch(jqXHR => {
+          console.log(jqXHR)
+        })
     },
     async doTestSnapshot() {
       let data = {
