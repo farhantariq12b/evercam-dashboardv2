@@ -16,14 +16,28 @@
                     label="API ID"
                     class="col-4 height-50 float-left"
                     :value="userApiId"
+                    readonly
                     solo
-                  />
+                  >
+                    <template slot="prepend">
+                      <span class="mt-1 text-left">
+                        ID:
+                      </span>
+                    </template>
+                  </v-text-field>
                   <v-text-field
                     label="API KEY"
-                    class="col-8 height-50 float-left"
+                    class="col-8 height-50 float-left pl-1"
                     :value="userApiKey"
+                    readonly
                     solo
-                  />
+                  >
+                    <template slot="prepend">
+                      <span class="mt-1 text-left">
+                        Key:
+                      </span>
+                    </template>
+                  </v-text-field>
                 </td>
               </tr>
             </tbody>
@@ -43,11 +57,25 @@
                 </td>
                 <td class="col-8 caption">
                   <v-select
-                    class="height-50"
-                    :items="items"
-                    label="Solo field"
+                    v-model="liveSelectedCamera"
+                    :items="cameras"
+                    item-value="id"
+                    item-text="name"
+                    label="Cameras"
+                    class="caption height-50"
+                    return-object
+                    @change="onSelectCamera"
                     solo
-                  ></v-select>
+                  >
+                    <template slot="item" slot-scope="data">
+                      <v-list-item-content>
+                        <v-list-item-title
+                          class="caption"
+                          v-text="data.item.name"
+                        />
+                      </v-list-item-content>
+                    </template>
+                  </v-select>
                 </td>
               </tr>
               <tr>
@@ -58,8 +86,9 @@
                  <v-text-field
                     label="URL to JPEG"
                     class="col-12 height-50 float-left"
+                    :value="liveUrlToJpeg"
                     solo
-                  ></v-text-field>
+                  />
                 </td>
               </tr>
               <tr>
@@ -70,8 +99,9 @@
                   <v-text-field
                     label="URL to Dash"
                     class="col-12 height-50 float-left"
+                    :value="liveUrlToDash"
                     solo
-                  ></v-text-field>
+                  />
                 </td>
               </tr>
             </tbody>
@@ -91,11 +121,25 @@
                 </td>
                 <td class="col-8 caption">
                   <v-select
-                    class="height-50"
-                    :items="items"
-                    label="Solo field"
+                    v-model="recordedSelectedCamera"
+                    :items="cameras"
+                    item-value="id"
+                    item-text="name"
+                    label="Cameras"
+                    class="caption height-50"
+                    return-object
+                    @change="onSelectRecordedCamera"
                     solo
-                  ></v-select>
+                  >
+                    <template slot="item" slot-scope="data">
+                      <v-list-item-content>
+                        <v-list-item-title
+                          class="caption"
+                          v-text="data.item.name"
+                        />
+                      </v-list-item-content>
+                    </template>
+                  </v-select>
                 </td>
               </tr>
               <tr>
@@ -103,11 +147,54 @@
                   Date & Time
                 </td>
                 <td class="col-8 caption">
-                 <v-text-field
-                    label="URL to JPEG"
-                    class="col-12 height-50 float-left"
-                    solo
-                  ></v-text-field>
+                  <v-col lg="6" md="6" sm="12" class="float-left pl-0">
+                    <v-menu
+                      v-model="menu2"
+                      :close-on-content-click="false"
+                      :nudge-right="40"
+                      transition="scale-transition"
+                      max-width="295px"
+                      offset-y
+                    >
+                      <template v-slot:activator="{ on }">
+                        <v-text-field
+                          v-model="date"
+                          label="Date"
+                          prepend-icon="far fa-calendar-alt"
+                          readonly
+                          v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker v-model="date" @input="menu2 = false"></v-date-picker>
+                    </v-menu>
+                  </v-col>
+                  <v-col lg="6" md="6" sm="12" class="float-left pl-0 pr-0">
+                    <v-menu
+                      ref="menu"
+                      v-model="timeMenu"
+                      :close-on-content-click="false"
+                      :nudge-right="40"
+                      :return-value.sync="time"
+                      transition="scale-transition"
+                      max-width="295px"
+                      offset-y
+                    >
+                      <template v-slot:activator="{ on }">
+                        <v-text-field
+                          v-model="time"
+                          label="Time"
+                          prepend-icon="far fa-clock"
+                          readonly
+                          v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-time-picker
+                        v-if="timeMenu"
+                        v-model="time"
+                        @click:minute="$refs.menu.save(time)"
+                      ></v-time-picker>
+                    </v-menu>
+                  </v-col>
                 </td>
               </tr>
               <tr>
@@ -116,7 +203,7 @@
                 </td>
                 <td class="col-8 caption">
                  <v-text-field
-                    label="URL to JPEG"
+                    label="URL to Snapshot"
                     class="col-12 height-50 float-left"
                     solo
                   ></v-text-field>
@@ -171,10 +258,19 @@ export default {
   data () {
     return {
       userApiId: '',
-      userApiKey: ''
+      userApiKey: '',
+      liveSelectedCamera: '',
+      cameras: [],
+      liveUrlToJpeg: '',
+      liveUrlToDash: '',
+      recordedSelectedCamera: '',
+      time: null,
+      timeMenu: false,
+      date: new Date().toISOString().substr(0, 10)
     }
   },
   mounted() {
+    this.loadCameras()
     this.$axios
       .$get(process.env.API_URL + "auth/credentials")
       .then(response => {
@@ -183,6 +279,37 @@ export default {
         console.log(this.userApiId )
         console.log(this.userApiKey )
       })
+  },
+  methods: {
+    async loadCameras() {
+      const { data } = await this.$axios.get(`${process.env.API_URL}cameras`)
+      this.cameras = this.sortByKey(data.cameras, "name")
+      let c = data.cameras[0].name
+      this.liveSelectedCamera = data.cameras[0].name
+    },
+    onSelectCamera(data) {
+      this.liveUrlToJpeg = `${process.env.API_URL}cameras/${data.id}/live/snapshot?api_id=${this.userApiId}&api_key=${this.userApiKey}`
+      this.liveUrlToDash = `https://dash2.evercam.io/v2/cameras/${data.id}/live/snapshot?api_id=${this.userApiId}&api_key=${this.userApiKey}`
+    },
+    onSelectRecordedCamera(data) {
+      
+    },
+    sortByKey(list, key) {
+      return list.sort(function(a, b) {
+        var x, y
+        x = a[key]
+        y = b[key]
+        if (x < y) {
+          return -1
+        } else {
+          if (x > y) {
+            return 1
+          } else {
+            return 0
+          }
+        }
+      })
+    }
   }
 }
 </script>
