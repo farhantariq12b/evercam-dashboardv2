@@ -90,6 +90,7 @@
                   value="online,offline,vh status"
                   hide-details
                   class="checkbox-margin mx-2"
+                  @change="doSelectAll"
                 ></v-checkbox>
                 <v-checkbox
                   v-model="selected"
@@ -98,6 +99,7 @@
                   value="cloud recordings updated,cloud recordings created"
                   hide-details
                   class="checkbox-margin mx-2"
+                  @change="doSelectAll"
                 ></v-checkbox>
                 <v-checkbox
                   v-model="selected"
@@ -106,6 +108,7 @@
                   value="shared,updated share,stopped sharing"
                   hide-details
                   class="checkbox-margin mx-2"
+                  @change="doSelectAll"
                 ></v-checkbox>
                 <v-checkbox
                   v-model="selected"
@@ -114,6 +117,7 @@
                   value="archive created,archive deleted"
                   hide-details
                   class="checkbox-margin mx-2"
+                  @change="doSelectAll"
                 ></v-checkbox>
                 <v-checkbox
                   v-model="selected"
@@ -122,6 +126,7 @@
                   value="accessed,viewed,camera created,created,edited,camera edited,captured,vh status"
                   hide-details
                   class="checkbox-margin mx-2"
+                  @change="doSelectAll"
                 ></v-checkbox>
                 <v-checkbox
                   v-model="selected"
@@ -130,6 +135,7 @@
                   value="custom"
                   hide-details
                   class="checkbox-margin mx-2"
+                  @change="doSelectAll"
                 ></v-checkbox>
               </v-row>
 
@@ -588,6 +594,13 @@ export default {
         ]
       } else {
         this.selected = []
+      }
+    },
+    doSelectAll() {
+      if(this.selected.length === 6) {
+        this.chkAll = true
+      } else {
+        this.chkAll = false
       }
     }
   }

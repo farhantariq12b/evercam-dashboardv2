@@ -1,5 +1,5 @@
 <template>
-  <v-layout align-center justify-center style="">
+  <v-layout align-center justify-center>
     <v-progress-circular
       v-if="isLoading"
       :size="80"

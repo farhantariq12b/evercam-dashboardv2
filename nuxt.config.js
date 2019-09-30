@@ -51,7 +51,7 @@ export default {
     { src: "~plugins/vimeo-player", ssr: false },
     "~/plugins/axios",
     { src: "~plugins/vue-konva", ssr: false },
-    "@/plugins/google-maps",
+    { src: "~/plugins/google-maps" },
     "@/plugins/vee-validate"
   ],
   /*
@@ -91,6 +91,7 @@ export default {
    ** Build configuration
    */
   build: {
+    transpile: [/^vue2-google-maps($|\/)/],
     /*
      ** You can extend webpack config here
      */
