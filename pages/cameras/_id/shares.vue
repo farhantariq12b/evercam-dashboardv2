@@ -22,7 +22,9 @@
             <tr>
               <td>
                 <v-avatar size="30px" class="float-left gravatar-margin">
-                  <img :src="owner.avatar" >
+                  <img
+                    :src="getFavicon(owner.email)"
+                  />
                 </v-avatar>
                 <v-card flat class="float-left card-background">
                   <v-list-item class="item-padding">
@@ -127,7 +129,9 @@
             <tr v-for="share in shares">
               <td>
                 <v-avatar size="30px" class="float-left gravatar-margin">
-                  <img :src="share.avatar" >
+                  <img
+                    :src="getFavicon(share.email)"
+                  />
                 </v-avatar>
                 <v-card flat class="float-left card-background">
                   <v-list-item class="item-padding">
@@ -225,7 +229,9 @@
             <tr v-for="request in share_requests">
               <td>
                 <v-avatar size="30px" class="float-left gravatar-margin">
-                  <img :src="request.avatar" >
+                  <img
+                    :src="getFavicon(request.email)"
+                  />
                 </v-avatar>
                 <v-card flat class="float-left card-background">
                   <v-list-item class="item-padding">
@@ -507,7 +513,6 @@ export default {
     let shares_list = []
     let requests_list = []
     let permission = ""
-    let avatar = ""
     data.shares.forEach(function(share) {
       if (share.rights.indexOf("edit") !== -1) {
         permission = "full"
@@ -517,15 +522,8 @@ export default {
         permission = "minimum"
       }
 
-      let index = share.email.indexOf("@")
-      let domain = share.email.substr(index + 1)
-      avatar = `https://gravatar.com/avatar/${hex_md5(
-        share.email
-      )}?d=https://favicon.yandex.net/favicon/${domain}`
-
       shares_list.push({
         id: share.id,
-        avatar: avatar,
         fullname: share.fullname,
         user_id: share.user_id,
         email: share.email,
@@ -545,14 +543,7 @@ export default {
         permission = "minimum"
       }
 
-      let index = request.email.indexOf("@")
-      let domain = request.email.substr(index + 1)
-      avatar = `https://gravatar.com/avatar/${hex_md5(
-        request.email
-      )}?d=https://favicon.yandex.net/favicon/${domain}`
-
       requests_list.push({
-        avatar: avatar,
         user_id: request.user_id,
         sharer_name: request.sharer_name,
         sharer_email: request.sharer_email,
@@ -562,13 +553,6 @@ export default {
         camera_id: request.camera_id
       })
     })
-
-    let index = data.owner.email.indexOf("@")
-    let domain = data.owner.email.substr(index + 1)
-    avatar = `https://gravatar.com/avatar/${hex_md5(
-      data.owner.email
-    )}?d=https://favicon.yandex.net/favicon/${domain}`
-    data.owner.avatar = avatar
 
     return {
       shares: shares_list,
@@ -702,18 +686,10 @@ export default {
 
           let shares_list = this.shares
           let requests_list = this.share_requests
-          let avatar = ""
           let permission = this.createRight
           data.shares.forEach(function(share) {
-            let index = share.email.indexOf("@")
-            let domain = share.email.substr(index + 1)
-            avatar = `https://gravatar.com/avatar/${hex_md5(
-              share.email
-            )}?d=https://favicon.yandex.net/favicon/${domain}`
-
             shares_list.push({
               id: share.id,
-              avatar: avatar,
               fullname: share.fullname,
               user_id: share.user_id,
               email: share.email,
@@ -726,14 +702,7 @@ export default {
           this.shares = shares_list
 
           data.share_requests.forEach(function(request) {
-            let index = request.email.indexOf("@")
-            let domain = request.email.substr(index + 1)
-            avatar = `https://gravatar.com/avatar/${hex_md5(
-              request.email
-            )}?d=https://favicon.yandex.net/favicon/${domain}`
-
             requests_list.push({
-              avatar: avatar,
               user_id: request.user_id,
               sharer_name: request.sharer_name,
               sharer_email: request.sharer_email,
@@ -786,7 +755,6 @@ export default {
         )
         let shares_list = []
         let permission = ""
-        let avatar = ""
         data.shares.forEach(function(share) {
           if (share.rights.indexOf("edit") !== -1) {
             permission = "full"
@@ -796,15 +764,8 @@ export default {
             permission = "minimum"
           }
 
-          let index = share.email.indexOf("@")
-          let domain = share.email.substr(index + 1)
-          avatar = `https://gravatar.com/avatar/${hex_md5(
-            share.email
-          )}?d=https://favicon.yandex.net/favicon/${domain}`
-
           shares_list.push({
             id: share.id,
-            avatar: avatar,
             fullname: share.fullname,
             user_id: share.user_id,
             email: share.email,
@@ -814,7 +775,6 @@ export default {
             camera_id: share.camera_id
           })
         })
-        data.owner.avatar = this.getFavicon(data.owner.email)
 
         console.log("Camera ownership has been successfully transferred.")
         this.newOwner = null
