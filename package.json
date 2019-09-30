@@ -70,6 +70,6 @@
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.8.5",
-    "nodemon": "^1.19.2"
+    "nodemon": "^1.19.3"
   }
 }
