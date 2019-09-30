@@ -214,7 +214,7 @@
 
           <template v-slot:expanded-item="{ item }" class="mytable">
             <td :colspan="4">
-              <v-simple-table>
+              <v-simple-table class="details-table">
                 <thead>
                   <tr>
                     <th>Settings</th>
@@ -323,6 +323,10 @@
 .label-margin {
   margin-top: 5px !important;
   padding-left: 30px !important;
+}
+
+.details-table td {
+  font-size: 0.75rem !important;
 }
 </style>
 
