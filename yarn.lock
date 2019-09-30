@@ -10160,10 +10160,10 @@ vue-hot-reload-api@^2.3.0:
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.3.tgz#2756f46cb3258054c5f4723de8ae7e87302a1ccf"
   integrity sha512-KmvZVtmM26BQOMK1rwUZsrqxEGeKiYSZGA7SNWE6uExx8UX/cj9hq2MRV/wWC3Cq6AoeDGk57rL9YMFRel/q+g==
 
-vue-konva@^2.0.9:
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/vue-konva/-/vue-konva-2.0.9.tgz#ef9c01beaea0cf803be5c727ce27310c50a252ec"
-  integrity sha512-LdoeTGvoF2afMlk8Ly4vi9Bx00qiaPOnRyVoI++4NiFU/G0a6IHB2XQSiP/YxTYEBb8rmm3AaTiFyX4Fhfztcg==
+vue-konva@^2.0.10:
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/vue-konva/-/vue-konva-2.0.10.tgz#99d5e8be47b70b4c31c6673d23b772985f2f26c4"
+  integrity sha512-xurpK1YlTjFlV4R4X0VdUy0e3BVXAdhqNQcBQW82XWezRLUmh30lrm+qcrzKHrakLalg6s+6Ui1pyYRQiWRAig==
 
 vue-loader@^15.7.1:
   version "15.7.1"
