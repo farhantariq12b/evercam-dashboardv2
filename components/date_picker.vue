@@ -2,7 +2,7 @@
   <div>
     <span class="timer" data-from="25" data-to="75" />
     <div class="inner" />
-    <p>Date: <input id="datepicker" type="text" ></p>
+    <p>Date: <input id="datepicker" type="text"></p>
   </div>
 </template>
 

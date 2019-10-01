@@ -159,7 +159,10 @@
                   <td class="caption">
                     H264 URL:
                   </td>
-                  <td v-if="camera.external.rtsp.h264" class="caption break-word">
+                  <td
+                    v-if="camera.external.rtsp.h264"
+                    class="caption break-word"
+                  >
                     {{
                       camera.external.rtsp.h264.replace(
                         `rtsp://${camera.external.host}:${camera.external.rtsp.port}/`,
@@ -289,7 +292,7 @@
             Cameras Details
           </span>
         </v-card-title>
-        <v-divider></v-divider>
+        <v-divider />
         <v-card-text>
           <v-container class="model-container">
             <v-row>
@@ -312,7 +315,10 @@
                 >
                   <template slot="item" slot-scope="data">
                     <v-list-item-content>
-                      <v-list-item-title class="caption" v-text="data.item.name" />
+                      <v-list-item-title
+                        class="caption"
+                        v-text="data.item.name"
+                      />
                     </v-list-item-content>
                   </template>
                 </v-select>
@@ -328,7 +334,10 @@
                 >
                   <template slot="item" slot-scope="data">
                     <v-list-item-content>
-                      <v-list-item-title class="caption" v-text="data.item.name" />
+                      <v-list-item-title
+                        class="caption"
+                        v-text="data.item.name"
+                      />
                     </v-list-item-content>
                   </template>
                 </v-select>
@@ -361,6 +370,7 @@
                   label="IP (or URL)"
                   class="caption"
                   required
+                  @keyup="checkPortStatus(camera.external.http.port, 'http')"
                 >
                   <template slot="prepend">
                     <span class="input-group-addon">http://</span>
@@ -369,38 +379,104 @@
                 <v-text-field
                   v-model="camera.external.http.port"
                   label="VH HTTP Port"
-                  class="caption col-4 text-field-left width-quarter"
+                  class="caption col-12 text-field-left"
+                  :maxlength="5"
+                  hint="Port should be in number with 2-5 characters"
                   required
-                />
+                  @keyup="checkPortStatus(camera.external.http.port, 'http')"
+                  @keypress="isNumber($event)"
+                >
+                  <template slot="append">
+                    <span class="mt-1 min-width80 text-right">
+                      {{ httpStatus }}
+                    </span>
+                    <v-img
+                      v-show="httpStatus == ''"
+                      src="/loading.gif"
+                      width="16"
+                      height="16"
+                      max-height="16"
+                      max-width="16"
+                      class="mt-1 http-refresh-gif"
+                    />
+                  </template>
+                </v-text-field>
                 <v-text-field
                   v-model="camera.external.http.nvr_port"
                   label="NVR HTTP Port"
-                  class="caption col-4 text-field-left width-quarter"
+                  class="caption col-12 text-field-left"
+                  :maxlength="5"
+                  hint="Port should be in number with 2-5 characters"
                   required
-                />
+                  @keyup="checkPortStatus(camera.external.http.nvr_port, 'nvr')"
+                  @keypress="isNumber($event)"
+                >
+                  <template slot="append">
+                    <span class="mt-1 min-width80 text-right">
+                      {{ nvrStatus }}
+                    </span>
+                    <v-img
+                      v-show="nvrStatus == ''"
+                      src="/loading.gif"
+                      width="16"
+                      height="16"
+                      max-width="16"
+                      max-height="16"
+                      class="mt-1 nvr-refresh-gif"
+                    />
+                  </template>
+                </v-text-field>
                 <v-text-field
                   v-model="camera.external.rtsp.port"
                   label="RTSP Port"
-                  class="caption col-4 text-field-right width-quarter"
+                  class="caption col-12 text-field-left"
+                  :maxlength="5"
+                  hint="Port should be in number with 2-5 characters"
                   required
-                />
-
+                  @keyup="checkPortStatus(camera.external.rtsp.port, 'rtsp')"
+                  @keypress="isNumber($event)"
+                >
+                  <template slot="append">
+                    <span class="rtsp-status-port mt-1 min-width80 text-right">
+                      {{ rtspStatus }}
+                    </span>
+                    <v-img 
+                      v-show="rtspStatus == ''"
+                      src="/loading.gif"
+                      width="16"
+                      height="16"
+                      max-height="16"
+                      max-width="16"
+                      class="mt-1 rtsp-refresh-gif"
+                    />
+                  </template>
+                </v-text-field>
                 <v-select
                   v-model="selectedTimezone"
                   :items="timezones"
                   :item-value="timezones.value"
                   label="Timezone"
-                  class="caption"
+                  class="caption col-12 text-field-left"
                   return-object
                 >
                   <template v-slot:item="data">
                     <v-list-item-content>
-                      <v-list-item-title class="caption" v-text="data.item.text" />
+                      <v-list-item-title
+                        class="caption"
+                        v-text="data.item.text"
+                      />
                     </v-list-item-content>
                   </template>
                 </v-select>
               </v-col>
-              <v-col col="auto" lg="5" md="5" sm="12" xs="12" class="col-paddings">
+              <v-col
+                col="auto"
+                lg="5"
+                md="5"
+                sm="12"
+                xs="12"
+                class="col-paddings"
+              >
                 <v-img :src="testSnapshot" aspect-ratio="2" class="test-img" />
                 <v-btn color="blue darken-1" text @click="doTestSnapshot">
                   Test Snapshot
@@ -409,7 +485,7 @@
             </v-row>
           </v-container>
         </v-card-text>
-        <v-divider></v-divider>
+        <v-divider />
         <v-card-actions>
           <v-btn color="blue darken-1" text @click="dialog = false">
             Close
@@ -485,6 +561,10 @@
   padding-top: 56.2%;
 }
 
+.min-width80 {
+  min-width: 80px;
+}
+
 .edit-link {
   color: #428bca;
   -webkit-transition: all 0.2s linear;
@@ -547,7 +627,10 @@ export default {
       models: [],
       timezones: [],
       testSnapshot: "",
-      mapTypeId: "terrain"
+      mapTypeId: "terrain",
+      httpStatus: " ",
+      nvrStatus: " ",
+      rtspStatus: " "
     }
   },
   async asyncData({ params, store, $axios }) {
@@ -590,6 +673,37 @@ export default {
       )
       this.models = this.sortByKey(data.models, "name")
     },
+    isNumber(evt) {
+      evt = evt ? evt : window.event
+      var charCode = evt.which ? evt.which : evt.keyCode
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
+        evt.preventDefault()
+      } else {
+        return true
+      }
+    },
+    checkPortStatus(port_value, port_type) {
+      let variable = `${port_type}Status`
+      this[variable] = ""
+      this.$axios
+        .get(
+          `${process.env.API_URL}cameras/port-check?address=${this.camera.external.host}&port=${port_value}`
+        )
+        .then(data => {
+          if (data.data.open == true) {
+            this[variable] = "Port is Open"
+          } else {
+            this[variable] = "Port is Closed"
+          }
+        })
+        .catch(jqXHR => {
+          console.log(jqXHR)
+        })
+    },
     async doTestSnapshot() {
       let data = {
         external_url: `http://${this.camera.external.host}:${this.camera.external.http.port}`,
@@ -620,7 +734,7 @@ export default {
       //       name: tz,
       //       offset: moment.tz(tz).utcOffset()
       //     })
-          
+
       //     return memo
       //   }, [])
       //   .sort((a, b) => {
@@ -634,36 +748,60 @@ export default {
       //     })
       //   }, "")
       this.timezones = [
-        { value: "Etc/GMT+12", text: "(GMT-12:00) International Date Line West" },
+        {
+          value: "Etc/GMT+12",
+          text: "(GMT-12:00) International Date Line West"
+        },
         { value: "Pacific/Pago_Pago", text: "(GMT-11:00) American Samoa" },
         { value: "Pacific/Midway", text: "(GMT-11:00) Midway Island" },
         { value: "Pacific/Honolulu", text: "(GMT-10:00) Hawaii" },
         { value: "America/Juneau", text: "(GMT-09:00) Alaska" },
-        { value: "America/Los_Angeles", text: "(GMT-08:00) Pacific Time (US &amp; Canada)" },
+        {
+          value: "America/Los_Angeles",
+          text: "(GMT-08:00) Pacific Time (US &amp; Canada)"
+        },
         { value: "America/Tijuana", text: "(GMT-08:00) Tijuana" },
         { value: "America/Phoenix", text: "(GMT-07:00) Arizona" },
         { value: "America/Chihuahua", text: "(GMT-07:00) Chihuahua" },
         { value: "America/Mazatlan", text: "(GMT-07:00) Mazatlan" },
-        { value: "America/Denver", text: "(GMT-07:00) Mountain Time (US &amp; Canada)" },
+        {
+          value: "America/Denver",
+          text: "(GMT-07:00) Mountain Time (US &amp; Canada)"
+        },
         { value: "America/Guatemala", text: "(GMT-06:00) Central America" },
-        { value: "America/Chicago", text: "(GMT-06:00) Central Time (US &amp; Canada)" },
+        {
+          value: "America/Chicago",
+          text: "(GMT-06:00) Central Time (US &amp; Canada)"
+        },
         { value: "America/Mexico_City", text: "(GMT-06:00) Guadalajara" },
         { value: "America/Mexico_City", text: "(GMT-06:00) Mexico City" },
         { value: "America/Monterrey", text: "(GMT-06:00) Monterrey" },
         { value: "America/Regina", text: "(GMT-06:00) Saskatchewan" },
         { value: "America/Bogota", text: "(GMT-05:00) Bogota" },
-        { value: "America/New_York", text: "(GMT-05:00) Eastern Time (US &amp; Canada)" },
-        { value: "America/Indiana/Indianapolis", text: "(GMT-05:00) Indiana (East)" },
+        {
+          value: "America/New_York",
+          text: "(GMT-05:00) Eastern Time (US &amp; Canada)"
+        },
+        {
+          value: "America/Indiana/Indianapolis",
+          text: "(GMT-05:00) Indiana (East)"
+        },
         { value: "America/Lima", text: "(GMT-05:00) Lima" },
         { value: "America/Lima", text: "(GMT-05:00) Quito" },
-        { value: "America/Halifax", text: "(GMT-04:00) Atlantic Time (Canada)" },
+        {
+          value: "America/Halifax",
+          text: "(GMT-04:00) Atlantic Time (Canada)"
+        },
         { value: "America/Caracas", text: "(GMT-04:00) Caracas" },
         { value: "America/Guyana", text: "(GMT-04:00) Georgetown" },
         { value: "America/La_Paz", text: "(GMT-04:00) La Paz" },
         { value: "America/Puerto_Rico", text: "(GMT-04:00) Puerto Rico" },
         { value: "America/Santiago", text: "(GMT-04:00) Santiago" },
         { value: "America/Sao_Paulo", text: "(GMT-03:00) Brasilia" },
-        { value: "America/Argentina/Buenos_Aires", text: "(GMT-03:00) Buenos Aires" },
+        {
+          value: "America/Argentina/Buenos_Aires",
+          text: "(GMT-03:00) Buenos Aires"
+        },
         { value: "America/Godthab", text: "(GMT-03:00) Greenland" },
         { value: "America/Montevideo", text: "(GMT-03:00) Montevideo" },
         { value: "Atlantic/South_Georgia", text: "(GMT-02:00) Mid-Atlantic" },
@@ -771,7 +909,7 @@ export default {
         { value: "Pacific/Auckland", text: "(GMT+12:00) Wellington" },
         { value: "Pacific/Tongatapu", text: "(GMT+13:00) Nuku'alofa" },
         { value: "Pacific/Apia", text: "(GMT+13:00) Samoa" },
-        { value: "Pacific/Fakaofo", text: "(GMT+13:00) Tokelau Is." },
+        { value: "Pacific/Fakaofo", text: "(GMT+13:00) Tokelau Is." }
       ]
     },
     openCameraUpdate() {
@@ -798,14 +936,14 @@ export default {
         external_http_port: this.camera.external.http.port,
         nvr_http_port: this.camera.external.http.nvr_port,
         external_rtsp_port: this.camera.external.rtsp.port,
-        camera_timezone: this.selectedTimezone.value,
+        camera_timezone: this.selectedTimezone.value
       }
       await this.$axios
         .$patch(`${process.env.API_URL}cameras/${this.camera.id}`, data)
         .then(function(response) {
           console.log("Settings updated successfully.")
         })
-        .catch((jqXHR) => {
+        .catch(jqXHR => {
           console.log(jqXHR)
         })
       this.dialog = false
