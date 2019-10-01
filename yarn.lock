@@ -772,10 +772,10 @@
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
 
-"@fortawesome/fontawesome-free@^5.11.1":
-  version "5.11.1"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.11.1.tgz#cef685a74708cf57b367c32d9f36a931c5a4e894"
-  integrity sha512-DtXLVYAkDU0ce1cFUgLvZaMd1R2J/LviBYih9xr4ZLhQMrgvYX7w2vOxlpKLRALfIj5GyC5zoVrcACOkLcFgvg==
+"@fortawesome/fontawesome-free@^5.11.2":
+  version "5.11.2"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.11.2.tgz#8644bc25b19475779a7b7c1fc104bc0a794f4465"
+  integrity sha512-XiUPoS79r1G7PcpnNtq85TJ7inJWe0v+b5oZJZKb0pGHNIV6+UiNeQWiFGmuQ0aj7GEhnD/v9iqxIsjuRKtEnQ==
 
 "@fullcalendar/core@^4.3.1", "@fullcalendar/core@~4.3.0":
   version "4.3.1"
@@ -3817,15 +3817,16 @@ eslint-config-prettier@^6.3.0:
   dependencies:
     get-stdin "^6.0.0"
 
-eslint-loader@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-loader/-/eslint-loader-3.0.0.tgz#fb70bc2d552a674f43f07f5e6575083e565e790d"
-  integrity sha512-rdxyQ0i9VlhwVlR6oEzrIft8WNKYSD2/cOAJ1YVH/F76gAta7Zv1Dr5xJOUyx0fAsHB5cKNz9hwlUVLMFsQlPA==
+eslint-loader@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/eslint-loader/-/eslint-loader-3.0.2.tgz#5a627316a51d6f41d357b9f6f0554e91506cdd6e"
+  integrity sha512-S5VnD+UpVY1PyYRqeBd/4pgsmkvSokbHqTXAQMpvCyRr3XN2tvSLo9spm2nEpqQqh9dezw3os/0zWihLeOg2Rw==
   dependencies:
+    fs-extra "^8.1.0"
     loader-fs-cache "^1.0.2"
     loader-utils "^1.2.3"
     object-hash "^1.3.1"
-    schema-utils "^2.1.0"
+    schema-utils "^2.2.0"
 
 eslint-plugin-prettier@^3.1.1:
   version "3.1.1"
@@ -3869,10 +3870,10 @@ eslint-visitor-keys@^1.0.0, eslint-visitor-keys@^1.1.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.1.0.tgz#e2a82cea84ff246ad6fb57f9bde5b46621459ec2"
   integrity sha512-8y9YjtM1JBJU/A9Kc+SbaOV4y29sSWckBwMHa+FGtVj5gN/sbnKDf6xJUl+8g7FAij9LVaP8C24DUiH/f/2Z9A==
 
-eslint@^6.4.0:
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-6.4.0.tgz#5aa9227c3fbe921982b2eda94ba0d7fae858611a"
-  integrity sha512-WTVEzK3lSFoXUovDHEbkJqCVPEPwbhCq4trDktNI6ygs7aO41d4cDT0JFAT5MivzZeVLWlg7vHL+bgrQv/t3vA==
+eslint@^6.5.0:
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-6.5.0.tgz#304623eec903969dd5c9f2d61c6ce3d6ecec8750"
+  integrity sha512-IIbSW+vKOqMatPmS9ayyku4tvWxHY2iricSRtOz6+ZA5IPRlgXzEL0u/j6dr4eha0ugmhMwDTqxtmNu3kj9O4w==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     ajv "^6.10.0"
@@ -6619,10 +6620,10 @@ node-res@^5.0.1:
     on-finished "^2.3.0"
     vary "^1.1.2"
 
-nodemon@^1.19.2:
-  version "1.19.2"
-  resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.19.2.tgz#b0975147dc99b3761ceb595b3f9277084931dcc0"
-  integrity sha512-hRLYaw5Ihyw9zK7NF+9EUzVyS6Cvgc14yh8CAYr38tPxJa6UrOxwAQ351GwrgoanHCF0FalQFn6w5eoX/LGdJw==
+nodemon@^1.19.3:
+  version "1.19.3"
+  resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.19.3.tgz#db71b3e62aef2a8e1283a9fa00164237356102c0"
+  integrity sha512-TBNKRmJykEbxpTniZBusqRrUTHIEqa2fpecbTQDQj1Gxjth7kKAPP296ztR0o5gPUWsiYbuEbt73/+XMYab1+w==
   dependencies:
     chokidar "^2.1.5"
     debug "^3.1.0"
@@ -8692,13 +8693,13 @@ schema-utils@^1.0.0:
     ajv-errors "^1.0.0"
     ajv-keywords "^3.1.0"
 
-schema-utils@^2.0.0, schema-utils@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-2.1.0.tgz#940363b6b1ec407800a22951bdcc23363c039393"
-  integrity sha512-g6SViEZAfGNrToD82ZPUjq52KUPDYc+fN5+g6Euo5mLokl/9Yx14z0Cu4RR1m55HtBXejO0sBt+qw79axN+Fiw==
+schema-utils@^2.0.0, schema-utils@^2.1.0, schema-utils@^2.2.0:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-2.4.1.tgz#e89ade5d056dc8bcaca377574bb4a9c4e1b8be56"
+  integrity sha512-RqYLpkPZX5Oc3fw/kHHHyP56fg5Y+XBpIpV8nCg0znIALfq3OH+Ea9Hfeac9BAMwG5IICltiZ0vxFvJQONfA5w==
   dependencies:
-    ajv "^6.1.0"
-    ajv-keywords "^3.1.0"
+    ajv "^6.10.2"
+    ajv-keywords "^3.4.1"
 
 scriptjs@^2.5.9:
   version "2.5.9"
@@ -9963,10 +9964,10 @@ vee-validate@^2.1.2:
   resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.2.15.tgz#dc6c925d21e57288d3308fe5a39a0941036c575a"
   integrity sha512-4TOsI8XwVkKVLkg8Nhmy+jyoJrR6XcTRDyxBarzcCvYzU61zamipS1WsB6FlDze8eJQpgglS4NXAS6o4NDPs1g==
 
-vee-validate@^3.0.5:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-3.0.5.tgz#0555a329f90c32cacd37b8318b4d08e6526e1856"
-  integrity sha512-VmRscZiCMrL6t6WdR5yke1RzYAMnEB7wTA2FKnS1eGIRY2l71Z6FuUqgcm9rHtE3GXmi5NiF0RoiD0ivNC5crA==
+vee-validate@^3.0.8:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-3.0.8.tgz#9aae7409925250eaef8a05b30f629c206009c27d"
+  integrity sha512-17PgYauciJrynQADWbS+bZw3FqPZkt0Ozm0LrJNf4eppU6GlgYgTbiyHZmbeX1U73nxfZ4rNdJqaxdGuRZf2PQ==
 
 vendors@^1.0.0:
   version "1.0.3"
@@ -10160,10 +10161,10 @@ vue-hot-reload-api@^2.3.0:
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.3.tgz#2756f46cb3258054c5f4723de8ae7e87302a1ccf"
   integrity sha512-KmvZVtmM26BQOMK1rwUZsrqxEGeKiYSZGA7SNWE6uExx8UX/cj9hq2MRV/wWC3Cq6AoeDGk57rL9YMFRel/q+g==
 
-vue-konva@^2.0.9:
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/vue-konva/-/vue-konva-2.0.9.tgz#ef9c01beaea0cf803be5c727ce27310c50a252ec"
-  integrity sha512-LdoeTGvoF2afMlk8Ly4vi9Bx00qiaPOnRyVoI++4NiFU/G0a6IHB2XQSiP/YxTYEBb8rmm3AaTiFyX4Fhfztcg==
+vue-konva@^2.0.10:
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/vue-konva/-/vue-konva-2.0.10.tgz#99d5e8be47b70b4c31c6673d23b772985f2f26c4"
+  integrity sha512-xurpK1YlTjFlV4R4X0VdUy0e3BVXAdhqNQcBQW82XWezRLUmh30lrm+qcrzKHrakLalg6s+6Ui1pyYRQiWRAig==
 
 vue-loader@^15.7.1:
   version "15.7.1"
@@ -10221,10 +10222,10 @@ vue-server-renderer@^2.6.10:
     serialize-javascript "^1.3.0"
     source-map "0.5.6"
 
-vue-slider-component@^3.0.40:
-  version "3.0.40"
-  resolved "https://registry.yarnpkg.com/vue-slider-component/-/vue-slider-component-3.0.40.tgz#f8eb0ae2d4d8c63f7b767e2ae7a316449a88958c"
-  integrity sha512-8obhszDPC34b43h/dd0Gh+oQmUD402X+yo129K3m1EiqAlQ5Imr12XAOQ+RcwCKSOLigLW/flZ0H3dvmhk2ZWQ==
+vue-slider-component@^3.0.41:
+  version "3.0.41"
+  resolved "https://registry.yarnpkg.com/vue-slider-component/-/vue-slider-component-3.0.41.tgz#dd97f51347b200fc56b05789263b2f02ad5016f9"
+  integrity sha512-TVLwAJtDInkYp3KYUqptvyLg9Ppx4WqCeVlbbqCS10MpLItq10yRhObWVAGcN07n2++Vv7h5y//4hLGZkauBZA==
   dependencies:
     vue-property-decorator "^8.0.0"
 
