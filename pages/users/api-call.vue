@@ -3,7 +3,7 @@
   <v-row>
     <v-col cols="auto" lg="12" md="12" sm="12" xs="12" class="api-column">
       <v-card class="card-style">
-        <v-card-text>API ID & Keys are for use by developers. <b>Do not share this information,</b> it gives the holder access to your Evercam account.</v-card-text>
+        <v-card-title class="label subtitle-1 mb-5 break-word">API ID & Key are for use by developers. <b>Do not share this information,</b> it gives the holder access to your Evercam account.</v-card-title>
         <v-card-text>
           <v-simple-table class="api-key-id">
             <tbody>
@@ -14,26 +14,26 @@
                 <td class="col-8 caption">
                   <v-text-field
                     label="API ID"
-                    class="col-4 height-50 float-left"
+                    class="col-4 height-50 float-left caption"
                     :value="userApiId"
                     readonly
                     solo
                   >
                     <template slot="prepend">
-                      <span class="mt-1 text-left">
+                      <span class="margint-7 text-left">
                         ID:
                       </span>
                     </template>
                   </v-text-field>
                   <v-text-field
                     label="API KEY"
-                    class="col-8 height-50 float-left pl-1"
+                    class="col-8 height-50 float-left pl-1 caption"
                     :value="userApiKey"
                     readonly
                     solo
                   >
                     <template slot="prepend">
-                      <span class="mt-1 text-left">
+                      <span class="margint-7 text-left">
                         Key:
                       </span>
                     </template>
@@ -62,9 +62,9 @@
                     item-value="id"
                     item-text="name"
                     label="Cameras"
-                    class="caption height-50"
-                    return-object
+                    class="caption height-50 caption"
                     @change="onSelectCamera"
+                    return-object
                     solo
                   >
                     <template slot="item" slot-scope="data">
@@ -72,6 +72,7 @@
                         <v-list-item-title
                           class="caption"
                           v-text="data.item.name"
+                          readonly
                         />
                       </v-list-item-content>
                     </template>
@@ -85,10 +86,25 @@
                 <td class="col-8 caption">
                  <v-text-field
                     label="URL to JPEG"
-                    class="col-12 height-50 float-left"
+                    class="col-12 height-50 float-left caption"
                     :value="liveUrlToJpeg"
+                    readonly
                     solo
-                  />
+                  >
+                    <template slot="append">
+                      <v-btn 
+                        icon 
+                        color="blue" 
+                        x-small 
+                        target="blank" 
+                        :href="liveUrlToJpeg"
+                      >
+                        <v-icon>
+                          fa fa-external-link-alt
+                        </v-icon>
+                      </v-btn>
+                    </template>
+                 </v-text-field>
                 </td>
               </tr>
               <tr>
@@ -98,10 +114,25 @@
                 <td class="col-8 caption">
                   <v-text-field
                     label="URL to Dash"
-                    class="col-12 height-50 float-left"
+                    class="col-12 height-50 float-left caption"
                     :value="liveUrlToDash"
+                    readonly
                     solo
-                  />
+                  >
+                    <template slot="append">
+                      <v-btn 
+                        icon 
+                        color="blue" 
+                        x-small 
+                        target="blank" 
+                        :href="liveUrlToDash"
+                      >
+                        <v-icon>
+                          fa fa-external-link-alt
+                        </v-icon>
+                      </v-btn>
+                    </template>
+                 </v-text-field>
                 </td>
               </tr>
             </tbody>
@@ -121,14 +152,14 @@
                 </td>
                 <td class="col-8 caption">
                   <v-select
-                    v-model="recordedSelectedCamera"
                     :items="cameras"
                     item-value="id"
                     item-text="name"
                     label="Cameras"
-                    class="caption height-50"
-                    return-object
+                    class="caption height-50 caption"
                     @change="onSelectRecordedCamera"
+                    :value="recordedSelectedCamera"
+                    return-object
                     solo
                   >
                     <template slot="item" slot-scope="data">
@@ -147,54 +178,26 @@
                   Date & Time
                 </td>
                 <td class="col-8 caption">
-                  <v-col lg="6" md="6" sm="12" class="float-left pl-0">
-                    <v-menu
-                      v-model="menu2"
-                      :close-on-content-click="false"
-                      :nudge-right="40"
-                      transition="scale-transition"
-                      max-width="295px"
-                      offset-y
-                    >
-                      <template v-slot:activator="{ on }">
-                        <v-text-field
-                          v-model="date"
-                          label="Date"
-                          prepend-icon="far fa-calendar-alt"
-                          readonly
-                          v-on="on"
-                        ></v-text-field>
-                      </template>
-                      <v-date-picker v-model="date" @input="menu2 = false"></v-date-picker>
-                    </v-menu>
-                  </v-col>
-                  <v-col lg="6" md="6" sm="12" class="float-left pl-0 pr-0">
-                    <v-menu
-                      ref="menu"
-                      v-model="timeMenu"
-                      :close-on-content-click="false"
-                      :nudge-right="40"
-                      :return-value.sync="time"
-                      transition="scale-transition"
-                      max-width="295px"
-                      offset-y
-                    >
-                      <template v-slot:activator="{ on }">
-                        <v-text-field
-                          v-model="time"
-                          label="Time"
-                          prepend-icon="far fa-clock"
-                          readonly
-                          v-on="on"
-                        ></v-text-field>
-                      </template>
-                      <v-time-picker
-                        v-if="timeMenu"
-                        v-model="time"
-                        @click:minute="$refs.menu.save(time)"
-                      ></v-time-picker>
-                    </v-menu>
-                  </v-col>
+                  <vue-ctk-date-time-picker
+                    v-model="api_datetime"
+                    class="caption"
+                    hint="Date & Time"
+                    format="YYYY-MM-DDTHH:mm:ss.sss"
+                    button-color="#68a2d5"
+                    color="#68a2d5"
+                    @input="onChangeTime"
+                    no-shortcuts
+                    no-header
+                    no-button-now
+                  >
+                    <v-text-field 
+                      label="URL to Dash"
+                      class="col-12 float-left height-50 border-bottom pl-2 pt-4 caption"
+                      :value="liveUrlToDash"
+                      readonly
+                      solo
+                    />
+                  </vue-ctk-date-time-picker>
                 </td>
               </tr>
               <tr>
@@ -204,9 +207,26 @@
                 <td class="col-8 caption">
                  <v-text-field
                     label="URL to Snapshot"
-                    class="col-12 height-50 float-left"
+                    class="col-12 height-50 float-left caption"
+                    :value="urlToSnapshot"
+                    readonly
                     solo
-                  ></v-text-field>
+                  >
+                    <template slot="append">
+                      <v-btn
+                        v-show="snapshotDataUrl" 
+                        color="blue" 
+                        target="blank" 
+                        :href="urlToSnapshot"
+                        icon 
+                        x-small 
+                      >
+                        <v-icon>
+                          fa fa-external-link-alt
+                        </v-icon>
+                      </v-btn>
+                    </template>
+                 </v-text-field>
                 </td>
               </tr>
               <tr>
@@ -216,9 +236,25 @@
                 <td class="col-8 caption">
                   <v-text-field
                     label="URL to Dash"
-                    class="col-12 height-50 float-left"
+                    class="col-12 height-50 float-left caption"
+                    :value="urlToDash"
+                    readonly
                     solo
-                  ></v-text-field>
+                  >
+                    <template slot="append">
+                      <v-btn 
+                        color="blue" 
+                        target="blank" 
+                        :href="urlToDash"
+                        icon 
+                        x-small 
+                      >
+                        <v-icon>
+                          fa fa-external-link-alt
+                        </v-icon>
+                      </v-btn>
+                    </template>
+                 </v-text-field>
                 </td>
               </tr>
             </tbody>
@@ -239,34 +275,65 @@
 .cam-label {
   width: 30%;
 }
+
+.v-data-table__wrapper {
+  overflow-x: visible;
+  overflow-y: visible;
+}
+
 .height-50 {
   height: 50px;
 }
+
+.break-word {
+  word-break: break-word;
+}
+
+.margint-7 {
+  margin-top: 7px;
+}
+
 .card-style {
   border-radius: 0;
   box-shadow: none;
 }
+
 .api-column td {
   border-bottom-width: 0 !important;
   height: auto;
   padding: 5px;
 }
+
+.border-bottom {
+  border-bottom: 1px solid #00000087;
+}
 </style>
 
 <script>
+import moment from "moment-timezone"
+import "vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css"
+import VueCtkDateTimePicker from "vue-ctk-date-time-picker"
+
 export default {
+  name: "API",
+  components: {
+    VueCtkDateTimePicker
+  },
   data () {
     return {
-      userApiId: '',
-      userApiKey: '',
-      liveSelectedCamera: '',
+      liveSelectedCamera: [],
       cameras: [],
+      recordedSelectedCamera: [],
+      cameraData: [],
+      api_datetime: moment().format("YYYY-MM-DDTHH:mm:ss.sss"),
+      date: new Date().toISOString(),
+      snapshotDataUrl: false,
+      userApiKey: '',
+      userApiId: '',
       liveUrlToJpeg: '',
       liveUrlToDash: '',
-      recordedSelectedCamera: '',
-      time: null,
-      timeMenu: false,
-      date: new Date().toISOString().substr(0, 10)
+      urlToDash: '',
+      urlToSnapshot: ''
     }
   },
   mounted() {
@@ -276,23 +343,43 @@ export default {
       .then(response => {
         this.userApiId = response.api_id
         this.userApiKey = response.api_key
-        console.log(this.userApiId )
-        console.log(this.userApiKey )
       })
   },
   methods: {
     async loadCameras() {
       const { data } = await this.$axios.get(`${process.env.API_URL}cameras`)
       this.cameras = this.sortByKey(data.cameras, "name")
-      let c = data.cameras[0].name
-      this.liveSelectedCamera = data.cameras[0].name
+      let c = data.cameras[0]
+      this.liveSelectedCamera = { name: c.name, id: c.id }
+      this.recordedSelectedCamera = { name: c.name, id: c.id }
+      this.onSelectCamera(c)
+      this.onSelectRecordedCamera(c)
+      this.cameraData = c
+    },
+    onChangeTime() {
+      this.onSelectRecordedCamera(this.cameraData)
     },
     onSelectCamera(data) {
       this.liveUrlToJpeg = `${process.env.API_URL}cameras/${data.id}/live/snapshot?api_id=${this.userApiId}&api_key=${this.userApiKey}`
       this.liveUrlToDash = `https://dash2.evercam.io/v2/cameras/${data.id}/live/snapshot?api_id=${this.userApiId}&api_key=${this.userApiKey}`
     },
     onSelectRecordedCamera(data) {
-      
+      this.cameraData = data
+      let date_time = moment.tz(this.api_datetime, data.timezone).format("YYYY-MM-DDTHH:mm:ss.SSSZ")
+      this.$axios
+        .get(
+          `${process.env.API_URL}cameras/${data.id}/recordings/snapshots/${date_time}?api_id=${this.userApiId}&api_key=${this.userApiKey}`
+        )
+        .then(data => {
+          this.snapshotDataUrl = true
+          this.urlToSnapshot = `${process.env.API_URL}cameras/${this.cameraData.id}/recordings/snapshots/${date_time}?api_id=${this.userApiId}&api_key=${this.userApiKey}&view=true`
+          this.urlToDash = `https://dash2.evercam.io/v2/cameras/${this.cameraData.id}/recordings/snapshots/${date_time}?api_id=${this.userApiId}&api_key=${this.userApiKey}`
+        })
+        .catch(jqXHR => {
+          this.snapshotDataUrl = false
+          this.urlToSnapshot = `There are no snapshots available for the selected period.`
+          this.urlToDash = `https://dash2.evercam.io/v2/cameras/${this.cameraData.id}/recordings/snapshots/${date_time}?api_id=${this.userApiId}&api_key=${this.userApiKey}`
+        })
     },
     sortByKey(list, key) {
       return list.sort(function(a, b) {
