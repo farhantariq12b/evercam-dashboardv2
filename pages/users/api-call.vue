@@ -58,23 +58,63 @@
                 <td class="col-8 caption">
                   <v-select
                     v-model="liveSelectedCamera"
-                    :items="cameras"
+                    :items="usercameras"
                     item-value="id"
                     item-text="name"
                     label="Cameras"
-                    class="caption height-50 caption"
+                    class="caption height-50 caption max-width-300"
                     @change="onSelectCamera"
                     return-object
                     solo
                   >
-                    <template slot="item" slot-scope="data">
-                      <v-list-item-content>
-                        <v-list-item-title
-                          class="caption"
-                          v-text="data.item.name"
-                          readonly
+                    <template v-slot:selection="data">
+                      <v-avatar 
+                        left
+                        :tile="true"
+                        class="pr-3"
+                        height="35px"
+                      >
+                        <v-img
+                          :src="
+                            data.item.thumbnail_url +
+                              '?api_id=' +
+                              userApiId +
+                              '&api_key=' +
+                              userApiKey
+                          "
                         />
-                      </v-list-item-content>
+                      </v-avatar>
+                      {{ data.item.name }}
+                    </template>
+                    <template v-slot:item="data">
+                      <template v-if="typeof data.item !== 'object'">
+                        <v-list-item-content v-text="data.item" />
+                      </template>
+                      <template v-else>
+                        <v-list-item-avatar
+                         :tile="true"
+                          height="35px"
+                          max-height="35px"
+                          class="mr-3"
+                        >
+                          <img
+                            :src="
+                              data.item.thumbnail_url +
+                                '?api_id=' +
+                                userApiId +
+                                '&api_key=' +
+                                userApiKey
+                            "
+                            height="35px"
+                          />
+                        </v-list-item-avatar>
+                        <v-list-item-content>
+                          <v-list-item-title 
+                            class="caption" 
+                            v-text="data.item.name"
+                          />
+                        </v-list-item-content>
+                      </template>
                     </template>
                   </v-select>
                 </td>
@@ -152,28 +192,71 @@
                 </td>
                 <td class="col-8 caption">
                   <v-select
-                    :items="cameras"
+                    :items="usercameras"
                     item-value="id"
                     item-text="name"
                     label="Cameras"
-                    class="caption height-50 caption"
+                    class="caption height-50 caption max-width-300"
                     @change="onSelectRecordedCamera"
                     :value="recordedSelectedCamera"
                     return-object
                     solo
                   >
-                    <template slot="item" slot-scope="data">
-                      <v-list-item-content>
-                        <v-list-item-title
-                          class="caption"
-                          v-text="data.item.name"
+                    <template v-slot:selection="data">
+                      <v-avatar 
+                        left
+                        :tile="true"
+                        class="pr-3"
+                        height="35px"
+                      >
+                        <v-img
+                          :src="
+                            data.item.thumbnail_url +
+                              '?api_id=' +
+                              userApiId +
+                              '&api_key=' +
+                              userApiKey
+                          "
                         />
-                      </v-list-item-content>
+                      </v-avatar>
+                      {{ data.item.name }}
+                    </template>
+                    <template v-slot:item="data">
+                      <template v-if="typeof data.item !== 'object'">
+                        <v-list-item-content v-text="data.item" />
+                      </template>
+                      <template v-else>
+                        <v-list-item-avatar
+                         :tile="true"
+                          height="35px"
+                          max-height="35px"
+                          class="mr-3"
+                        >
+                          <img
+                            :src="
+                              data.item.thumbnail_url +
+                                '?api_id=' +
+                                userApiId +
+                                '&api_key=' +
+                                userApiKey
+                            "
+                            height="35px"
+                          />
+                        </v-list-item-avatar>
+                        <v-list-item-content>
+                          <v-list-item-title 
+                            class="caption" 
+                            v-text="data.item.name"
+                          />
+                        </v-list-item-content>
+                      </template>
                     </template>
                   </v-select>
                 </td>
               </tr>
-              <tr>
+              <tr
+                class="height-50"
+              >
                 <td class="col-3 cam-label caption">
                   Date & Time
                 </td>
@@ -192,7 +275,7 @@
                   >
                     <v-text-field 
                       label="URL to Dash"
-                      class="col-12 float-left height-50 border-bottom pl-2 pt-4 caption"
+                      class="col-12 float-left height-45 border-bottom pl-3 pt-3 caption max-width-300"
                       :value="liveUrlToDash"
                       readonly
                       solo
@@ -276,13 +359,16 @@
   width: 30%;
 }
 
-.v-data-table__wrapper {
-  overflow-x: visible;
-  overflow-y: visible;
-}
-
 .height-50 {
   height: 50px;
+}
+
+.height-45 {
+  height: 45px;
+}
+
+.max-width-300 {
+  max-width: 300px;
 }
 
 .break-word {
@@ -304,8 +390,17 @@
   padding: 5px;
 }
 
+.date-time-picker {
+  position: absolute;
+  border-radius: 4px;
+  max-width: 80%;
+  z-index: 5;
+  margin-top: -24px;
+  max-width: 300px;
+}
+
 .border-bottom {
-  border-bottom: 1px solid #00000087;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
 }
 </style>
 
@@ -313,6 +408,7 @@
 import moment from "moment-timezone"
 import "vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css"
 import VueCtkDateTimePicker from "vue-ctk-date-time-picker"
+import { mapGetters } from "vuex"
 
 export default {
   name: "API",
@@ -322,7 +418,7 @@ export default {
   data () {
     return {
       liveSelectedCamera: [],
-      cameras: [],
+      usercameras: [],
       recordedSelectedCamera: [],
       cameraData: [],
       api_datetime: moment().format("YYYY-MM-DDTHH:mm:ss.sss"),
@@ -336,20 +432,31 @@ export default {
       urlToSnapshot: ''
     }
   },
+  computed: {
+    ...mapGetters(["cameras"])
+  },
   mounted() {
-    this.loadCameras()
     this.$axios
       .$get(process.env.API_URL + "auth/credentials")
       .then(response => {
         this.userApiId = response.api_id
         this.userApiKey = response.api_key
+        this.loadCameras()
       })
   },
   methods: {
     async loadCameras() {
-      const { data } = await this.$axios.get(`${process.env.API_URL}cameras`)
-      this.cameras = this.sortByKey(data.cameras, "name")
-      let c = data.cameras[0]
+      let myitems = []
+      this.cameras.forEach(function(camera) {
+        myitems.push({
+          name: camera.name,
+          id: camera.id,
+          timezone: camera.timezone,
+          thumbnail_url: camera.thumbnail_url
+        })
+      })
+      this.usercameras = myitems
+      let c = this.cameras[0]
       this.liveSelectedCamera = { name: c.name, id: c.id }
       this.recordedSelectedCamera = { name: c.name, id: c.id }
       this.onSelectCamera(c)
@@ -380,22 +487,6 @@ export default {
           this.urlToSnapshot = `There are no snapshots available for the selected period.`
           this.urlToDash = `https://dash2.evercam.io/v2/cameras/${this.cameraData.id}/recordings/snapshots/${date_time}?api_id=${this.userApiId}&api_key=${this.userApiKey}`
         })
-    },
-    sortByKey(list, key) {
-      return list.sort(function(a, b) {
-        var x, y
-        x = a[key]
-        y = b[key]
-        if (x < y) {
-          return -1
-        } else {
-          if (x > y) {
-            return 1
-          } else {
-            return 0
-          }
-        }
-      })
     }
   }
 }
