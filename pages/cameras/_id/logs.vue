@@ -35,11 +35,24 @@
               Date & Time
             </v-col>
             <v-col col="1" lg="10" md="10" sm="12" xs="12">
-              <v-row class="mx-0">
-                <v-col col="1" lg="1" md="1" class="caption">
+              <v-card
+                class="d-flex flex-row"
+                color="lighten-2"
+                flat
+                tile
+              >
+                <v-card
+                  class="pa-1 caption"
+                  flat
+                  tile
+                >
                   From:
-                </v-col>
-                <v-col col="2" lg="2" md="2">
+                </v-card>
+                <v-card
+                  class="pa-1"
+                  flat
+                  tile
+                >
                   <vue-ctk-date-time-picker
                     v-model="from_datetime"
                     class=""
@@ -53,12 +66,20 @@
                   >
                     <v-text-field class="caption mt-0 pt-0 border-bottom"/>
                   </vue-ctk-date-time-picker>
-                </v-col>
+                </v-card>
 
-                <v-col col="1" lg="1" md="1" class="caption">
+                <v-card
+                  class="pa-1 ml-2 caption"
+                  flat
+                  tile
+                >
                   To:
-                </v-col>
-                <v-col col="2" lg="2" md="2">
+                </v-card>
+                <v-card
+                  class="pa-1"
+                  flat
+                  tile
+                >
                   <vue-ctk-date-time-picker
                     v-model="to_datetime"
                     class=""
@@ -72,8 +93,8 @@
                   >
                     <v-text-field class="caption mt-0 pt-0 border-bottom"/>
                   </vue-ctk-date-time-picker>
-                </v-col>
-              </v-row>
+                </v-card>
+              </v-card>
             </v-col>
           </v-row>
           <v-row class="mx-0">
@@ -337,6 +358,7 @@
 
 .border-bottom {
   border-bottom: 1px solid #00000087;
+  color: #000000;
 }
 
 .details-table td {
