@@ -1,20 +1,41 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row class="mx-0">
+      <v-col col="12" lg="12">
+        <v-card>
+          <v-card-title class="caption">
+            <label class="subtitle-1">Camera Response Time:</label>
+            <span class="green--text pa-1 response-average">Average Success Response Time: {{ successResponse }}</span>
+            <span class="red--text pa-1 response-average">{{ failedRequests }}% Failed Requests</span>
+          </v-card-title>
+          <v-card-text>
+            <v-col
+              ref="livetail"
+              col="12"
+              lg="12"
+              class="disabled-textarea"
+              v-html="tail"
+            >
+            </v-col>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row class="mx-0">
       <v-col col="12">
         <v-card>
-          <v-row>
+          <v-row class="mx-0">
             <v-col
               col="1"
               lg="1"
               md="1"
               sm="12"
               xs="12"
-              class="label-margin subtitle-1">
+              class="subtitle-1">
               Date & Time
             </v-col>
             <v-col col="1" lg="10" md="10" sm="12" xs="12">
-              <v-row>
+              <v-row class="mx-0">
                 <v-col col="1" lg="1" md="1" class="caption">
                   From:
                 </v-col>
@@ -30,7 +51,7 @@
                     no-shortcuts
                     no-header
                   >
-                    <v-text-field class="caption remove-paddings"/>
+                    <v-text-field class="caption mt-0 pt-0 border-bottom"/>
                   </vue-ctk-date-time-picker>
                 </v-col>
 
@@ -49,20 +70,20 @@
                     no-header
                     no-label
                   >
-                    <v-text-field class="caption remove-paddings"/>
+                    <v-text-field class="caption mt-0 pt-0 border-bottom"/>
                   </vue-ctk-date-time-picker>
                 </v-col>
               </v-row>
             </v-col>
           </v-row>
-          <v-row>
+          <v-row class="mx-0">
             <v-col
               col="1"
               lg="1"
               md="1"
               sm="12"
               xs="12"
-              class="label-margin subtitle-1"
+              class="subtitle-1"
             >
               Filter By
             </v-col>
@@ -74,13 +95,13 @@
               sm="12"
               xs="12"
             >
-              <v-row>
+              <v-row class="mx-0">
                 <v-checkbox
                   v-model="chkAll"
                   label="ALL"
                   color="primary"
                   hide-details
-                  class="checkbox-margin mx-2 caption"
+                  class="mt-0 mx-2 caption"
                   @change="selectAll"
                 ></v-checkbox>
                 <v-checkbox
@@ -89,7 +110,7 @@
                   color="primary"
                   value="online,offline,vh status"
                   hide-details
-                  class="checkbox-margin mx-2"
+                  class="mt-0 mx-2"
                   @change="doSelectAll"
                 ></v-checkbox>
                 <v-checkbox
@@ -98,7 +119,7 @@
                   color="primary"
                   value="cloud recordings updated,cloud recordings created"
                   hide-details
-                  class="checkbox-margin mx-2"
+                  class="mt-0 mx-2"
                   @change="doSelectAll"
                 ></v-checkbox>
                 <v-checkbox
@@ -107,7 +128,7 @@
                   color="primary"
                   value="shared,updated share,stopped sharing"
                   hide-details
-                  class="checkbox-margin mx-2"
+                  class="mt-0 mx-2"
                   @change="doSelectAll"
                 ></v-checkbox>
                 <v-checkbox
@@ -116,7 +137,7 @@
                   color="primary"
                   value="archive created,archive deleted"
                   hide-details
-                  class="checkbox-margin mx-2"
+                  class="mt-0 mx-2"
                   @change="doSelectAll"
                 ></v-checkbox>
                 <v-checkbox
@@ -125,7 +146,7 @@
                   color="primary"
                   value="accessed,viewed,camera created,created,edited,camera edited,captured,vh status"
                   hide-details
-                  class="checkbox-margin mx-2"
+                  class="mt-0 mx-2"
                   @change="doSelectAll"
                 ></v-checkbox>
                 <v-checkbox
@@ -134,13 +155,13 @@
                   color="primary"
                   value="custom"
                   hide-details
-                  class="checkbox-margin mx-2"
+                  class="mt-0 mx-2"
                   @change="doSelectAll"
                 ></v-checkbox>
               </v-row>
 
               <br />
-              <v-row class="">
+              <v-row class="mx-0">
                 <v-btn
                   depressed
                   color="primary"
@@ -155,7 +176,7 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row class="mx-0">
       <v-col col="12">
         <v-data-table
           dense
@@ -306,27 +327,32 @@
 </template>
 
 <style scoped>
+.response-average {
+  font-weight: 600 !important;
+}
+
 .custom-note-css {
   background-color: #ffff0052;
 }
 
-.checkbox-margin {
-  margin-top: 0 !important;
-}
-
-.remove-paddings {
-  margin-top: 0 !important;
-  padding-top: 0 !important;
+.border-bottom {
   border-bottom: 1px solid #00000087;
-}
-
-.label-margin {
-  margin-top: 5px !important;
-  padding-left: 30px !important;
 }
 
 .details-table td {
   font-size: 0.75rem !important;
+}
+
+.disabled-textarea {
+  background-color: #fff;
+  border: solid 1px #e5e5e5;
+  color: #000 !important;
+  font-size: 0.75rem !important;
+  padding: 5px;
+  width: 100%;
+  height: 250px;
+  line-height: 1.8;
+  overflow-y: scroll;
 }
 </style>
 
@@ -334,6 +360,8 @@
 import moment from "moment-timezone"
 import "vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css"
 import VueCtkDateTimePicker from "vue-ctk-date-time-picker"
+import { Socket } from "phoenix-socket"
+import { mapGetters } from "vuex"
 
 export default {
   name: "Logs",
@@ -342,6 +370,16 @@ export default {
   },
   data() {
     return {
+      successResponse: "0.00",
+      failedRequests: "0.00",
+      errors: [],
+      success: [],
+      total_success: 0,
+      total_errors: 0,
+      sum: 0,
+      start_date: moment(),
+      offsetTop: 0,
+      tail: "",
       chkAll: false,
       selected: ["online,offline,vh status", "custom"],
       from_datetime: moment().subtract(60, "days").format("YYYY-MM-DDTHH:mm:ss"),
@@ -401,6 +439,19 @@ export default {
     return {
       logs: logs_list
     }
+  },
+  computed: {
+    ...mapGetters(["token"])
+  },
+  watch: {
+    $route() {
+      if (this.channel) {
+        this.channel.leave()
+      }
+    }
+  },
+  mounted() {
+    this.get_responses(true)
   },
   methods: {
     getEvent(log) {
@@ -605,6 +656,95 @@ export default {
         this.chkAll = true
       } else {
         this.chkAll = false
+      }
+    },
+    get_responses(is_update) {
+      this.$axios
+        .get(`${process.env.API_URL}cameras/${this.$route.params.id}/response-time`)
+        .then(response => {
+          if(response.data) {
+            this.arrange_datasets(response.data)
+          }
+          this.startLiveTail()
+        })
+    },
+    arrange_datasets (data) {
+      this.start_date = moment(data[0])
+      let start_index = 0
+      data.splice(0, 1)
+
+      while(start_index < data.length) {
+        let val = data[start_index + 1]
+        let date_time = moment(data[start_index]*1000)
+        let row = `<span>[${date_time.format('MM/DD/YYYY HH:mm:ss')}]</span> <span>${val}</span>`
+        if(val.indexOf("[Error]") >= 0) {
+          this.tail = `${this.tail}<div class='col-sm-12 pa-0 red--text'>${row}</div>`
+          this.errors.push(val)
+          this.success.push(0)
+          this.total_errors += 1
+        } else {
+          this.tail = `${this.tail}<div class='col-sm-12 pa-0'>${row}</div>`
+          this.success.push(val)
+          let response_time = parseFloat(val.split(" ")[1].replace("[", "").replace("]", ""))
+          this.sum += response_time
+          this.total_success += 1
+          this.errors.push(0)
+        }
+        start_index += 2
+      }
+
+      this.calculate_failed_percentage()
+      this.scrollToEnd()
+    },
+    calculate_failed_percentage() {
+      let curr_date_time = moment()
+      let minutes = curr_date_time.diff(this.start_date, 'minutes')
+      let failed_perc = (this.total_errors / (12 * minutes)) * 100
+
+      if(this.total_errors === 0) {
+        this.failedRequests = "0.00"
+      } else {
+        this.failedRequests = `${parseFloat(failed_perc).toFixed(2)}`
+      }
+
+      if(this.sum === 0) {
+        this.successResponse = "0.00"
+      } else {
+        this.successResponse = parseFloat(this.sum / this.total_success).toFixed(4)
+      }
+    },
+    startLiveTail() {
+      let socket = new Socket(process.env.SOCKET_URL, {
+        params: {
+          token: this.token,
+          ip: "1.1.1.1",
+          source: "live_tail"
+        }
+      })
+      socket.connect()
+      this.channel = socket.channel(`livetail:${this.$route.params.id}`, {})
+      this.channel.join()
+      this.channel.on("camera-response", payload => {
+        let timestamp = `<span>[${moment(payload.timestamp*1000).format('MM/DD/YYYY HH:mm:ss')}:]</span>`
+        let response_time = `<span>[${payload.response_time}]</span>`
+        let description = `<span>[${payload.description}]</span>`
+        if(payload.response_type === "ok") {
+          this.sum += payload.response_time
+          this.total_success += 1
+          this.tail = `${this.tail}<div class='col-sm-12 pa-0'>${timestamp} <span>[Snapshot]</span> ${response_time} ${description}</div>`
+        } else {
+          this.total_errors += 1
+          this.tail = `${this.tail}<div class='col-sm-12 red--text pa-0'>${timestamp} <span>[Error]</span>${response_time} <span>[${payload.response_type}]</span> ${description}</div>`
+        }
+
+        this.calculate_failed_percentage()
+        this.scrollToEnd()
+      })
+    },
+    scrollToEnd() {
+      let container = this.$refs.livetail
+      if(container && container.scrollHeight > 250) {
+        container.scrollTop = container.scrollHeight
       }
     }
   }
