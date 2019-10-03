@@ -443,10 +443,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["cameras"]),
-    is_large_only() {
-        return this.$vuetify.breakpoint.mdOnly
-    },
+    ...mapGetters(["cameras"])
   },
   mounted() {
     this.$axios
