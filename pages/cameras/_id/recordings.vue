@@ -14,8 +14,9 @@
         <v-icon>fas fa-times</v-icon>
       </v-btn>
     </v-snackbar>
-    <v-row no-gutters class="full-size">
-      <v-col cols="9">
+    <EditImage v-if="editImage" :image="currentSnapshot" :edit="editImage" @changeView="updateView"/>
+    <v-row v-else no-gutters class="full-size">
+      <v-col cols="10">
         <v-layout align-center justify-center class="player-size">
           <v-progress-circular
             v-if="isLoading"
@@ -32,7 +33,7 @@
             <v-btn dark fab small color="rgba(0, 0, 0, 0.65)">
               <v-icon>fas fa-download</v-icon>
             </v-btn>
-            <v-btn dark fab small color="rgba(0, 0, 0, 0.65)">
+            <v-btn dark fab small color="rgba(0, 0, 0, 0.65)" @click="editImage = true">
               <v-icon>fas fa-pencil-alt</v-icon>
             </v-btn>
           </div>
@@ -704,14 +705,17 @@ import listPlugin from "@fullcalendar/list"
 import momentPlugin from "@fullcalendar/moment"
 import "@fullcalendar/core/main.css"
 import "@fullcalendar/daygrid/main.css"
+import EditImage from "~/components/EditImage.vue"
 
 export default {
   name: "Live",
   components: {
     VueSlider,
-    FullCalendar
+    FullCalendar,
+    EditImage
   },
   data: () => ({
+    editImage: false,
     setSnapshot: null,
     snackbar: false,
     color: "",
@@ -893,6 +897,9 @@ export default {
   },
   beforeDestroy() {},
   methods: {
+    updateView(variable) {
+      this.editImage = variable
+    },
     go_to_get_snapshot() {
       this.isLoading = true
       if (this.selected_hour.length > 0) {
