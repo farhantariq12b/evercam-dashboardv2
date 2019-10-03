@@ -16,7 +16,7 @@
     </v-snackbar>
     <EditImage v-if="editImage" :image="currentSnapshot" :edit="editImage" @changeView="updateView"/>
     <v-row v-else no-gutters class="full-size">
-      <v-col cols="10">
+      <v-col cols="9">
         <v-layout align-center justify-center class="player-size">
           <v-progress-circular
             v-if="isLoading"
@@ -297,20 +297,15 @@
             <v-row>
               <v-col cols="6">
                 <v-btn text color="primary" width="100%" @click="firstFrame">
-                  <v-icon size="15">
-fas fa-chevron-left </v-icon
-                  ><v-icon size="15" class="pr-2"> fas fa-chevron-left
-</v-icon>First
+                  <v-icon size="15">fas fa-chevron-left </v-icon>
+                  <v-icon size="15" class="pr-2"> fas fa-chevron-left</v-icon>First
                 </v-btn>
               </v-col>
               <v-col cols="6">
                 <v-btn text color="primary" width="100%" @click="lastFrame">
                   Last
-                  <v-icon size="15" class="pl-2">
-fas fa-chevron-right </v-icon
-                  ><v-icon size="15">
-                    fas fa-chevron-right
-                  </v-icon>
+                  <v-icon size="15" class="pl-2">fas fa-chevron-right</v-icon>
+                  <v-icon size="15">fas fa-chevron-right</v-icon>
                 </v-btn>
               </v-col>
             </v-row>

@@ -294,10 +294,11 @@ export default {
             formData.append("to_date", date)
             this.$axios
                 .$post(
-                    `${process.env.API_URL}cameras/${this.$route.params.id}/archives`, formData, {
-                        headers: {
-                            "Content-Type": "multipart/form-data"
-                        }
+                    `${process.env.API_URL}cameras/${this.$route.params.id}/archives`, formData,
+                    {
+                      headers: {
+                        "Content-Type": "multipart/form-data"
+                      }
                     }
                 ).then(() => {
                     this.color = "success"
