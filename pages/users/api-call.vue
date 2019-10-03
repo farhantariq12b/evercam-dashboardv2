@@ -14,7 +14,7 @@
                 <td class="col-8 caption">
                   <v-text-field
                     label="API ID"
-                    class="col-4 height-50 float-left caption"
+                    class="height-50 float-left caption max-min-width-150"
                     :value="userApiId"
                     readonly
                     solo
@@ -27,7 +27,7 @@
                   </v-text-field>
                   <v-text-field
                     label="API KEY"
-                    class="col-8 height-50 float-left pl-1 caption"
+                    class="height-50 float-left pl-1 caption max-min-width-300"
                     :value="userApiKey"
                     readonly
                     solo
@@ -371,6 +371,16 @@
   max-width: 300px;
 }
 
+.max-min-width-300 {
+  max-width: 300px;
+  min-width: 200px; 
+}
+
+.max-min-width-150 {
+  max-width: 150px;
+  min-width: 150px; 
+}
+
 .break-word {
   word-break: break-word;
 }
@@ -433,7 +443,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["cameras"])
+    ...mapGetters(["cameras"]),
+    is_large_only() {
+        return this.$vuetify.breakpoint.mdOnly
+    },
   },
   mounted() {
     this.$axios
