@@ -1,11 +1,11 @@
 import qs from "qs";
 
 export const state = () => ({
+  snapmails: [],
+  snapmailById: [],
+  snapmailEditId: null,
   snapmailDialog: false,
   snapmailDialogType: 'create',
-  snapmailData: [],
-  snapmailDataById: [],
-  snapmailCardId: null,
 })
 
 export const mutations = {
@@ -15,72 +15,71 @@ export const mutations = {
   setSnapmailDialogType(state, payload) {
     state.snapmailDialogType = payload;
   },
-  setSnapmailData(state, payload) {
-    state.snapmailData = payload;
+  setSnapmails(state, payload) {
+    state.snapmails = payload;
   },
-  setSnapmailCardId(state, payload) {
-    state.snapmailCardId = payload;
+  setSnapmailEditId(state, payload) {
+    state.snapmailEditId = payload;
   },
-  setSnapmailDataById(state, payload) {
-    state.snapmailDataById = payload;
+  setSnapmailById(state, payload) {
+    state.snapmailById = payload;
   },
 }
 
 export const actions = {
-  async setSnapmailData({ commit }, payload) {
+  async createSnapmail({}, payload) {
     try {
-      const data = await this.$axios.$post(`${process.env.API_URL}snapmails`, payload);
+      await this.$axios.$post(`${process.env.API_URL}/snapmails`, payload);
     } catch (err) {
       console.log(err)
     }
   },
 
-  async fetchSnapmailData({ commit }) {
+  async getSnapmails({ commit }) {
     try {
-      const data = await this.$axios.$get(`${process.env.API_URL}snapmails`);
-      commit("setSnapmailData", data.snapmails);
+      const data = await this.$axios.$get(`${process.env.API_URL}/snapmails`);
+      commit("setSnapmails", data.snapmails);
     } catch (err) {
       console.log(err);
     }
   },
 
-  async fetchSnapmailDataById({ commit }, id) {
+  async getSnapmailById({ commit }, id) {
     try {
-      const data = await this.$axios.$get(`${process.env.API_URL}snapmails/${id}`);
-      commit("setSnapmailDataById", data.snapmails);
+      const data = await this.$axios.$get(`${process.env.API_URL}/snapmails/${id}`);
+      commit("setSnapmailById", data.snapmails);
     } catch (err) {
       console.log(err);
     }
   },
 
-  async deleteSnapmail({commit, dispatch }, id) {
+  async destroySnapmail({ dispatch }, id) {
     try {
-      const data = await this.$axios.$delete(`${process.env.API_URL}snapmails/${id}`);
-      dispatch('fetchSnapmailData');
+      await this.$axios.$delete(`${process.env.API_URL}/snapmails/${id}`);
+      dispatch('getSnapmails');
     }catch(error) {
       console.log(error);
     }
   },
 
-  async updateSnapmailData({dispatch}, payload) {
+  async updateSnapmail({}, payload) {
     try {
-      const data = await this.$axios.$patch(`${process.env.API_URL}snapmails/${payload.id}`, payload.data);
+      await this.$axios.$patch(`${process.env.API_URL}/snapmails/${payload.id}`, payload.data);
     }
     catch(error) {
       console.error(error);
     }
   },
 
-  async updatePauseStatus({dispatch}, payload) {
+  async updatePauseStatus({}, payload) {
     try {
-      const data = await this.$axios.$patch(`${process.env.API_URL}snapmails/${payload.id}`, {'is_paused':!payload.is_paused});
+      await this.$axios.$patch(`${process.env.API_URL}/snapmails/${payload.id}`, { 'is_paused': !payload.is_paused });
     }
     catch(error) {
       console.error(error);
     }
   },
 }
-
 
 export const getters = {
   getSnapmailDialog(state) {
@@ -89,13 +88,13 @@ export const getters = {
   getSnapmailDialogType(state) {
     return state.snapmailDialogType;
   },
-  getSnapmailData(state) {
-    return state.snapmailData;
+  getSnapmails(state) {
+    return state.snapmails;
   },
-  getSnapmailCardId(state) {
-    return state.snapmailCardId;
+  getSnapmailEditId(state) {
+    return state.snapmailEditId;
   },
-  getSnapmailDataById(state) {
-    return state.snapmailDataById;
+  getSnapmailById(state) {
+    return state.snapmailById;
   },
 }
