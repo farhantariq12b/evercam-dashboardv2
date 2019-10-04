@@ -3,7 +3,7 @@
     <v-card>
       <v-container>
         <v-row>
-          <v-col md="11" class="body-1 font-weight-medium">
+          <v-col md="11" class="body-1 font-weight-medium py-0">
             New Snapmail
           </v-col>
           <v-col md="1" class="mt-n2 pt-0">

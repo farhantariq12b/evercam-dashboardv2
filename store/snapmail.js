@@ -62,7 +62,7 @@ export const actions = {
     }
   },
 
-  async updateSnapmail({}, payload) {
+  async updateSnapmail({dispatch}, payload) {
     try {
       await this.$axios.$patch(`${process.env.API_URL}/snapmails/${payload.id}`, payload.data);
     }

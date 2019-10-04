@@ -8,7 +8,6 @@
       </v-tabs>
     </v-sheet>
     
-    <!----------------------------------- Snapmail Text ----------------------------------->
     <v-row v-if="snapmailsList.length == 0">
       <v-col md="5" class="mt-6 ml-4 body-2">
           Snapmail is a scheduled email that contains a snapshot from your camera. Include as many emails and cameras as you like.
@@ -28,8 +27,7 @@
       </v-col>
     </v-row>
 
-    <!----------------------------------- Snapmail Card ----------------------------------->
-    <div v-if="snapmailsList.length > 0">
+    <div v-else>
       <v-card
         v-for="(data, key) in snapmailsList"
         :key="key"
@@ -74,7 +72,7 @@
                 <span v-for="(day, dayKey) in days" :key="dayKey">
                   <v-chip small
                   :color="data.notify_days.find( notifyDay => day.value == notifyDay) ? '#428bca':'#fff'"
-                  :class="['mr-2 pa-0 mt-1 text-center day-border custom-chip',
+                  :class="['mr-2 pa-0 mt-1 day-border custom-chip',
                       (data.notify_days.find( notifyDay => day.value == notifyDay) ? ' white--text':'darken-4')]"
                   >{{day.text}}</v-chip>
                 </span>
@@ -89,13 +87,43 @@
             <v-icon size="16" class="mr-2" color="#428bca" @click="isPaused(data)" v-if="data.is_paused">fas fa-play</v-icon>
             <v-icon size="16" class="mr-2" color="#428bca" @click="isPaused(data)" v-else>fas fa-pause</v-icon>
             <v-icon size="16" class="mr-2" color="#428bca" @click="openDialog(true, 'edit', data.id)">fas fa-edit</v-icon>
-            <v-icon size="16" class="mr-2" color="#428bca" @click="removeSnapmail(data.id)">fas fa-trash-alt</v-icon>      
+            <v-menu
+                v-model="menus['menu'+key]"
+                :close-on-content-click="false"
+                :nudge-width="200"
+                offset-y
+              >
+                <template v-slot:activator="{ on }">
+                  <v-icon 
+                    size="16" 
+                    class="mr-2" 
+                    color="#428bca"
+                    v-on="on"
+                  >fas fa-trash-alt</v-icon>
+                </template>
+
+                <v-card class="pt-0 pl-2 pr-2 pb-2">
+                  <v-card-title class="body-1">
+                    Are you sure?
+                  </v-card-title>
+                  <v-card-actions>
+                    <v-btn
+                      class="width-117 text-capitalize"
+                      dark
+                      tile
+                      elevation="0"
+                      color="#428bca"
+                      @click="removeSnapmail(data.id, menus['menu'+key], key)">Yes, Remove</v-btn>
+                    <v-btn tile elevation="0" class="width-76" height="36" @click="menus['menu'+key] = false">No</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-menu>
+            <!-- <v-icon size="16" class="mr-2" color="#428bca" @click="removeSnapmail(data.id)">fas fa-trash-alt</v-icon> -->
           </v-col>
         </v-row>
       </v-card>
     </div>
       
-      <!----------------------------------- Snapmail Button ------------------------------->
       <v-btn
         class="mb-10 ml-4 text-capitalize"
         dark
@@ -105,7 +133,6 @@
         @click="openDialog(true, 'create', '')">
         Create a new Snapmail
       </v-btn>
-      <!----------------------------------- Snapmail Dialog ------------------------------->
       <SnapmailDialog v-if="dialog" />
   </v-container>
 </template>
@@ -120,6 +147,7 @@
     },
     data() {
       return {
+        menus: {},
         cycle: false,
         cameraNames: [],
         snapmailsList: {},
@@ -170,7 +198,7 @@
       },
 
       async isPaused(data) {
-        await this.updatePauseStatus({id: data.id, is_paused: data.is_paused});
+        await this.updatePauseStatus({ id: data.id, is_paused: data.is_paused });
         await this.getSnapmails();
       },
 
@@ -187,9 +215,11 @@
         await this.getSnapmails();
       },
 
-      removeSnapmail(id) {
+      removeSnapmail(id, menu, key) {
+        console.log(this.menus['menu'+key]);
+        this.menus['menu'+key] = false;
         this.destroySnapmail(id);
-      }
+      },
     },
     watch: {
       snapmails(val) {
@@ -208,7 +238,14 @@
     font-size: 12px;
     height: 24px;
     width: 24px;
-    line-height: 24px;
     display: inline-block;
+    line-height: 24px;
+    text-align: center;
+  }
+  .width-117 {
+    width: 117px;
+  }
+  .width-76 {
+    width: 76px;
   }
 </style>

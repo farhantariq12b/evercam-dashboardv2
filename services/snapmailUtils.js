@@ -14,7 +14,8 @@ export const formatToString = (data, email) => {
     let recipients    = data.recipients   !== null ? arrayToString(data.recipients)   : '';
     let notify_days   = data.notify_days  !== null ? arrayToString(data.notify_days)  : '';
     let notify_time   = data.notify_time;
-    snapmailData = {...snapmailData, camera_exids, recipients, subject, notify_days, notify_time};
+    let timezone      = data.timezone;
+    snapmailData = {...snapmailData, camera_exids, recipients, subject, notify_days, notify_time, timezone};
     return snapmailData;
 }
 
@@ -25,6 +26,7 @@ export const formatToArray = (data) => {
         let recipients    = d.recipients   !== null ? stringToArray(d.recipients)        : '';
         let notify_days   = d.notify_days  !== null ? stringToArray(d.notify_days)       : '';
         let notify_time   = d.notify_time;
+        let timezone      = d.timezone;
         data[i] = {...data[i], camera_ids, camera_names, recipients, notify_days};
     });
     return data;

@@ -1,24 +1,31 @@
 <template>
-	<v-combobox
-    v-model="recipients"
-    multiple
-    chips
-    outlined
-    height="20"
-    @change="selectedRecipients"
-  >
-    <template v-slot:selection="data">
-      <v-chip
-        :key="JSON.stringify(data.item)"
-        v-bind="data.attrs"
-        :input-value="data.selected"
-        :disabled="data.disabled"
-        @click:close="data.parent.selectItem(data.item)"
+	<div>
+    <ValidationProvider name="Recipient" rules="required|email" v-slot="{ errors }">
+      <v-combobox
+        v-model="recipients"
+        multiple
+        chips
+        outlined
+        height="20"
+        @change="selectedRecipients"
+        class="custom-height mb-0 pb-0"
       >
-        {{ data.item }}
-      </v-chip>
-    </template>
-  </v-combobox>
+        <template v-slot:selection="data">
+          <v-chip
+            :key="JSON.stringify(data.item)"
+            v-bind="data.attrs"
+            :input-value="data.selected"
+            :disabled="data.disabled"
+            @click:close="data.parent.selectItem(data.item)"
+          >
+            {{ data.item }}
+          </v-chip>
+        </template>
+      </v-combobox>
+      <p>{{ errors[0] }}</p>
+    </ValidationProvider>
+  </div>
+
 </template>
 <script>
   export default {
@@ -35,3 +42,8 @@
     }
   }
 </script>
+<style>
+  .custom-height {
+    height: 56px !important;
+  }
+</style>

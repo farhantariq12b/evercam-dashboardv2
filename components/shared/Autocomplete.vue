@@ -1,63 +1,56 @@
 <template>
   <div>
-  	<ValidationProvider name="cameras" rules="required">
-      <div slot-scope="{ errors }">
-        <v-autocomplete
-            v-model="camera_ids"
-            :items="cameras"
-            @change="selectedCameras"
-            chips
-            label="Select Cameras"
-            item-text="name"
-            item-value="id"
-            multiple
-            outlined
-            dense
-            small-chips
-          >
-            <template v-slot:selection="data">
-              <v-chip
-                v-bind="data.attrs"
-                :input-value="data.selected"
-                close
-                @click="data.select"
-                @click:close="remove(data.item)"
-              >
-                <v-avatar left>
-                  <v-img :src="`${data.item.thumbnail_url}?authorization=${token}`"></v-img>
-                </v-avatar>
-                {{ data.item.name }}
-              </v-chip>
+  	<ValidationProvider name="Camera" rules="required" v-slot="{ errors }">
+      <v-autocomplete
+          v-model="camera_ids"
+          :items="cameras"
+          @change="selectedCameras"
+          chips
+          label="Select Cameras"
+          item-text="name"
+          item-value="id"
+          multiple
+          outlined
+          dense
+          small-chips
+          class="custom-height"
+        >
+          <template v-slot:selection="data">
+            <v-chip
+              v-bind="data.attrs"
+              :input-value="data.selected"
+              close
+              @click="data.select"
+              @click:close="remove(data.item)"
+            >
+              <v-avatar left>
+                <v-img :src="`${data.item.thumbnail_url}?authorization=${token}`"></v-img>
+              </v-avatar>
+              {{ data.item.name }}
+            </v-chip>
+          </template>
+          <template v-slot:item="data">
+            <template v-if="typeof data.item !== 'object'">
+              <v-list-item-content v-text="data.item"></v-list-item-content>
             </template>
-            <template v-slot:item="data">
-              <template v-if="typeof data.item !== 'object'">
-                <v-list-item-content v-text="data.item"></v-list-item-content>
-              </template>
-              <template v-else>
-                <v-list-item-avatar>
-                  <img :src="`${data.item.thumbnail_url}?authorization=${token}`">
-                </v-list-item-avatar>
-                <v-list-item-content>
-                  <v-list-item-title v-html="data.item.name"></v-list-item-title>
-                </v-list-item-content>
-              </template>
+            <template v-else>
+              <v-list-item-avatar>
+                <img :src="`${data.item.thumbnail_url}?authorization=${token}`">
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title v-html="data.item.name"></v-list-item-title>
+              </v-list-item-content>
             </template>
-        </v-autocomplete>
+          </template>
+      </v-autocomplete>
       <p>{{ errors[0] }}</p>
-      </div>
     </ValidationProvider>
-
-      
   </div>
 </template>
 <script>
   import { mapActions, mapMutations, mapGetters } from 'vuex';
-  import { ValidationProvider } from 'vee-validate';
 
   export default {
-    components: {
-      ValidationProvider
-    },
     props: ['camera_exids'],
     data() {
       return {
@@ -82,3 +75,8 @@
     }
   }
 </script>
+<style>
+  .custom-height {
+    height: 65px !important;
+  }
+</style>
