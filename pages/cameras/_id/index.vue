@@ -1,7 +1,12 @@
 <template>
-  <v-layout >
-    <EditImage v-if="editImage" :image="currentSnapshot" :edit="editImage" @changeView="updateView"/>
-    <v-layout align-center justify-center v-else>
+  <v-layout>
+    <EditImage
+      v-if="editImage"
+      :image="currentSnapshot"
+      :edit="editImage"
+      @changeView="updateView"
+    />
+    <v-layout v-else align-center justify-center>
       <v-progress-circular
         v-if="isLoading"
         :size="80"
@@ -50,7 +55,16 @@
         <v-btn dark fab small color="rgba(0, 0, 0, 0.65)">
           <v-icon>fas fa-download</v-icon>
         </v-btn>
-        <v-btn dark fab small color="rgba(0, 0, 0, 0.65)" @click="editImage = true; stopJpegStream()">
+        <v-btn
+          dark
+          fab
+          small
+          color="rgba(0, 0, 0, 0.65)"
+          @click="
+            editImage = true
+            stopJpegStream()
+          "
+        >
           <v-icon>fas fa-pencil-alt</v-icon>
         </v-btn>
         <v-btn dark fab small color="rgba(0, 0, 0, 0.65)">

@@ -2,13 +2,20 @@
   <v-form>
     <v-container>
       <v-row>
-        <v-col cols="12" lg="5" md="5" sm="12" xs="12" class="password-column ml-4 mt-5">
+        <v-col
+          cols="12"
+          lg="5"
+          md="5"
+          sm="12"
+          xs="12"
+          class="password-column ml-4 mt-5"
+        >
           <v-text-field
             v-model="currentPassword"
             label="Current Password"
             type="password"
             required
-          ></v-text-field>
+          />
           <ValidationObserver>
             <ValidationProvider rules="required" vid="confirmation">
               <v-text-field
@@ -16,7 +23,7 @@
                 label="New Password"
                 type="password"
                 required
-              ></v-text-field>
+              />
             </ValidationProvider>
             <ValidationProvider rules="required|confirmed:confirmation">
               <v-text-field
@@ -30,10 +37,7 @@
               />
             </ValidationProvider>
           </ValidationObserver>
-          <v-btn
-            color="primary"
-            class="button-margin-left mt-5"
-          >
+          <v-btn color="primary" class="button-margin-left mt-5">
             Change Password
           </v-btn>
         </v-col>
@@ -42,8 +46,7 @@
   </v-form>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
 
 <script>
 import {
@@ -54,14 +57,14 @@ import {
 export default {
   name: "Password",
   components: {
-  ValidationProvider,
-  ValidationObserver
+    ValidationProvider,
+    ValidationObserver
   },
-  data () {
+  data() {
     return {
-      currentPassword: '',
-      newPassword: '',
-      confirmPassword: ''
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: ""
     }
   }
 }

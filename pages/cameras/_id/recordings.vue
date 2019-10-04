@@ -14,7 +14,12 @@
         <v-icon>fas fa-times</v-icon>
       </v-btn>
     </v-snackbar>
-    <EditImage v-if="editImage" :image="currentSnapshot" :edit="editImage" @changeView="updateView"/>
+    <EditImage
+      v-if="editImage"
+      :image="currentSnapshot"
+      :edit="editImage"
+      @changeView="updateView"
+    />
     <v-row v-else no-gutters class="full-size">
       <v-col cols="9">
         <v-layout align-center justify-center class="player-size">
@@ -33,7 +38,13 @@
             <v-btn dark fab small color="rgba(0, 0, 0, 0.65)">
               <v-icon>fas fa-download</v-icon>
             </v-btn>
-            <v-btn dark fab small color="rgba(0, 0, 0, 0.65)" @click="editImage = true">
+            <v-btn
+              dark
+              fab
+              small
+              color="rgba(0, 0, 0, 0.65)"
+              @click="editImage = true"
+            >
               <v-icon>fas fa-pencil-alt</v-icon>
             </v-btn>
           </div>
@@ -297,15 +308,22 @@
             <v-row>
               <v-col cols="6">
                 <v-btn text color="primary" width="100%" @click="firstFrame">
-                  <v-icon size="15">fas fa-chevron-left </v-icon>
-                  <v-icon size="15" class="pr-2"> fas fa-chevron-left</v-icon>First
+                  <v-icon size="15">
+                    fas fa-chevron-left
+                  </v-icon>
+                  <v-icon size="15" class="pr-2"> fas fa-chevron-left
+</v-icon>First
                 </v-btn>
               </v-col>
               <v-col cols="6">
                 <v-btn text color="primary" width="100%" @click="lastFrame">
                   Last
-                  <v-icon size="15" class="pl-2">fas fa-chevron-right</v-icon>
-                  <v-icon size="15">fas fa-chevron-right</v-icon>
+                  <v-icon size="15" class="pl-2">
+                    fas fa-chevron-right
+                  </v-icon>
+                  <v-icon size="15">
+                    fas fa-chevron-right
+                  </v-icon>
                 </v-btn>
               </v-col>
             </v-row>
@@ -709,103 +727,105 @@ export default {
     FullCalendar,
     EditImage
   },
-  data: () => ({
-    editImage: false,
-    setSnapshot: null,
-    snackbar: false,
-    color: "",
-    mode: "",
-    text: "",
-    timeout: 3000,
-    y: "top",
-    totalImageFileSize: "",
-    monthlyImageFileSize: "",
-    imageSize: "",
-    imageDimensions: "",
-    dialogInfo: false,
-    dialogSchedule: false,
-    selected_status: "",
-    selected_schedule: [],
-    plugins: [
-      interactionPlugin,
-      dayGridPlugin,
-      timeGridPlugin,
-      listPlugin,
-      momentPlugin
-    ],
-    axisFormat: "HH",
-    defaultView: "timeGridWeek",
-    allDaySlot: false,
-    slotDuration: "00:60:00",
-    columnFormat: "dddd",
-    columnHeaderFormat: { weekday: "short" },
-    defaultDate: "1970-01-01",
-    dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-    eventLimit: true,
-    eventOverlap: false,
-    eventColor: "#458CC7",
-    firstDay: 1,
-    height: "auto",
-    selectHelper: true,
-    selectable: true,
-    timezone: "UTC",
-    header: {
-      left: "",
-      center: "",
-      right: ""
-    },
-    editable: true,
-    events: null,
-    edit_status: false,
-    edit_duration: false,
-    edit_frequency: false,
-    op_status: [
-      { value: "on", text: "Continuous" },
-      { value: "off", text: "Off" },
-      { value: "pause", text: "Paused" },
-      { value: "on-scheduled", text: "On Schedule" }
-    ],
-    op_duration: [
-      { value: 1, text: "Infinity" },
-      { value: 7, text: "24 hours recording" },
-      { value: 30, text: "7 days recording" },
-      { value: 90, text: "30 days recording" },
-      { value: -1, text: "90 days recording" }
-    ],
-    op_frequency: [
-      { value: 60, text: "60 (1 per second)" },
-      { value: 30, text: "30 (1 every 2 second)" },
-      { value: 12, text: "12 (1 every 5 second)" },
-      { value: 6, text: "6 (1 every 10 second)" },
-      { value: 1, text: "1 (1 every 60 second)" },
-      { value: 5, text: "1 (1 every 5 minutes)" },
-      { value: 10, text: "1 (1 every 10 minutes)" }
-    ],
-    recordings: [],
-    hasRight: false,
-    interval: 1,
-    menu3: false,
-    menu2: false,
-    title: "",
-    duration: null,
-    date: new Date().toISOString().substr(0, 10),
-    time: new Date().getHours() + ":00",
-    dialog: false,
-    isPlaying: false,
-    value: 0,
-    formatter1: v => this.getString(v),
-    selected_hour: [],
-    count: 1,
-    publicPath: process.env.BASE_URL,
-    currentSnapshot: [],
-    isLoading: true,
-    disabledDays: [],
-    allowedHours: [],
-    datePicker: moment().format("YYYY-MM-DD"),
-    timePicker: moment().format("HH:mm"),
-    pickerDate: null,
-    buttonActive: 0
-  }),
+  data: function() {
+    return {
+      editImage: false,
+      setSnapshot: null,
+      snackbar: false,
+      color: "",
+      mode: "",
+      text: "",
+      timeout: 3000,
+      y: "top",
+      totalImageFileSize: "",
+      monthlyImageFileSize: "",
+      imageSize: "",
+      imageDimensions: "",
+      dialogInfo: false,
+      dialogSchedule: false,
+      selected_status: "",
+      selected_schedule: [],
+      plugins: [
+        interactionPlugin,
+        dayGridPlugin,
+        timeGridPlugin,
+        listPlugin,
+        momentPlugin
+      ],
+      axisFormat: "HH",
+      defaultView: "timeGridWeek",
+      allDaySlot: false,
+      slotDuration: "00:60:00",
+      columnFormat: "dddd",
+      columnHeaderFormat: { weekday: "short" },
+      defaultDate: "1970-01-01",
+      dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+      eventLimit: true,
+      eventOverlap: false,
+      eventColor: "#458CC7",
+      firstDay: 1,
+      height: "auto",
+      selectHelper: true,
+      selectable: true,
+      timezone: "UTC",
+      header: {
+        left: "",
+        center: "",
+        right: ""
+      },
+      editable: true,
+      events: null,
+      edit_status: false,
+      edit_duration: false,
+      edit_frequency: false,
+      op_status: [
+        { value: "on", text: "Continuous" },
+        { value: "off", text: "Off" },
+        { value: "pause", text: "Paused" },
+        { value: "on-scheduled", text: "On Schedule" }
+      ],
+      op_duration: [
+        { value: 1, text: "Infinity" },
+        { value: 7, text: "24 hours recording" },
+        { value: 30, text: "7 days recording" },
+        { value: 90, text: "30 days recording" },
+        { value: -1, text: "90 days recording" }
+      ],
+      op_frequency: [
+        { value: 60, text: "60 (1 per second)" },
+        { value: 30, text: "30 (1 every 2 second)" },
+        { value: 12, text: "12 (1 every 5 second)" },
+        { value: 6, text: "6 (1 every 10 second)" },
+        { value: 1, text: "1 (1 every 60 second)" },
+        { value: 5, text: "1 (1 every 5 minutes)" },
+        { value: 10, text: "1 (1 every 10 minutes)" }
+      ],
+      recordings: [],
+      hasRight: false,
+      interval: 1,
+      menu3: false,
+      menu2: false,
+      title: "",
+      duration: null,
+      date: new Date().toISOString().substr(0, 10),
+      time: new Date().getHours() + ":00",
+      dialog: false,
+      isPlaying: false,
+      value: 0,
+      formatter1: v => this.getString(v),
+      selected_hour: [],
+      count: 1,
+      publicPath: process.env.BASE_URL,
+      currentSnapshot: [],
+      isLoading: true,
+      disabledDays: [],
+      allowedHours: [],
+      datePicker: moment().format("YYYY-MM-DD"),
+      timePicker: moment().format("HH:mm"),
+      pickerDate: null,
+      buttonActive: 0
+    }
+  },
   computed: {
     ...mapGetters(["token"]),
     selected_camera: function() {
