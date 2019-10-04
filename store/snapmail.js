@@ -24,11 +24,6 @@ export const mutations = {
   setSnapmailDataById(state, payload) {
     state.snapmailDataById = payload;
   },
-  deleteSnapmail(state, id){
-   let index = state.snapmailData.findIndex(snapmail => snapmail.id == id)
-   state.snapmailData.splice(index, 1)
-
-  }
 }
 
 export const actions = {
@@ -61,7 +56,6 @@ export const actions = {
   async deleteSnapmail({commit, dispatch }, id) {
     try {
       const data = await this.$axios.$delete(`${process.env.API_URL}snapmails/${id}`);
-      commit("deleteSnapmail", id);
       dispatch('fetchSnapmailData');
     }catch(error) {
       console.log(error);

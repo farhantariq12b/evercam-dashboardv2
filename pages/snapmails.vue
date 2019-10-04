@@ -35,7 +35,7 @@
         :key="key"
         elevation="2"
         max-width="340"
-        class="mt-10 ml-10 d-inline-block"
+        class="mt-6 ml-4 mb-8 d-inline-block"
       >
 
         <v-carousel
@@ -48,12 +48,11 @@
           height="213"
         >
 
-          <v-carousel-item
-            v-for="(camera, i) in data.camera_ids"
-            :key="i"
-          >
-            
+          <v-carousel-item v-for="(camera, i) in data.camera_ids" :key="i">
             <v-img :src="`${cameras.filter(cam => cam.id == camera).map((cam) => cam.thumbnail_url)}?authorization=${token}`" />
+            <div class="text-center caption font-weight-regular">
+              <span>{{data.camera_names[i]}}</span>
+            </div>
           </v-carousel-item>
         </v-carousel>
         
@@ -75,8 +74,8 @@
                 <span v-for="(day, dayKey) in days" :key="dayKey">
                   <v-chip small
                   :color="data.notify_days.find( notifyDay => day.value == notifyDay) ? '#428bca':'#fff'"
-                  :class="data.notify_days.find( notifyDay => day.value == notifyDay) ? 'white--text day-border mr-2 pa-2':'darken-4 day-border mr-2 pa-2'"
-
+                  :class="['mr-2 pa-0 mt-1 text-center day-border custom-chip',
+                      (data.notify_days.find( notifyDay => day.value == notifyDay) ? ' white--text':'darken-4')]"
                   >{{day.text}}</v-chip>
                 </span>
               </v-list-item-subtitle>
@@ -99,7 +98,7 @@
       
       <!----------------------------------- Snapmail Button ----------------------------------->
       <v-btn
-        class=" ml-4 text-capitalize"
+        class="mb-10 ml-4 text-capitalize"
         dark
         tile
         elevation="0"
@@ -191,11 +190,24 @@
         this.deleteSnapmail(id);
       }
     },
+    watch: {
+      snapmailsData(val) {
+        this.formatData(val);
+      }
+    }
   }
 </script>
 
 <style>
   .day-border {
     border:  1px solid #428bca !important;
+  }
+  .custom-chip {
+    border-radius: 24px;
+    font-size: 12px;
+    height: 24px;
+    width: 24px;
+    line-height: 24px;
+    display: inline-block;
   }
 </style>
