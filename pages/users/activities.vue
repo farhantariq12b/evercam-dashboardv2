@@ -51,7 +51,7 @@
                     depressed
                     small
                     color="primary"
-                    class="button-margin-left"
+                    class="button-margin-left caption"
                     @click="filterLog"
                   >
                     Filter

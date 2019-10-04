@@ -37,7 +37,10 @@
               />
             </ValidationProvider>
           </ValidationObserver>
-          <v-btn color="primary" class="button-margin-left mt-5">
+          <v-btn
+            color="primary"
+            class="button-margin-left mt-5 caption"
+          >
             Change Password
           </v-btn>
         </v-col>

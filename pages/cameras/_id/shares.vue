@@ -370,7 +370,7 @@
               <v-btn
                 depressed
                 color="primary"
-                class="button-margin-left"
+                class="button-margin-left caption"
                 @click="createShare"
               >
                 Share
