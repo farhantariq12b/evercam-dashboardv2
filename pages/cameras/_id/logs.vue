@@ -837,22 +837,6 @@ export default {
       if (container && container.scrollHeight > 250) {
         container.scrollTop = container.scrollHeight
       }
-    },
-    loadTheChange(name,oldValue,newValue) {
-      console.log(oldValue)
-      console.log(newValue)
-      if(oldValue == newValue) {
-        return
-          `<td>${name}</td>
-          <td>${oldValue}</td>
-          <td>${newValue}</td>`
-      }
-      else {
-        return 
-          `<td>${name}</td>
-          <td style='background-color:yellow;'>${oldValue}</td>
-          <td style='background-color:yellow;'>${newValue}</td>`
-      }
     }
   }
 }
