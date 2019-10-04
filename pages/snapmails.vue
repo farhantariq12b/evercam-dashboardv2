@@ -1,16 +1,16 @@
 <template>
-  <v-container class="grey lighten-5">
-    <v-sheet class="tabs" elevation="1">
+  <v-container class="white lighten-5">
+    <v-sheet elevation="1">
       <v-tabs>
-        <v-tab>
+        <v-tab class="text-capitalize body-2">
           Snapmail - Scheduled Emails
         </v-tab>
       </v-tabs>
     </v-sheet>
     
     <!----------------------------------- Snapmail Text ----------------------------------->
-    <v-row v-if="snapmailsData.length == 0">
-      <v-col md="6" class="mt-8 ml-4">
+    <v-row v-if="snapmails.length == 0">
+      <v-col md="5" class="mt-6 ml-4 body-2">
           Snapmail is a scheduled email that contains a snapshot from your camera. Include as many emails and cameras as you like.
           <br/><br/>
           This clever feature sends you up-to-date, high-resolution images direct to your inbox.
@@ -20,7 +20,7 @@
           Now everyone is updated, and you haven’t left your desk.
       </v-col>
       <v-col>
-        <v-img 
+        <v-img class="mt-6" 
           :src="require('~/assets/snapmails.jpg')"
           max-width="280"
         >  
@@ -29,26 +29,31 @@
     </v-row>
 
     <!----------------------------------- Snapmail Card ----------------------------------->
-    <div v-if="snapmailsData.length > 0">
+    <div v-if="snapmails.length > 0">
       <v-card
-        v-for="(data, key) in snapmailsData"
+        v-for="(data, key) in snapmails"
         :key="key"
         elevation="2"
         max-width="340"
         class="mt-10 ml-10 d-inline-block"
       >
+
         <v-carousel
           :continuous="false"
           :cycle="cycle"
+          interval="2000"
+          reverse
           :show-arrows="false"
           hide-delimiter-background
           height="213"
         >
+
           <v-carousel-item
-            v-for="(camera, i) in data.camera_exids"
+            v-for="(camera, i) in data.camera_ids"
             :key="i"
           >
-            <v-img v-if="cameras[i].id == camera" :src="`${cameras[i].thumbnail_url}?authorization=${token}`" />
+            
+            <v-img :src="`${cameras.filter(cam => cam.id == camera).map((cam) => cam.thumbnail_url)}?authorization=${token}`" />
           </v-carousel-item>
         </v-carousel>
         
@@ -56,22 +61,23 @@
           <v-list-item>
             <v-list-item-content>
               <v-list-item-subtitle>
-                <v-icon>fas fa-clock</v-icon>
-                {{data.notify_time.hours    < 9 ? `0${data.notify_time.hours}`  :data.notify_time.hours}}:
-                {{data.notify_time.minutes  < 9 ? `0${data.notify_time.minutes}`:data.notify_time.minutes }} 
-                {{data.timezone}}
+                <v-icon size="14" color="#aaa" class="mr-3">fas fa-clock</v-icon>
+                {{data.notify_time}} {{data.timezone}}
               </v-list-item-subtitle>
 
               <v-list-item-subtitle>
-                <v-icon>fas fa-users</v-icon>
-                <span v-for="(email) in data.recipients">{{email}}, </span>
+                <v-icon size="14" color="#aaa" class="mr-3">fas fa-users</v-icon>
+                <span v-for="(email, emailKey) in data.recipients" :key="emailKey">{{email}}, </span>
               </v-list-item-subtitle>
 
               <v-list-item-subtitle>
-                <v-icon>fas fa-calendar-alt</v-icon>
+                <v-icon size="14" color="#aaa" class="mr-3">fas fa-calendar-alt</v-icon>
                 <span v-for="(day, dayKey) in days" :key="dayKey">
+                  <v-chip small
+                  :color="data.notify_days.find( notifyDay => day.value == notifyDay) ? '#428bca':'#fff'"
+                  :class="data.notify_days.find( notifyDay => day.value == notifyDay) ? 'white--text day-border mr-2 pa-2':'darken-4 day-border mr-2 pa-2'"
 
-                  <v-chip :color="data.notify_days.find( notifyDay => day.value == notifyDay) ? 'primary':''">{{day.text}}</v-chip>
+                  >{{day.text}}</v-chip>
                 </span>
               </v-list-item-subtitle>
             </v-list-item-content>
@@ -80,24 +86,36 @@
 
         <v-row>
           <v-col class="text-right">
-            <v-icon>fas fa-clone</v-icon>
-            <v-icon>fas fa-pause</v-icon>
-            <v-icon>fas fa-edit</v-icon>
-            <v-icon>fas fa-trash-alt</v-icon>
+            <v-icon size="16" class="mr-2" color="#428bca" @click="cloneSnapmail(data)">fas fa-clone</v-icon>
+            <v-icon size="16" class="mr-2" color="#428bca" @click="isPaused(data)" v-if="data.is_paused">fas fa-play</v-icon>
+            <v-icon size="16" class="mr-2" color="#428bca" @click="isPaused(data)" v-else>fas fa-pause</v-icon>
+            <v-icon size="16" class="mr-2" color="#428bca" @click="openDialog(true, 'edit', data.id)">fas fa-edit</v-icon>
+            <v-icon size="16" class="mr-2" color="#428bca" @click="removeSnapmail(data.id)">fas fa-trash-alt</v-icon>      
           </v-col>
         </v-row>
       </v-card>
+      <!------------------------------------------- Close Modal Button ------------------------------------------->
     </div>
       
       <!----------------------------------- Snapmail Button ----------------------------------->
-      <v-btn color="primary" class="mt-10 ml-10" dark @click="setSnapmailDialog(true)">Create a new Snapmail</v-btn>
+      <v-btn
+        class=" ml-4 text-capitalize"
+        dark
+        tile
+        elevation="0"
+        color="#428bca"
+        @click="openDialog(true, 'create', '')">
+        Create a new Snapmail
+      </v-btn>
       <!----------------------------------- Snapmail Dialog ----------------------------------->
-      <SnapmailDialog :cameras="cameras" />
+      <SnapmailDialog v-if="dialog" />
   </v-container>
 </template>
 <script>
-  import { mapGetters, mapMutations } from 'vuex';
+  import { mapGetters, mapMutations, mapActions } from 'vuex';
+  import { getCameraNameArray, reformatDataService, formatToReformatForApi } from '@/services/snapmailUtils';
   import SnapmailDialog from '@/components/SnapmailDialog';
+
   export default {
     components: {
       SnapmailDialog
@@ -105,28 +123,79 @@
     data () {
       return {
         cycle: false,
+        cameraNames: [],
+        snapmails: {},
         days: [
-          {id: 1, value: 'Mo', text: 'M'},
-          {id: 2, value: 'Tu', text: 'T'},
-          {id: 3, value: 'We', text: 'W'},
-          {id: 4, value: 'Th', text: 'T'},
-          {id: 5, value: 'Fr', text: 'F'},
-          {id: 6, value: 'Sa', text: 'S'},
-          {id: 7, value: 'Su', text: 'S'},
+          {id: 1, value: 'Monday', text: 'M'},
+          {id: 2, value: 'Tuesday', text: 'T'},
+          {id: 3, value: 'Wednesday', text: 'W'},
+          {id: 4, value: 'Thursday', text: 'T'},
+          {id: 5, value: 'Friday', text: 'F'},
+          {id: 6, value: 'Saturday', text: 'S'},
+          {id: 7, value: 'Sunday', text: 'S'},
         ],
       }
+    },
+    created() {
+      this.fetchSnapmailData();
+      this.formatData(this.snapmailsData);
+      this.getCameraNames();
     },
     computed: {
       ...mapGetters({
         cameras: 'cameras',
+        email: 'email',
         token: 'token',
-        snapmailsData: 'common/getSnapmailData',
-      })
+        dialog: 'snapmail/getSnapmailDialog',
+        snapmailsData: 'snapmail/getSnapmailData',
+      }),
     },
     methods: {
       ...mapMutations({
-        setSnapmailDialog: 'common/setSnapmailDialog',
+        setSnapmailDialog: 'snapmail/setSnapmailDialog',
+        setSnapmailDialogType: 'snapmail/setSnapmailDialogType',
+        setSnapmailCardId: 'snapmail/setSnapmailCardId',
       }),
+      ...mapActions({
+        fetchSnapmailData: 'snapmail/fetchSnapmailData',
+        deleteSnapmail: 'snapmail/deleteSnapmail',
+        setSnapmailData: 'snapmail/setSnapmailData',
+        updatePauseStatus: 'snapmail/updatePauseStatus',
+      }),
+
+      openDialog(bool, type, id) {
+        this.setSnapmailCardId(id);
+        this.setSnapmailDialog(bool);
+        this.setSnapmailDialogType(type);
+      },
+
+      async isPaused(data) {
+        await this.updatePauseStatus({id: data.id, is_paused: data.is_paused});
+        await this.fetchSnapmailData();
+      },
+
+      formatData(data) {
+        this.snapmails = reformatDataService(data);
+      },
+
+      async getCameraNames() {
+        this.cameraNames = getCameraNameArray(this.cameras);
+      },
+
+      async cloneSnapmail(data) {
+        await this.setSnapmailData(formatToReformatForApi(data, this.email));
+        await this.fetchSnapmailData();
+      },
+
+      removeSnapmail(id) {
+        this.deleteSnapmail(id);
+      }
     },
   }
 </script>
+
+<style>
+  .day-border {
+    border:  1px solid #428bca !important;
+  }
+</style>

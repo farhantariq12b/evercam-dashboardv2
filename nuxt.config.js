@@ -49,6 +49,7 @@ export default {
   plugins: [
     "~/plugins/vuetify",
     { src: "~plugins/vimeo-player", ssr: false },
+    { src: "~plugins/timepicker", },
     "~/plugins/axios",
     { src: "~plugins/vue-konva", ssr: false },
     "@/plugins/google-maps",
