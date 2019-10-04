@@ -32,7 +32,7 @@
           </ValidationObserver>
           <v-btn
             color="primary"
-            class="button-margin-left mt-5"
+            class="button-margin-left mt-5 caption"
           >
             Change Password
           </v-btn>
