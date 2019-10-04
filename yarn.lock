@@ -1099,6 +1099,13 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
+"@toast-ui/vue-image-editor@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@toast-ui/vue-image-editor/-/vue-image-editor-1.0.2.tgz#658e5fc8d43d3caaabc2ebd8f3a543d2bea29ebd"
+  integrity sha512-si0ZA26Y1zgDS4lFzKTTGFV5huUSIhFzp5QKQizJLoS1vuTOcwOK0jEwA4NiJ++yeGvtRQSgCWDb6kMJiHDYuw==
+  dependencies:
+    tui-image-editor "~3.3.0"
+
 "@types/events@*":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
@@ -2857,6 +2864,11 @@ core-js-compat@^3.1.1:
     browserslist "^4.6.6"
     semver "^6.3.0"
 
+core-js@2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.4.1.tgz#4de911e667b0eae9124e34254b53aea6fc618d3e"
+  integrity sha1-TekR5mew6ukSTjQlS1OupvxhjT4=
+
 core-js@^2.0.0, core-js@^2.4.0, core-js@^2.6.5:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.9.tgz#6b4b214620c834152e179323727fc19741b084f2"
@@ -4203,6 +4215,11 @@ file-loader@^4.2.0:
   dependencies:
     loader-utils "^1.2.3"
     schema-utils "^2.0.0"
+
+file-saver@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/file-saver/-/file-saver-2.0.2.tgz#06d6e728a9ea2df2cce2f8d9e84dfcdc338ec17a"
+  integrity sha512-Wz3c3XQ5xroCxd1G8b7yL0Ehkf0TC9oYC6buPFkNnU9EnaPlifeAFCyCh+iewXTyFRcg0a6j3J7FmJsIhlhBdw==
 
 filesize@^3.6.1:
   version "3.6.1"
@@ -9583,6 +9600,27 @@ tty-browserify@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/tty-browserify/-/tty-browserify-0.0.0.tgz#a157ba402da24e9bf957f9aa69d524eed42901a6"
   integrity sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY=
+
+tui-code-snippet@^1.5.0:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/tui-code-snippet/-/tui-code-snippet-1.5.2.tgz#f4b8f0f1ac996b0b5b621f77c9507af19a0de238"
+  integrity sha512-6UqTlQaaC1KLcmC0HAoq5dtl1G4Fib+R+NC7pmaV7kiIlZ7JqKhUmnOoGRcreAyzd81UTK/vCvhrw9QJskpCFQ==
+
+tui-color-picker@^2.2.0:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/tui-color-picker/-/tui-color-picker-2.2.4.tgz#7f69d165ca4dcd699403197eee4fa91d425e97eb"
+  integrity sha512-ycOis7zo2UW5FuTTjUeDPELKvPJnw4Ym8zlvC3AvY4jTzfbLTrAqtFIPBAtBcq3G5nQJoWkeohPVrAKKggfGVQ==
+  dependencies:
+    tui-code-snippet "^1.5.0"
+
+tui-image-editor@~3.3.0:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/tui-image-editor/-/tui-image-editor-3.3.1.tgz#c907cf57ab56ec6ec8a39960b237767cc34159c1"
+  integrity sha512-hcFuC2O70Ez3QDsfbg+EjlOlZl0EXyjlExl6pX6lcSLTyVNvGGhki/XRbAwcxpPeUJNj87I8nqk5zngqAxaJUA==
+  dependencies:
+    core-js "2.4.1"
+    tui-code-snippet "^1.5.0"
+    tui-color-picker "^2.2.0"
 
 tunnel-agent@^0.6.0:
   version "0.6.0"
