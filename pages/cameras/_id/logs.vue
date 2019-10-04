@@ -26,15 +26,20 @@
         <v-card>
           <v-row class="mx-0">
             <v-col
-              col="1"
-              lg="1"
-              md="1"
+              cols="12"
               sm="12"
-              xs="12"
-              class="subtitle-1">
+              lg="2"
+              md="2"
+              class="subtitle-1"
+            >
               Date & Time
             </v-col>
-            <v-col col="1" lg="10" md="10" sm="12" xs="12">
+            <v-col 
+              cols="12"
+              sm="12" 
+              md="10" 
+              lg="10" 
+            >
               <v-card
                 class="d-flex flex-row"
                 color="lighten-2"
@@ -99,86 +104,105 @@
           </v-row>
           <v-row class="mx-0">
             <v-col
-              col="1"
-              lg="1"
-              md="1"
+              cols="12"
               sm="12"
-              xs="12"
+              md="2"
+              lg="2"
               class="subtitle-1"
             >
               Filter By
             </v-col>
 
             <v-col
-              col="1"
-              lg="10"
-              md="10"
+              cols="12"
               sm="12"
-              xs="12"
+              md="10"
+              lg="10"
             >
               <v-row class="mx-0">
                 <v-checkbox
                   v-model="chkAll"
-                  label="ALL"
                   color="primary"
                   hide-details
-                  class="mt-0 mx-2 caption"
+                  class="mt-0 mx-2 ml-0"
                   @change="selectAll"
-                ></v-checkbox>
+                >
+                  <template v-slot:label>
+                    <div class="caption label-color">ALL</div>
+                  </template>
+                </v-checkbox>
                 <v-checkbox
                   v-model="selected"
-                  label="Online / Offline"
                   color="primary"
                   value="online,offline,vh status"
                   hide-details
-                  class="mt-0 mx-2"
+                  class="mt-0 mx-2 ml-0"
                   @change="doSelectAll"
-                ></v-checkbox>
+                >
+                  <template v-slot:label>
+                    <div class="caption label-color">Online / Offline</div>
+                  </template>
+                </v-checkbox>
                 <v-checkbox
                   v-model="selected"
-                  label="Cloud Recording Settings"
                   color="primary"
                   value="cloud recordings updated,cloud recordings created"
                   hide-details
-                  class="mt-0 mx-2"
+                  class="mt-0 mx-2 ml-0"
                   @change="doSelectAll"
-                ></v-checkbox>
+                >
+                  <template v-slot:label>
+                    <div class="caption label-color">Cloud Recording Settings</div>
+                  </template>
+                </v-checkbox>
                 <v-checkbox
                   v-model="selected"
-                  label="Sharing Settings"
                   color="primary"
                   value="shared,updated share,stopped sharing"
                   hide-details
-                  class="mt-0 mx-2"
+                  class="mt-0 mx-2 ml-0"
                   @change="doSelectAll"
-                ></v-checkbox>
+                >
+                  <template v-slot:label>
+                    <div class="caption label-color">Sharing Settings</div>
+                  </template>
+                </v-checkbox>
                 <v-checkbox
                   v-model="selected"
-                  label="Archive Settings"
                   color="primary"
                   value="archive created,archive deleted"
                   hide-details
-                  class="mt-0 mx-2"
+                  class="mt-0 mx-2 ml-0"
                   @change="doSelectAll"
-                ></v-checkbox>
+                >
+                  <template v-slot:label>
+                    <div class="caption label-color">Archive Settings</div>
+                  </template>
+                </v-checkbox>
                 <v-checkbox
                   v-model="selected"
-                  label="Camera Settings"
                   color="primary"
                   value="accessed,viewed,camera created,created,edited,camera edited,captured,vh status"
                   hide-details
-                  class="mt-0 mx-2"
+                  class="mt-0 mx-2 ml-0"
                   @change="doSelectAll"
-                ></v-checkbox>
+                >
+                  <template v-slot:label>
+                    <div class="caption label-color">Camera Settings</div>
+                  </template>
+                </v-checkbox>
                 <v-checkbox
                   v-model="selected"
-                  label="Custom"
                   color="primary"
                   value="custom"
                   hide-details
-                  class="mt-0 mx-2"
+                  class="mt-0 mx-2 ml-0"
                   @change="doSelectAll"
-                ></v-checkbox>
+                >
+                  <template v-slot:label>
+                    <div class="caption label-color">Custom</div>
+                  </template>
+                </v-checkbox>
               </v-row>
 
               <br />
@@ -255,7 +279,7 @@
           </template>
 
           <template v-slot:expanded-item="{ item }" class="mytable">
-            <td :colspan="4">
+            <td :colspan="4" class="pl-0 pr-0">
               <v-simple-table class="details-table">
                 <thead>
                   <tr>
@@ -265,74 +289,74 @@
                   </tr>
                 </thead>
                 <tbody v-if="isTableSettings(item)">
-                  <tr>
+                  <tr :class="{'yellow lighten-3': item.extra.cam_settings.old.name != item.extra.cam_settings.new.name}">
                     <td>Name</td>
                     <td>{{ item.extra.cam_settings.old.name }}</td>
                     <td>{{ item.extra.cam_settings.new.name }}</td>
                   </tr>
-                  <tr>
+                  <tr :class="{'yellow lighten-3': item.extra.cam_settings.old.public != item.extra.cam_settings.new.public}">
                     <td>Public</td>
                     <td>{{ item.extra.cam_settings.old.public }}</td>
                     <td>{{ item.extra.cam_settings.new.public }}</td>
                   </tr>
-                  <tr>
+                  <tr :class="{'yellow lighten-3': item.extra.cam_settings.old.discoverable != item.extra.cam_settings.new.discoverable}">
                     <td>Discoverable</td>
                     <td>{{ item.extra.cam_settings.old.discoverable }}</td>
                     <td>{{ item.extra.cam_settings.new.discoverable }}</td>
                   </tr>
-                  <tr>
+                  <tr :class="{'yellow lighten-3': item.extra.cam_settings.old.external_host != item.extra.cam_settings.new.external_host}">
                     <td>IP</td>
                     <td>{{ item.extra.cam_settings.old.external_host }}</td>
                     <td>{{ item.extra.cam_settings.new.external_host }}</td>
                   </tr>
-                  <tr>
+                  <tr :class="{'yellow lighten-3': item.extra.cam_settings.old.external_http_port != item.extra.cam_settings.new.external_http_port}">
                     <td>HTTP Port</td>
                     <td>{{ item.extra.cam_settings.old.external_http_port }}</td>
                     <td>{{ item.extra.cam_settings.new.external_http_port }}</td>
                   </tr>
-                  <tr>
+                  <tr :class="{'yellow lighten-3': item.extra.cam_settings.old.external_rtsp_port != item.extra.cam_settings.new.external_rtsp_port}">
                     <td>RTSP Port</td>
                     <td>{{ item.extra.cam_settings.old.external_rtsp_port }}</td>
                     <td>{{ item.extra.cam_settings.new.external_rtsp_port }}</td>
                   </tr>
-                  <tr>
+                  <tr :class="{'yellow lighten-3': item.extra.cam_settings.old.snapshot_url != item.extra.cam_settings.new.snapshot_url}">
                     <td>Snapshot URL</td>
                     <td>{{ item.extra.cam_settings.old.snapshot_url }}</td>
                     <td>{{ item.extra.cam_settings.new.snapshot_url }}</td>
                   </tr>
-                  <tr>
+                  <tr :class="{'yellow lighten-3': item.extra.cam_settings.old.auth.username != item.extra.cam_settings.new.auth.username}">
                     <td>Username</td>
                     <td>{{ item.extra.cam_settings.old.auth.username }}</td>
                     <td>{{ item.extra.cam_settings.new.auth.username }}</td>
                   </tr>
-                  <tr>
+                  <tr :class="{'yellow lighten-3': item.extra.cam_settings.old.auth.password != item.extra.cam_settings.new.auth.password}">
                     <td>Password</td>
                     <td>{{ item.extra.cam_settings.old.auth.password }}</td>
                     <td>{{ item.extra.cam_settings.new.auth.password }}</td>
                   </tr>
-                  <tr>
+                  <tr :class="{'yellow lighten-3': item.extra.cam_settings.old.vendor_model_name != item.extra.cam_settings.new.vendor_model_name}">
                     <td>Model</td>
                     <td>{{ item.extra.cam_settings.old.vendor_model_name }}</td>
                     <td>{{ item.extra.cam_settings.new.vendor_model_name }}</td>
                   </tr>
-                  <tr>
+                  <tr :class="{'yellow lighten-3': item.extra.cam_settings.old.vendor_name != item.extra.cam_settings.new.vendor_name}">
                     <td>Vendor</td>
                     <td>{{ item.extra.cam_settings.old.vendor_name }}</td>
                     <td>{{ item.extra.cam_settings.new.vendor_name }}</td>
                   </tr>
                 </tbody>
                 <tbody v-if="isCloudSettings(item)">
-                  <tr>
+                  <tr :class="{'yellow lighten-3': item.extra.cr_settings.old.status != item.extra.cr_settings.new.status}">
                     <td>Status</td>
                     <td>{{ item.extra.cr_settings.old.status }}</td>
                     <td>{{ item.extra.cr_settings.new.status }}</td>
                   </tr>
-                  <tr>
+                  <tr :class="{'yellow lighten-3': item.extra.cr_settings.old.storage_duration != item.extra.cr_settings.new.storage_duration}">
                     <td>Storage Duration</td>
                     <td>{{ item.extra.cr_settings.old.storage_duration }}</td>
                     <td>{{ item.extra.cr_settings.new.storage_duration }}</td>
                   </tr>
-                  <tr>
+                  <tr :class="{'yellow lighten-3': item.extra.cr_settings.old.frequency != item.extra.cr_settings.new.frequency}">
                     <td>Frequency</td>
                     <td>{{ item.extra.cr_settings.old.frequency }}</td>
                     <td>{{ item.extra.cr_settings.new.frequency }}</td>
@@ -350,6 +374,10 @@
 <style scoped>
 .response-average {
   font-weight: 600 !important;
+}
+
+.label-color {
+  color: rgba(0, 0, 0, 0.87);
 }
 
 .custom-note-css {
@@ -403,14 +431,15 @@ export default {
       offsetTop: 0,
       tail: "",
       chkAll: false,
+      table_value: '',
       selected: ["online,offline,vh status", "custom"],
       from_datetime: moment().subtract(60, "days").format("YYYY-MM-DDTHH:mm:ss"),
       to_datetime: moment().format("YYYY-MM-DDTHH:mm:ss"),
       expanded: [],
       headers: [
-        { text: "Date & Time", value: "done_at" },
-        { text: "Event", value: "action" },
-        { text: "User/Client", value: "who" }
+        { text: "Date & Time", value: "done_at", class: "caption font-weight-medium" },
+        { text: "Event", value: "action", class: "caption font-weight-medium" },
+        { text: "User/Client", value: "who", class: "caption font-weight-medium" }
       ],
       logs: []
     }
@@ -767,6 +796,22 @@ export default {
       let container = this.$refs.livetail
       if(container && container.scrollHeight > 250) {
         container.scrollTop = container.scrollHeight
+      }
+    },
+    loadTheChange(name,oldValue,newValue) {
+      console.log(oldValue)
+      console.log(newValue)
+      if(oldValue == newValue) {
+        return
+          `<td>${name}</td>
+          <td>${oldValue}</td>
+          <td>${newValue}</td>`
+      }
+      else {
+        return 
+          `<td>${name}</td>
+          <td style='background-color:yellow;'>${oldValue}</td>
+          <td style='background-color:yellow;'>${newValue}</td>`
       }
     }
   }
