@@ -13,6 +13,7 @@
           no-button-now
           :no-value-to-custom-elem="true"
           :no-clear-button="true"
+          @validate="changebeforeDate"
         >
           <v-btn color="primary">
             <v-icon class="pr-2">fas fa-calendar-alt</v-icon>
@@ -32,6 +33,7 @@
           :no-value-to-custom-elem="true"
           :no-clear-button="true"
           :right="true"
+          @validate="changeLastDate"
         >
           <v-btn color="primary" class="float-right">
             <v-icon class="pr-2">fas fa-calendar-alt</v-icon>
@@ -279,6 +281,32 @@ export default {
     this.clearTimer()
   },
   methods: {
+    async changeLastDate() {
+      try {
+        let datetime = moment.tz(this.after_datetime, this.camera.timezone).toISOString(true)
+        const { snapshots } = await this.$axios.$get(`${process.env.API_URL}cameras/${this.$route.params.id}/recordings/snapshots/${datetime}/nearest`)
+        if(snapshots[0]) {
+          this.after_img = snapshots[0].data
+          this.after_datetime = moment.tz(snapshots[0].created_at, this.camera.timezone).format("YYYY-MM-DDTHH:mm:ss")
+          this.updateTitle()
+        }
+      } catch(e) {
+        console.log(e)
+      }
+    },
+    async changebeforeDate() {
+      try {
+        let datetime = moment.tz(this.oldest_datetime, this.camera.timezone).toISOString(true)
+        const { snapshots } = await this.$axios.$get(`${process.env.API_URL}cameras/${this.$route.params.id}/recordings/snapshots/${datetime}/nearest`)
+        if(snapshots[0]) {
+          this.before_img = snapshots[0].data
+          this.oldest_datetime = moment.tz(snapshots[0].created_at, this.camera.timezone).format("YYYY-MM-DDTHH:mm:ss")
+          this.updateTitle()
+        }
+      } catch(e) {
+        console.log(e)
+      }
+    },
     async createCompare() {
       this.processing = true
       this.disableCreate = true
@@ -363,6 +391,11 @@ export default {
       } catch (err) {
         console.log('Oops, unable to copy')
       }
+    },
+    updateTitle() {
+      let before_date = moment.tz(this.oldest_datetime, this.camera.timezone)
+      let after_date = moment.tz(this.after_datetime, this.camera.timezone)
+      this.title = `${before_date.format("Do MMM")} to ${after_date.format("Do MMM")}`
     }
   }
 }
