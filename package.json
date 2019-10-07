@@ -69,7 +69,7 @@
     "vuex-persist": "^2.0.1"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.8.6",
+    "@nuxtjs/vuetify": "^1.9.0",
     "nodemon": "^1.19.3"
   }
 }
