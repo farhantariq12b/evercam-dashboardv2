@@ -1,14 +1,16 @@
 <template>
 	<div>
-    <ValidationProvider name="Recipient" rules="required|email" v-slot="{ errors }">
+    <ValidationProvider name="Recipient" rules="required|email">
       <v-combobox
         v-model="recipients"
+        slot-scope="{ errors }"
+        :error-messages="errors"
         multiple
         chips
         outlined
         height="20"
         @change="selectedRecipients"
-        class="custom-height mb-0 pb-0"
+        class="mb-0 pb-0"
       >
         <template v-slot:selection="data">
           <v-chip
@@ -22,7 +24,6 @@
           </v-chip>
         </template>
       </v-combobox>
-      <p>{{ errors[0] }}</p>
     </ValidationProvider>
   </div>
 
@@ -42,8 +43,3 @@
     }
   }
 </script>
-<style>
-  .custom-height {
-    height: 56px !important;
-  }
-</style>

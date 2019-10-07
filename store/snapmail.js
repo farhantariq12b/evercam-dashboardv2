@@ -29,7 +29,7 @@ export const mutations = {
 export const actions = {
   async createSnapmail({}, payload) {
     try {
-      await this.$axios.$post(`${process.env.API_URL}/snapmails`, payload);
+      await this.$axios.$post(`${process.env.API_URL}snapmails`, payload);
     } catch (err) {
       console.log(err)
     }
@@ -37,7 +37,7 @@ export const actions = {
 
   async getSnapmails({ commit }) {
     try {
-      const data = await this.$axios.$get(`${process.env.API_URL}/snapmails`);
+      const data = await this.$axios.$get(`${process.env.API_URL}snapmails`);
       commit("setSnapmails", data.snapmails);
     } catch (err) {
       console.log(err);
@@ -46,7 +46,7 @@ export const actions = {
 
   async getSnapmailById({ commit }, id) {
     try {
-      const data = await this.$axios.$get(`${process.env.API_URL}/snapmails/${id}`);
+      const data = await this.$axios.$get(`${process.env.API_URL}snapmails/${id}`);
       commit("setSnapmailById", data.snapmails);
     } catch (err) {
       console.log(err);
@@ -55,7 +55,7 @@ export const actions = {
 
   async destroySnapmail({ dispatch }, id) {
     try {
-      await this.$axios.$delete(`${process.env.API_URL}/snapmails/${id}`);
+      await this.$axios.$delete(`${process.env.API_URL}snapmails/${id}`);
       dispatch('getSnapmails');
     }catch(error) {
       console.log(error);
@@ -64,7 +64,7 @@ export const actions = {
 
   async updateSnapmail({dispatch}, payload) {
     try {
-      await this.$axios.$patch(`${process.env.API_URL}/snapmails/${payload.id}`, payload.data);
+      await this.$axios.$patch(`${process.env.API_URL}snapmails/${payload.id}`, payload.data);
     }
     catch(error) {
       console.error(error);
@@ -73,7 +73,7 @@ export const actions = {
 
   async updatePauseStatus({}, payload) {
     try {
-      await this.$axios.$patch(`${process.env.API_URL}/snapmails/${payload.id}`, { 'is_paused': !payload.is_paused });
+      await this.$axios.$patch(`${process.env.API_URL}snapmails/${payload.id}`, { 'is_paused': !payload.is_paused });
     }
     catch(error) {
       console.error(error);

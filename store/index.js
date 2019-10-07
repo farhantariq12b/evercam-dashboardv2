@@ -56,14 +56,14 @@ export const actions = {
         }
       }
       const data = await this.$axios.$post(
-        process.env.API_URL + "/auth/login",
+        process.env.API_URL + "auth/login",
         qs.stringify(form),
         config
       )
 
       this.$axios.setToken(data.token, "Bearer")
       const cameras_json = await this.$axios.$get(
-        `${process.env.API_URL}/cameras`
+        `${process.env.API_URL}cameras`
       )
       commit("SET_USER", data)
       commit("SET_CAMERAS", cameras_json)
@@ -75,7 +75,7 @@ export const actions = {
 
   async CAMERAS({ commit }) {
     try {
-      const data = await this.$axios.$get(`${process.env.API_URL}/cameras`)
+      const data = await this.$axios.$get(`${process.env.API_URL}cameras`)
       commit("SET_CAMERAS", data)
     } catch (err) {
       console.log(err)

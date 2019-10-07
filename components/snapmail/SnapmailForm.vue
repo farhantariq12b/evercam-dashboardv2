@@ -59,7 +59,7 @@
                 <v-col sm="3" class="pt-0 pb-0 mb-0 custom-height" v-for="(day, key) in days" :key="key">
                   <v-checkbox :label="day.name" :id="`day-${day.id}`" v-model="currentSnapmail.notify_days" :value="day.value"></v-checkbox>
                 </v-col>
-                <p class="pl-3">{{ errors[0] }}</p>
+                <p class="error-color pl-3">{{ errors[0] }}</p>
               </ValidationProvider>
           </v-row>
         </v-col>
@@ -174,5 +174,8 @@
   }
   .custom-height {
     height: 56px !important;
+  }
+  .error-color {
+    color: #ff5252;
   }
 </style>

@@ -1,10 +1,12 @@
 <template>
   <div>
-  	<ValidationProvider name="Camera" rules="required" v-slot="{ errors }">
+  	<ValidationProvider name="Camera" rules="required">
       <v-autocomplete
           v-model="camera_ids"
           :items="cameras"
           @change="selectedCameras"
+          slot-scope="{ errors }"
+          :error-messages="errors"
           chips
           label="Select Cameras"
           item-text="name"
@@ -13,7 +15,6 @@
           outlined
           dense
           small-chips
-          class="custom-height"
         >
           <template v-slot:selection="data">
             <v-chip
@@ -43,7 +44,6 @@
             </template>
           </template>
       </v-autocomplete>
-      <p>{{ errors[0] }}</p>
     </ValidationProvider>
   </div>
 </template>
@@ -75,8 +75,3 @@
     }
   }
 </script>
-<style>
-  .custom-height {
-    height: 65px !important;
-  }
-</style>
