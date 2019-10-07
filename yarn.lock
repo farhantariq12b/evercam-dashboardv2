@@ -3774,7 +3774,6 @@ eslint-loader@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/eslint-loader/-/eslint-loader-3.0.2.tgz#5a627316a51d6f41d357b9f6f0554e91506cdd6e"
   integrity sha512-S5VnD+UpVY1PyYRqeBd/4pgsmkvSokbHqTXAQMpvCyRr3XN2tvSLo9spm2nEpqQqh9dezw3os/0zWihLeOg2Rw==
-
   dependencies:
     fs-extra "^8.1.0"
     loader-fs-cache "^1.0.2"
@@ -9966,10 +9965,10 @@ vee-validate@^2.1.2:
   resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.2.15.tgz#dc6c925d21e57288d3308fe5a39a0941036c575a"
   integrity sha512-4TOsI8XwVkKVLkg8Nhmy+jyoJrR6XcTRDyxBarzcCvYzU61zamipS1WsB6FlDze8eJQpgglS4NXAS6o4NDPs1g==
 
-vee-validate@^3.0.8:
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-3.0.8.tgz#9aae7409925250eaef8a05b30f629c206009c27d"
-  integrity sha512-17PgYauciJrynQADWbS+bZw3FqPZkt0Ozm0LrJNf4eppU6GlgYgTbiyHZmbeX1U73nxfZ4rNdJqaxdGuRZf2PQ==
+vee-validate@^3.0.10:
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-3.0.10.tgz#0da1b6e917f35e2177dc90864c67b9aa0b8902dc"
+  integrity sha512-Rll62hEQm1a0ONaxrQg3rCiAB7SprYLZDpQVsBdCJOJbWjpBZz2fr3EAWJpLv/ib/SR2fIz5PmfOJDdMrxN+tA==
 
 vendors@^1.0.0:
   version "1.0.3"
