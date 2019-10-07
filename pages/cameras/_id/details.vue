@@ -440,7 +440,7 @@
                     <span class="rtsp-status-port mt-1 min-width80 text-right">
                       {{ rtspStatus }}
                     </span>
-                    <v-img 
+                    <v-img
                       v-show="rtspStatus == ''"
                       src="/loading.gif"
                       width="16"

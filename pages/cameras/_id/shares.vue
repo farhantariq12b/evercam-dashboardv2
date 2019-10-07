@@ -22,9 +22,7 @@
             <tr>
               <td>
                 <v-avatar size="30px" class="float-left gravatar-margin">
-                  <img
-                    :src="getFavicon(owner.email)"
-                  />
+                  <img :src="getFavicon(owner.email)" >
                 </v-avatar>
                 <v-card flat class="float-left card-background">
                   <v-list-item class="item-padding">
@@ -129,9 +127,7 @@
             <tr v-for="share in shares">
               <td>
                 <v-avatar size="30px" class="float-left gravatar-margin">
-                  <img
-                    :src="getFavicon(share.email)"
-                  />
+                  <img :src="getFavicon(share.email)" >
                 </v-avatar>
                 <v-card flat class="float-left card-background">
                   <v-list-item class="item-padding">
@@ -229,9 +225,7 @@
             <tr v-for="request in share_requests">
               <td>
                 <v-avatar size="30px" class="float-left gravatar-margin">
-                  <img
-                    :src="getFavicon(request.email)"
-                  />
+                  <img :src="getFavicon(request.email)" >
                 </v-avatar>
                 <v-card flat class="float-left card-background">
                   <v-list-item class="item-padding">
@@ -376,7 +370,7 @@
               <v-btn
                 depressed
                 color="primary"
-                class="button-margin-left"
+                class="button-margin-left caption"
                 @click="createShare"
               >
                 Share

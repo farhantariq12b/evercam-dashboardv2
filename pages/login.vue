@@ -25,6 +25,7 @@
                       slot-scope="{ errors, valid }"
                       :error-messages="errors"
                       :success="valid"
+                      class="caption"
                       name="login"
                       label="Login"
                       type="text"
@@ -35,6 +36,7 @@
                     id="password"
                     v-model="model.password"
                     name="password"
+                    class="caption"
                     label="Password"
                     type="password"
                   />
@@ -43,6 +45,7 @@
                     <v-btn
                       block
                       color="primary"
+                      class="caption"
                       :loading="loading"
                       @click="preformLogin"
                     >
@@ -51,7 +54,7 @@
                   </v-card-actions>
                 </v-form>
               </v-card-text>
-              <v-card-text class="text-center">
+              <v-card-text class="text-center caption label-color">
                 I've <a href="./">forgotten my password</a>
               </v-card-text>
             </v-card>
@@ -73,6 +76,10 @@
   height: 100%;
   overflow-y: hidden !important;
   overflow-x: hidden !important;
+}
+
+.label-color {
+  color: rgba(0, 0, 0, 0.87);
 }
 
 .video-player-box {

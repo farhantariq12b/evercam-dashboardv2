@@ -52,7 +52,8 @@ export default {
     "~/plugins/axios",
     { src: "~plugins/vue-konva", ssr: false },
     { src: "~/plugins/google-maps" },
-    "@/plugins/vee-validate"
+    "@/plugins/vee-validate",
+    "@/plugins/image-editor"
   ],
   /*
    ** Nuxt.js dev-modules

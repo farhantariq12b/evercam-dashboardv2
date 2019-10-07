@@ -210,7 +210,7 @@
                     @change="filesChange($event.target.files)"
                   />
                   <p v-if="isInitial">
-                    Drag your video here to begin<br />
+                    Drag your video here to begin<br >
                     or click to browse
                   </p>
                   <p v-if="isSaving">Uploading {{ fileCount }} files...</p>
@@ -218,7 +218,7 @@
                     {{ file.name }}
                   </p>
                   <p v-if="isFailed">
-                    Failed, click here or drag your<br />video here to try again
+                    Failed, click here or drag your<br >video here to try again
                   </p>
                 </div>
               </v-col>
@@ -335,7 +335,23 @@ export default {
         let completed_archives = res.archives.filter(function(archive) {
           return archive.status == "Completed" || archive.status == 5
         })
-        return { archives: completed_archives }
+        let key = "created_at"
+        let sorted_list =
+          completed_archives.sort(function(a, b) {
+            var x, y
+            y = a[key]
+            x = b[key]
+            if (x < y) {
+              return -1
+            } else {
+              if (x > y) {
+                return 1
+              } else {
+                return 0
+              }
+            }
+          })
+        return { archives: sorted_list }
       })
       .catch(() => {
         error({ statusCode: 404, message: "Post not found" })
