@@ -6,11 +6,9 @@
         slot-scope="{ errors }"
         :error-messages="errors"
         multiple
-        chips
+        small-chips
         outlined
-        height="20"
         @change="selectedRecipients"
-        class="mb-0 pb-0"
       >
         <template v-slot:selection="data">
           <v-chip

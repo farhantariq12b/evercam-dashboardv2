@@ -6,6 +6,11 @@ export const state = () => ({
   snapmailEditId: null,
   snapmailDialog: false,
   snapmailDialogType: 'create',
+  notification: {
+    text: '',
+    color: '',
+    snackbar: false,
+  },
 })
 
 export const mutations = {
@@ -24,12 +29,16 @@ export const mutations = {
   setSnapmailById(state, payload) {
     state.snapmailById = payload;
   },
+  setNotification(state, payload) {
+    state.notification = payload;
+  },
 }
 
 export const actions = {
-  async createSnapmail({}, payload) {
+  async createSnapmail({commit}, payload) {
     try {
       await this.$axios.$post(`${process.env.API_URL}snapmails`, payload);
+      commit('setNotification', { text: 'Snapmail created successfully', color: 'success', snackbar: true });
     } catch (err) {
       console.log(err)
     }
@@ -62,9 +71,11 @@ export const actions = {
     }
   },
 
-  async updateSnapmail({dispatch}, payload) {
+  async updateSnapmail({commit}, payload) {
     try {
       await this.$axios.$patch(`${process.env.API_URL}snapmails/${payload.id}`, payload.data);
+      commit('setNotification', { text: 'Snapmail updated successfully', color: 'success', snackbar: true });
+
     }
     catch(error) {
       console.error(error);
@@ -96,5 +107,8 @@ export const getters = {
   },
   getSnapmailById(state) {
     return state.snapmailById;
+  },
+  getNotification(state) {
+    return state.notification;
   },
 }

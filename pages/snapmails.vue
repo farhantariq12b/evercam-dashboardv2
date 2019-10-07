@@ -1,5 +1,17 @@
 <template>
   <v-container class="white lighten-5">
+     <v-snackbar
+      class="text-center"
+      v-model="notification.snackbar"
+      :bottom="y === 'bottom'"
+      :color="notification.color"
+      :timeout="timeout"
+      :top="y === 'top'"
+      :vertical="mode === 'vertical'"
+    >
+      {{ notification.text }}
+    </v-snackbar>
+
     <v-sheet elevation="1">
       <v-tabs>
         <v-tab class="text-capitalize body-2">
@@ -147,6 +159,8 @@
     },
     data() {
       return {
+        timeout: 3000,
+        y: "top",
         menus: {},
         cycle: false,
         cameraNames: [],
@@ -161,6 +175,7 @@
       this.days = config.days;
       this.formatSnapmailsToArray(this.snapmails);
       this.getCameraNames();
+      this.setNotification({});
     },
     computed: {
       ...mapGetters({
@@ -169,6 +184,7 @@
         token: 'token',
         dialog: 'snapmail/getSnapmailDialog',
         snapmails: 'snapmail/getSnapmails',
+        notification: 'snapmail/getNotification',
       }),
     },
     methods: {
@@ -176,6 +192,7 @@
         setSnapmailDialog: 'snapmail/setSnapmailDialog',
         setSnapmailDialogType: 'snapmail/setSnapmailDialogType',
         setSnapmailEditId: 'snapmail/setSnapmailEditId',
+        setNotification: 'snapmail/setNotification',
       }),
       ...mapActions({
         getSnapmails: 'snapmail/getSnapmails',
@@ -240,5 +257,8 @@
   }
   .width-76 {
     width: 76px;
+  }
+  .v-carousel__controls__item {
+    top: -14px;
   }
 </style>
