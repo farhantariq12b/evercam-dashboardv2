@@ -6865,6 +6865,11 @@ onetime@^5.1.0:
   dependencies:
     mimic-fn "^2.1.0"
 
+opencollective-postinstall@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/opencollective-postinstall/-/opencollective-postinstall-2.0.2.tgz#5657f1bede69b6e33a45939b061eb53d3c6c3a89"
+  integrity sha512-pVOEP16TrAO2/fjej1IdOyupJY8KDUM1CvsaScRbw6oddvpQoOfGk4ywha0HKKVAD6RkW4x6Q+tNBwhf3Bgpuw==
+
 opener@1.5.1, opener@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/opener/-/opener-1.5.1.tgz#6d2f0e77f1a0af0032aca716c2c1fbb8e7e8abed"
@@ -10189,11 +10194,12 @@ vue-no-ssr@^1.1.1:
   resolved "https://registry.yarnpkg.com/vue-no-ssr/-/vue-no-ssr-1.1.1.tgz#875f3be6fb0ae41568a837f3ac1a80eaa137b998"
   integrity sha512-ZMjqRpWabMPqPc7gIrG0Nw6vRf1+itwf0Itft7LbMXs2g3Zs/NFmevjZGN1x7K3Q95GmIjWbQZTVerxiBxI+0g==
 
-vue-popperjs@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/vue-popperjs/-/vue-popperjs-2.1.0.tgz#5dbf5eb053c754c8c9b11a31261aa0e0006b2bd4"
-  integrity sha512-LfcMfndjzDBHUaQhXpck1qlhXgsz8EpE56SHBQOVkeia2xFyxv7opoGzvxdcZKhfb9viZFj58oGWzE76yX73QA==
+vue-popperjs@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/vue-popperjs/-/vue-popperjs-2.2.0.tgz#468784b597c890bd505be8e8fd31d7a001742edb"
+  integrity sha512-VJFlCMpTExr8lZPJ9plWzK+K49Sj+JtWeeUchZr1KLpm6bzT5Bfyvq1lWA2biPaiUvNDgZvaJh2KfNMNjKXT0w==
   dependencies:
+    opencollective-postinstall "^2.0.2"
     popper.js "^1.15.0"
 
 vue-property-decorator@^8.0.0:
