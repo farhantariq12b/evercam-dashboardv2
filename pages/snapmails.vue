@@ -74,7 +74,7 @@
                   :color="data.notify_days.find( notifyDay => day.value == notifyDay) ? '#428bca':'#fff'"
                   :class="['mr-2 pa-0 mt-1 day-border custom-chip',
                       (data.notify_days.find( notifyDay => day.value == notifyDay) ? ' white--text':'darken-4')]"
-                  >{{day.text}}</v-chip>
+                  >{{day.letter}}</v-chip>
                 </span>
               </v-list-item-subtitle>
             </v-list-item-content>
@@ -118,7 +118,6 @@
                   </v-card-actions>
                 </v-card>
               </v-menu>
-            <!-- <v-icon size="16" class="mr-2" color="#428bca" @click="removeSnapmail(data.id)">fas fa-trash-alt</v-icon> -->
           </v-col>
         </v-row>
       </v-card>
@@ -139,7 +138,8 @@
 <script>
   import { mapGetters, mapMutations, mapActions } from 'vuex';
   import SnapmailDialog from '@/components/snapmail/SnapmailDialog';
-  import { getCameraNames, formatToArray, formatApiToString } from '@/services/snapmailUtils';
+  import { getCameraNames, formatToArray, formatApiToString } from '@/services/snapmail/snapmailUtils';
+  import config from '@/services/snapmail/data.config';
 
   export default {
     components: {
@@ -151,21 +151,14 @@
         cycle: false,
         cameraNames: [],
         snapmailsList: {},
-        days: [
-          {id: 1, value: 'Monday', text: 'M'},
-          {id: 2, value: 'Tuesday', text: 'T'},
-          {id: 3, value: 'Wednesday', text: 'W'},
-          {id: 4, value: 'Thursday', text: 'T'},
-          {id: 5, value: 'Friday', text: 'F'},
-          {id: 6, value: 'Saturday', text: 'S'},
-          {id: 7, value: 'Sunday', text: 'S'},
-        ],
+        days: null,
       }
     },
     async asyncData({ store, params }) {
       await store.dispatch('snapmail/getSnapmails');
     },
     created() {
+      this.days = config.days;
       this.formatSnapmailsToArray(this.snapmails);
       this.getCameraNames();
     },

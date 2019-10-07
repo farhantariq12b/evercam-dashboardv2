@@ -22,7 +22,7 @@
 <script>
   import { mapActions, mapMutations, mapGetters } from 'vuex';
   import SnapmailForm from '@/components/snapmail/SnapmailForm';
-  import { formatEditRequestToString } from '@/services/snapmailUtils';
+  import { formatEditRequestToString } from '@/services/snapmail/snapmailUtils';
   export default {
     components: {
       SnapmailForm
