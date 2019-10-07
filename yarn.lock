@@ -3774,7 +3774,6 @@ eslint-loader@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/eslint-loader/-/eslint-loader-3.0.2.tgz#5a627316a51d6f41d357b9f6f0554e91506cdd6e"
   integrity sha512-S5VnD+UpVY1PyYRqeBd/4pgsmkvSokbHqTXAQMpvCyRr3XN2tvSLo9spm2nEpqQqh9dezw3os/0zWihLeOg2Rw==
-
   dependencies:
     fs-extra "^8.1.0"
     loader-fs-cache "^1.0.2"
@@ -5722,10 +5721,10 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.2.tgz#01146b36a6218e64e58f3a8d66de5d7fc6f6d051"
   integrity sha512-s5kLOcnH0XqDO+FvuaLX8DDjZ18CGFk7VygH40QoKPUQhW4e2rvM0rwUq0t8IQDOwYSeLK01U90OjzBTme2QqA==
 
-konva@^4.0.12:
-  version "4.0.12"
-  resolved "https://registry.yarnpkg.com/konva/-/konva-4.0.12.tgz#16e8fda5f14768d35d59d8b2d195b552b15c4572"
-  integrity sha512-/z8bSJEHiMMtMJjLZgUWN098l/6GHJFupZqNFmSP2ru0sUuaeQo4PKyvIgI4Z8caeTP+oxP6FC0Pbghn8uTM9Q==
+konva@^4.0.13:
+  version "4.0.13"
+  resolved "https://registry.yarnpkg.com/konva/-/konva-4.0.13.tgz#553bcfdfa47acf7a304dbc73c3807896fd86494d"
+  integrity sha512-nRmrtapOwticSY3/yiQCZ8096LbaMPPCyQIzey3TTJD4RDTx6htldeQUivUdCJBSN+KNZ6ngdD64yFpG9tOgJw==
 
 last-call-webpack-plugin@^3.0.0:
   version "3.0.0"

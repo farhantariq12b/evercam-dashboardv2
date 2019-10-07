@@ -42,7 +42,7 @@
     "jquery": "^3.4.1",
     "jquery-ui": "^1.12.1",
     "jsdom": "^15.1.1",
-    "konva": "^4.0.12",
+    "konva": "^4.0.13",
     "md5-hex": "^3.0.1",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.26",
