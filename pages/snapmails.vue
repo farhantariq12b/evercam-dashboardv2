@@ -1,17 +1,6 @@
 <template>
   <v-container class="white lighten-5">
-     <v-snackbar
-      class="text-center"
-      v-model="notification.snackbar"
-      :bottom="y === 'bottom'"
-      :color="notification.color"
-      :timeout="timeout"
-      :top="y === 'top'"
-      :vertical="mode === 'vertical'"
-    >
-      {{ notification.text }}
-    </v-snackbar>
-
+    <Snackbar />
     <v-sheet elevation="1">
       <v-tabs>
         <v-tab class="text-capitalize body-2">
@@ -150,17 +139,17 @@
 <script>
   import { mapGetters, mapMutations, mapActions } from 'vuex';
   import SnapmailDialog from '@/components/snapmail/SnapmailDialog';
+  import Snackbar from '@/components/shared/Snackbar';
   import { getCameraNames, formatToArray, formatApiToString } from '@/services/snapmail/snapmailUtils';
   import config from '@/services/snapmail/data.config';
 
   export default {
     components: {
-      SnapmailDialog
+      SnapmailDialog,
+      Snackbar
     },
     data() {
       return {
-        timeout: 3000,
-        y: "top",
         menus: {},
         cycle: false,
         cameraNames: [],
@@ -175,7 +164,6 @@
       this.days = config.days;
       this.formatSnapmailsToArray(this.snapmails);
       this.getCameraNames();
-      this.setNotification({});
     },
     computed: {
       ...mapGetters({
@@ -184,7 +172,6 @@
         token: 'token',
         dialog: 'snapmail/getSnapmailDialog',
         snapmails: 'snapmail/getSnapmails',
-        notification: 'snapmail/getNotification',
       }),
     },
     methods: {
@@ -192,7 +179,6 @@
         setSnapmailDialog: 'snapmail/setSnapmailDialog',
         setSnapmailDialogType: 'snapmail/setSnapmailDialogType',
         setSnapmailEditId: 'snapmail/setSnapmailEditId',
-        setNotification: 'snapmail/setNotification',
       }),
       ...mapActions({
         getSnapmails: 'snapmail/getSnapmails',
