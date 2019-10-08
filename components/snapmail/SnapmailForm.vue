@@ -24,33 +24,39 @@
           Time
         </v-col>
         <v-col sm="3" class="pb-0 pt-0 custom-height">
-          <VueCtkDateTimePicker 
-            format="hh:mm" 
-            formatted="hh:mm" 
-            v-model="currentSnapmail.notify_time" 
-            onlyTime 
-            label="Select Time" 
-            inputSize="lg"
-          />
-        </v-col>
+          <ValidationProvider name="Time" rules="required" v-slot="{ errors }">
+            <VueCtkDateTimePicker 
+              format="hh:mm" 
+              formatted="hh:mm" 
+              v-model="currentSnapmail.notify_time" 
+              onlyTime 
+              label="Select Time" 
+              inputSize="lg"
+            />
+            <p class="error-color caption">{{ errors[0] }}</p>
+          </ValidationProvider>
+          </v-col>
         <v-col sm="7" class="pb-0 pt-0">
-          <v-select 
-            outlined
-            height="20" 
-            :items="timezoneList"
-            item-text="name"
-            item-value="value"
-            v-model="currentSnapmail.timezone"
-            class="custom-height"
-          ></v-select>
+          <ValidationProvider name="Timezone" rules="required" v-slot="{ errors }">
+            <v-select
+              outlined
+              height="20" 
+              :items="timezoneList"
+              item-text="name"
+              item-value="value"
+              v-model="currentSnapmail.timezone"
+              class="custom-height"
+            ></v-select>
+            <p class="error-color pl-3 caption">{{ errors[0] }}</p>
+          </ValidationProvider>
         </v-col>
       </v-row>
 
       <v-row>
-        <v-col sm="2" class="caption pb-0 pt-10">
+        <v-col sm="2" class="caption pb-0 pt-6">
           Days
         </v-col>
-        <v-col sm="10" class="pb-0 pt-6">
+        <v-col sm="10" class="pb-0 pt-0">
           <v-row>
               <v-col sm="3" class="pt-0 pb-0 mb-0">
                 <v-checkbox label="All Days" v-model="selectAll"></v-checkbox>
@@ -59,7 +65,7 @@
                 <v-col sm="3" class="pt-0 pb-0 mb-0 custom-height" v-for="(day, key) in days" :key="key">
                   <v-checkbox :label="day.name" :id="`day-${day.id}`" v-model="currentSnapmail.notify_days" :value="day.value"></v-checkbox>
                 </v-col>
-                <p class="error-color pl-3">{{ errors[0] }}</p>
+                <p class="error-color pl-3 caption">{{ errors[0] }}</p>
               </ValidationProvider>
           </v-row>
         </v-col>
