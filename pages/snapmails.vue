@@ -1,6 +1,5 @@
 <template>
   <v-container class="white lighten-5">
-    <Snackbar />
     <v-sheet elevation="1">
       <v-tabs>
         <v-tab class="text-capitalize body-2">
@@ -139,14 +138,12 @@
 <script>
   import { mapGetters, mapMutations, mapActions } from 'vuex';
   import SnapmailDialog from '@/components/snapmail/SnapmailDialog';
-  import Snackbar from '@/components/shared/Snackbar';
   import { getCameraNames, formatToArray, formatApiToString } from '@/services/snapmail/snapmailUtils';
   import config from '@/services/snapmail/data.config';
 
   export default {
     components: {
       SnapmailDialog,
-      Snackbar
     },
     data() {
       return {
@@ -178,7 +175,7 @@
       ...mapMutations({
         setSnapmailDialog: 'snapmail/setSnapmailDialog',
         setSnapmailDialogType: 'snapmail/setSnapmailDialogType',
-        setSnapmailEditId: 'snapmail/setSnapmailEditId',
+        setSnapmailId: 'snapmail/setSnapmailId',
       }),
       ...mapActions({
         getSnapmails: 'snapmail/getSnapmails',
@@ -188,7 +185,7 @@
       }),
 
       openDialog(bool, type, id) {
-        this.setSnapmailEditId(id);
+        this.setSnapmailId(id);
         this.setSnapmailDialog(bool);
         this.setSnapmailDialogType(type);
       },

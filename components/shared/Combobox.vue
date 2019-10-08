@@ -36,7 +36,7 @@
     },
     methods: {
       selectedRecipients() {
-        this.$emit('selectedRecipients',this.recipients);
+        this.$emit('selectedRecipients', this.recipients);
       }
     }
   }

@@ -98,7 +98,7 @@
         token: 'token',
         cameras: 'cameras',
         dialogType: 'snapmail/getSnapmailDialogType',
-        snapmailEditId: 'snapmail/getSnapmailEditId',
+        snapmailId: 'snapmail/getSnapmailId',
       }),
 
       selectAll: {
@@ -134,7 +134,7 @@
 
       async addSnapmail() {
         if(this.dialogType == 'edit') {
-          await this.updateSnapmail({ data: formatToString(this.currentSnapmail, this.email), id: this.snapmailEditId });
+          await this.updateSnapmail({ data: formatToString(this.currentSnapmail, this.email), id: this.snapmailId });
         }
         else
           await this.createSnapmail(formatToString(this.currentSnapmail, this.email));

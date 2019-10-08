@@ -44,15 +44,16 @@
       ...mapGetters({
         dialog: 'snapmail/getSnapmailDialog',
         dialogType: 'snapmail/getSnapmailDialogType',
-        snapmailById: 'snapmail/getSnapmailById',
-        snapmailEditId: 'snapmail/getSnapmailEditId',
+        currentSnapmail: 'snapmail/getCurrentSnapmail',
+        snapmailId: 'snapmail/getSnapmailId',
       }),
     },
     async created() {
-      if(this.snapmailEditId != '') {
-        await this.getSnapmailById(this.snapmailEditId)
-        await this.formatToString(this.snapmailById);
-      }else {
+      if(this.snapmailId != '') {
+        await this.getCurrentSnapmail(this.snapmailId)
+        await this.formatToString(this.currentSnapmail);
+      }
+      else {
         this.hasLoaded = true;
       }
     },
@@ -61,7 +62,7 @@
         setSnapmailDialog: 'snapmail/setSnapmailDialog',
       }),
       ...mapActions({
-        getSnapmailById: 'snapmail/getSnapmailById',
+        getCurrentSnapmail: 'snapmail/getCurrentSnapmail',
       }),
 
       async formatToString(snapmail) {

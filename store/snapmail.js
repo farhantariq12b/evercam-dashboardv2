@@ -2,8 +2,8 @@ import qs from "qs";
 
 export const state = () => ({
   snapmails: [],
-  snapmailById: [],
-  snapmailEditId: null,
+  currentSnapmail: [],
+  snapmailId: null,
   snapmailDialog: false,
   snapmailDialogType: 'create',
   notification: {
@@ -23,11 +23,11 @@ export const mutations = {
   setSnapmails(state, payload) {
     state.snapmails = payload;
   },
-  setSnapmailEditId(state, payload) {
-    state.snapmailEditId = payload;
+  setSnapmailId(state, payload) {
+    state.snapmailId = payload;
   },
-  setSnapmailById(state, payload) {
-    state.snapmailById = payload;
+  setSnapmailCurrentId(state, payload) {
+    state.currentSnapmail = payload;
   },
   setNotification(state, payload) {
     state.notification = payload;
@@ -53,10 +53,10 @@ export const actions = {
     }
   },
 
-  async getSnapmailById({ commit }, id) {
+  async getCurrentSnapmail({ commit }, id) {
     try {
       const data = await this.$axios.$get(`${process.env.API_URL}snapmails/${id}`);
-      commit("setSnapmailById", data.snapmails);
+      commit("setSnapmailCurrentId", data.snapmails);
     } catch (err) {
       console.log(err);
     }
@@ -102,11 +102,11 @@ export const getters = {
   getSnapmails(state) {
     return state.snapmails;
   },
-  getSnapmailEditId(state) {
-    return state.snapmailEditId;
+  getSnapmailId(state) {
+    return state.snapmailId;
   },
-  getSnapmailById(state) {
-    return state.snapmailById;
+  getCurrentSnapmail(state) {
+    return state.currentSnapmail;
   },
   getNotification(state) {
     return state.notification;
