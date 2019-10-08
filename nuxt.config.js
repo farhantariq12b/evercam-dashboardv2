@@ -52,8 +52,9 @@ export default {
     { src: "~plugins/timepicker" },
     "~/plugins/axios",
     { src: "~plugins/vue-konva", ssr: false },
-    "@/plugins/google-maps",
-    "@/plugins/vee-validate"
+    { src: "~/plugins/google-maps" },
+    "@/plugins/vee-validate",
+    "@/plugins/image-editor"
   ],
   /*
    ** Nuxt.js dev-modules
@@ -92,7 +93,7 @@ export default {
    ** Build configuration
    */
   build: {
-    transpile: ["vee-validate/dist/rules"],
+    transpile: [/^vue2-google-maps($|\/)/],
     /*
      ** You can extend webpack config here
      */

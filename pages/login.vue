@@ -21,13 +21,11 @@
                 <v-form ref="model">
                   <ValidationProvider name="login" rules="required|email">
                     <v-text-field
-                      slot-scope="{
-                        errors,
-                        valid
-                      }"
+                      v-model="model.username"
+                      slot-scope="{ errors, valid }"
                       :error-messages="errors"
                       :success="valid"
-                      v-model="model.username"
+                      class="caption"
                       name="login"
                       label="Login"
                       type="text"
@@ -38,6 +36,7 @@
                     id="password"
                     v-model="model.password"
                     name="password"
+                    class="caption"
                     label="Password"
                     type="password"
                   />
@@ -46,6 +45,7 @@
                     <v-btn
                       block
                       color="primary"
+                      class="caption"
                       :loading="loading"
                       @click="preformLogin"
                     >
@@ -54,7 +54,7 @@
                   </v-card-actions>
                 </v-form>
               </v-card-text>
-              <v-card-text class="text-center">
+              <v-card-text class="text-center caption label-color">
                 I've <a href="./">forgotten my password</a>
               </v-card-text>
             </v-card>
@@ -78,11 +78,14 @@
   overflow-x: hidden !important;
 }
 
+.label-color {
+  color: rgba(0, 0, 0, 0.87);
+}
+
 .video-player-box {
   position: absolute;
   z-index: 0;
   width: 100%;
-
 }
 </style>
 
@@ -90,7 +93,11 @@
 import { mapActions } from "vuex"
 import "video.js/dist/video-js.css"
 import { videoPlayer } from "vue-video-player"
-import { ValidationObserver, ValidationProvider, withValidation } from "vee-validate";
+import {
+  ValidationObserver,
+  ValidationProvider,
+  withValidation
+} from "vee-validate"
 
 export default {
   layout: "clean",
@@ -112,7 +119,7 @@ export default {
       sources: [
         {
           type: "video/mp4",
-          src: require('~/static/gpoview-a756f65192d97eb7c27d054296cd84fa4d2c41707d8c8ad1a579690cfb66e093.mp4')
+          src: require("~/static/gpoview-a756f65192d97eb7c27d054296cd84fa4d2c41707d8c8ad1a579690cfb66e093.mp4")
         }
       ]
     },

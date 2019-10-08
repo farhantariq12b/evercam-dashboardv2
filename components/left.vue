@@ -5,6 +5,7 @@
     :mini-variant="miniVariant"
     :clipped="clipped"
     :fixed="fixed"
+    :width="210"
     app
     dark
   >

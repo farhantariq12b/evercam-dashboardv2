@@ -49,10 +49,7 @@
           height="200px"
           gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
         >
-          <v-card-title
-            class="fill-height align-end"
-            v-text="archive.title"
-          />
+          <v-card-title class="fill-height align-end" v-text="archive.title" />
         </v-img>
 
         <v-card-text>
@@ -63,7 +60,11 @@
         </v-card-text>
       </v-card>
     </v-flex>
-    <div v-show="pagination" class="text-xs-center pl-2 pr-2 pt-2 pb-12" style="width: 100%">
+    <div
+      v-show="pagination"
+      class="text-xs-center pl-2 pr-2 pt-2 pb-12"
+      style="width: 100%"
+    >
       <v-btn dark width="100%" @click="loadMore">
         Load more...
       </v-btn>
@@ -209,7 +210,7 @@
                     @change="filesChange($event.target.files)"
                   />
                   <p v-if="isInitial">
-                    Drag your video here to begin<br>
+                    Drag your video here to begin<br >
                     or click to browse
                   </p>
                   <p v-if="isSaving">Uploading {{ fileCount }} files...</p>
@@ -217,7 +218,7 @@
                     {{ file.name }}
                   </p>
                   <p v-if="isFailed">
-                    Failed, click here or drag your<br>video here to try again
+                    Failed, click here or drag your<br >video here to try again
                   </p>
                 </div>
               </v-col>
@@ -334,7 +335,23 @@ export default {
         let completed_archives = res.archives.filter(function(archive) {
           return archive.status == "Completed" || archive.status == 5
         })
-        return { archives: completed_archives }
+        let key = "created_at"
+        let sorted_list =
+          completed_archives.sort(function(a, b) {
+            var x, y
+            y = a[key]
+            x = b[key]
+            if (x < y) {
+              return -1
+            } else {
+              if (x > y) {
+                return 1
+              } else {
+                return 0
+              }
+            }
+          })
+        return { archives: sorted_list }
       })
       .catch(() => {
         error({ statusCode: 404, message: "Post not found" })
@@ -350,7 +367,7 @@ export default {
     }
   },
   methods: {
-    async filesChange(fileList) {
+    filesChange(fileList) {
       this.currentStatus = STATUS_SUCCESS
       this.file = fileList[0]
       var vuethis = this
